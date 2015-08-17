@@ -14,7 +14,7 @@ from cpython.object cimport PyObject_CallMethodObjArgs, PyObject_Not, PyObject_I
 import re
 from collections import deque
 import itertools as it
-from .auxiliary import PyteomicsError, memoize, BasicComposition
+from pyteomics.auxiliary import PyteomicsError, memoize, BasicComposition
 
 cdef:
     list std_amino_acids, std_labels
