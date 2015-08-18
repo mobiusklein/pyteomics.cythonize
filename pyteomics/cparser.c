@@ -856,7 +856,6 @@ static char __pyx_k_sequence[] = "sequence";
 static char __pyx_k_tostring[] = "tostring";
 static char __pyx_k_a_z_A_Z_2[] = "[a-z]*[A-Z]";
 static char __pyx_k_a_z_A_Z_3[] = "([a-z]*)([A-Z])";
-static char __pyx_k_auxiliary[] = "auxiliary";
 static char __pyx_k_itertools[] = "itertools";
 static char __pyx_k_collections[] = "collections";
 static char __pyx_k_Unknown_label[] = "Unknown label: {}";
@@ -866,6 +865,7 @@ static char __pyx_k_parse_line_151[] = "parse (line 151)";
 static char __pyx_k_parsed_sequence[] = "parsed_sequence";
 static char __pyx_k_BasicComposition[] = "BasicComposition";
 static char __pyx_k_pyteomics_cparser[] = "pyteomics.cparser";
+static char __pyx_k_pyteomics_auxiliary[] = "pyteomics.auxiliary";
 static char __pyx_k_show_unmodified_termini[] = "show_unmodified_termini";
 static char __pyx_k_Not_a_valid_modX_sequence[] = "Not a valid modX sequence: ";
 static char __pyx_k_allow_unknown_modifications[] = "allow_unknown_modifications";
@@ -917,7 +917,6 @@ static PyObject *__pyx_kp_s_a_z_A_Z_2;
 static PyObject *__pyx_kp_s_a_z_A_Z_3;
 static PyObject *__pyx_n_s_allow_unknown_modifications;
 static PyObject *__pyx_kp_u_amino_acid_composition_line_343;
-static PyObject *__pyx_n_s_auxiliary;
 static PyObject *__pyx_n_s_collections;
 static PyObject *__pyx_n_s_compile;
 static PyObject *__pyx_n_s_cterm;
@@ -941,6 +940,7 @@ static PyObject *__pyx_n_s_nterm;
 static PyObject *__pyx_kp_u_parse_line_151;
 static PyObject *__pyx_n_s_parsed_sequence;
 static PyObject *__pyx_n_s_pop;
+static PyObject *__pyx_n_s_pyteomics_auxiliary;
 static PyObject *__pyx_n_s_pyteomics_cparser;
 static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_re;
@@ -4877,7 +4877,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_a_z_A_Z_3, __pyx_k_a_z_A_Z_3, sizeof(__pyx_k_a_z_A_Z_3), 0, 0, 1, 0},
   {&__pyx_n_s_allow_unknown_modifications, __pyx_k_allow_unknown_modifications, sizeof(__pyx_k_allow_unknown_modifications), 0, 0, 1, 1},
   {&__pyx_kp_u_amino_acid_composition_line_343, __pyx_k_amino_acid_composition_line_343, sizeof(__pyx_k_amino_acid_composition_line_343), 0, 1, 0, 0},
-  {&__pyx_n_s_auxiliary, __pyx_k_auxiliary, sizeof(__pyx_k_auxiliary), 0, 0, 1, 1},
   {&__pyx_n_s_collections, __pyx_k_collections, sizeof(__pyx_k_collections), 0, 0, 1, 1},
   {&__pyx_n_s_compile, __pyx_k_compile, sizeof(__pyx_k_compile), 0, 0, 1, 1},
   {&__pyx_n_s_cterm, __pyx_k_cterm, sizeof(__pyx_k_cterm), 0, 0, 1, 1},
@@ -4901,6 +4900,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_u_parse_line_151, __pyx_k_parse_line_151, sizeof(__pyx_k_parse_line_151), 0, 1, 0, 0},
   {&__pyx_n_s_parsed_sequence, __pyx_k_parsed_sequence, sizeof(__pyx_k_parsed_sequence), 0, 0, 1, 1},
   {&__pyx_n_s_pop, __pyx_k_pop, sizeof(__pyx_k_pop), 0, 0, 1, 1},
+  {&__pyx_n_s_pyteomics_auxiliary, __pyx_k_pyteomics_auxiliary, sizeof(__pyx_k_pyteomics_auxiliary), 0, 0, 1, 1},
   {&__pyx_n_s_pyteomics_cparser, __pyx_k_pyteomics_cparser, sizeof(__pyx_k_pyteomics_cparser), 0, 0, 1, 1},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_re, __pyx_k_re, sizeof(__pyx_k_re), 0, 0, 1, 1},
@@ -5110,7 +5110,7 @@ PyMODINIT_FUNC PyInit_cparser(void)
  * import re
  * from collections import deque             # <<<<<<<<<<<<<<
  * import itertools as it
- * from .auxiliary import PyteomicsError, memoize, BasicComposition
+ * from pyteomics.auxiliary import PyteomicsError, memoize, BasicComposition
  */
   __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
@@ -5130,7 +5130,7 @@ PyMODINIT_FUNC PyInit_cparser(void)
  * import re
  * from collections import deque
  * import itertools as it             # <<<<<<<<<<<<<<
- * from .auxiliary import PyteomicsError, memoize, BasicComposition
+ * from pyteomics.auxiliary import PyteomicsError, memoize, BasicComposition
  * 
  */
   __pyx_t_2 = __Pyx_Import(__pyx_n_s_itertools, 0, -1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -5141,7 +5141,7 @@ PyMODINIT_FUNC PyInit_cparser(void)
   /* "pyteomics\cparser.pyx":17
  * from collections import deque
  * import itertools as it
- * from .auxiliary import PyteomicsError, memoize, BasicComposition             # <<<<<<<<<<<<<<
+ * from pyteomics.auxiliary import PyteomicsError, memoize, BasicComposition             # <<<<<<<<<<<<<<
  * 
  * cdef:
  */
@@ -5156,7 +5156,7 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __Pyx_INCREF(__pyx_n_s_BasicComposition);
   PyList_SET_ITEM(__pyx_t_2, 2, __pyx_n_s_BasicComposition);
   __Pyx_GIVEREF(__pyx_n_s_BasicComposition);
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_auxiliary, __pyx_t_2, 1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_pyteomics_auxiliary, __pyx_t_2, -1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
