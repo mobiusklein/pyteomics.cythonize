@@ -18,8 +18,8 @@ from cparser cimport parse, amino_acid_composition, _split_label
 cdef:
     dict nist_mass = _nist_mass
     dict std_aa_mass = _std_aa_mass
-    dict std_ion_comp = _std_ion_comp
-    dict std_aa_comp = _std_aa_comp
+    dict std_ion_comp = {k: dict(v) for k, v in _std_ion_comp.items()}
+    dict std_aa_comp = {k: dict(v) for k, v in _std_aa_comp.items()}
 
 
 cdef inline double get_mass(dict mass_data, object key):
