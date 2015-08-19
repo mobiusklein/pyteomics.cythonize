@@ -4,7 +4,6 @@ cimport cython
 from cpython.ref cimport PyObject
 from cpython.dict cimport PyDict_GetItem, PyDict_SetItem, PyDict_Next, PyDict_Keys, PyDict_Update
 from cpython.int cimport PyInt_AsLong, PyInt_Check, PyInt_FromLong
-from cpython.string cimport PyString_Format
 from cpython.tuple cimport PyTuple_GetItem, PyTuple_GET_ITEM
 from cpython.list cimport PyList_GET_ITEM
 from cpython.float cimport PyFloat_AsDouble
@@ -232,7 +231,7 @@ cdef inline str _make_isotope_string(str element_name, int isotope_num):
         return element_name
     else:
         parts = (element_name, isotope_num)
-        return <str>PyString_Format('%s[%d]', parts)
+        return '%s[%d]' % parts
 
 
 cdef class CComposition(dict):
