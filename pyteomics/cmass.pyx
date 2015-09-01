@@ -147,7 +147,7 @@ cpdef double fast_mass2(str sequence, str ion_type=None, int charge=0,
     pos = 0
     while(PyDict_Next(comp, &pos, &pkey, &pvalue)):
         aa = <str>pkey
-        num = <int>pvalue
+        num = PyInt_AsLong(<object>pvalue)
         if aa in aa_mass:
             ptemp = PyDict_GetItem(aa_mass, aa)
             mass += PyFloat_AsDouble(<object>ptemp) * num
@@ -518,7 +518,7 @@ cdef class CComposition(dict):
 
 
     cpdef double mass(self, int average=False, charge=None, dict mass_data=nist_mass) except -1:
-        cdef int mdid
+        cdef long mdid
         mdid = id(mass_data)
         if self._mass_args is not None and average is self._mass_args[0]\
                 and charge == self._mass_args[1] and mdid == self._mass_args[2]:
