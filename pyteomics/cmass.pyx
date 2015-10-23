@@ -2,7 +2,7 @@ import re
 
 cimport cython
 from cpython.ref cimport PyObject
-from cpython.dict cimport PyDict_GetItem, PyDict_SetItem, PyDict_Next, PyDict_Keys, PyDict_Update
+from cpython.dict cimport PyDict_GetItem, PyDict_SetItem, PyDict_Next, PyDict_Keys, PyDict_Update, PyDict_DelItem
 from cpython.int cimport PyInt_AsLong, PyInt_Check, PyInt_FromLong
 from cpython.tuple cimport PyTuple_GetItem, PyTuple_GET_ITEM
 from cpython.list cimport PyList_GET_ITEM
@@ -13,6 +13,8 @@ from cpython.exc cimport PyErr_Occurred
 from pyteomics.auxiliary import PyteomicsError, _nist_mass
 from pyteomics.mass import std_aa_mass as _std_aa_mass, std_ion_comp as _std_ion_comp, std_aa_comp as _std_aa_comp
 
+from collections import defaultdict
+from itertools import chain
 
 import cparser
 from cparser import parse, amino_acid_composition, _split_label
@@ -237,6 +239,54 @@ cdef inline str _make_isotope_string(str element_name, int isotope_num):
 cdef class CComposition(dict):
 
     '''Represent arbitrary elemental compositions'''
+
+    def _from_parsed_sequence(self, parsed_sequence, aa_comp):
+        self.clear()
+        comp = defaultdict(int)
+        for aa in parsed_sequence:
+            if aa in aa_comp:
+                for elem, cnt in aa_comp[aa].items():
+                    comp[elem] += cnt
+            else:
+                try:
+                    mod, aa = cparser._split_label(aa)
+                    for elem, cnt in chain(
+                            aa_comp[mod].items(), aa_comp[aa].items()):
+                        comp[elem] += cnt
+
+                except (PyteomicsError, KeyError):
+                    raise PyteomicsError(
+                            'No information for %s in `aa_comp`' % aa)
+        self._from_dict(comp)
+
+    def _from_split_sequence(self, split_sequence, aa_comp):
+        self.clear()
+        comp = defaultdict(int)
+        for group in split_sequence:
+            i = 0
+            while i < len(group):
+                for j in range(len(group)+1, -1, -1):
+                    try:
+                        label = ''.join(group[i:j])
+                        for elem, cnt in aa_comp[label].items():
+                            comp[elem] += cnt
+                    except KeyError:
+                        continue
+                    else:
+                        i = j
+                        break
+                if j == 0:
+                    raise PyteomicsError("Invalid group starting from "
+                            "position %d: %s" % (i+1, group))
+        self._from_dict(comp)
+
+    def _from_sequence(self, sequence, aa_comp):
+        parsed_sequence = parse(
+            sequence,
+            labels=aa_comp,
+            show_unmodified_termini=True)
+        self._from_parsed_sequence(parsed_sequence, aa_comp)
+
     def __str__(self):   # pragma: no cover
         return 'Composition({})'.format(dict.__repr__(self))
 
@@ -279,7 +329,6 @@ cdef class CComposition(dict):
 
         return result
 
-
     def __isub__(self, other):
         cdef:
             str elem
@@ -315,8 +364,8 @@ cdef class CComposition(dict):
 
         return result
 
-    #def __reduce__(self):
-    #    return composition_factory, (list(self),), self.__getstate__()
+    def __reduce__(self):
+        return CComposition, (dict(self),)
 
     def __getstate__(self):
         return dict(self)
@@ -345,7 +394,6 @@ cdef class CComposition(dict):
             prod.setitem(k, v * rep)
         return prod
 
-
     def __richcmp__(self, other, int code):
         if code == 2:
             if not isinstance(other, dict):
@@ -364,9 +412,10 @@ cdef class CComposition(dict):
     def __missing__(self, str key):
         return 0
 
-    def __setitem__(self, str key, int value):
-        if value:  # Will not occur on 0 as 0 is falsey AND an integer
-            self.setitem(key, value)
+    def __setitem__(self, str key, object value):
+        cdef long int_value = PyInt_AsLong(round(value))
+        if int_value:  # Will not occur on 0 as 0 is falsey AND an integer
+            self.setitem(key, int_value)
         elif key in self:
             del self[key]
         self._mass_args = None
@@ -517,15 +566,16 @@ cdef class CComposition(dict):
         PyDict_Update(self, comp)
 
 
-    cpdef double mass(self, int average=False, charge=None, dict mass_data=nist_mass) except -1:
+    cpdef double mass(self, int average=False, charge=None, dict mass_data=nist_mass, ion_type=None) except -1:
         cdef long mdid
         mdid = id(mass_data)
         if self._mass_args is not None and average is self._mass_args[0]\
-                and charge == self._mass_args[1] and mdid == self._mass_args[2]:
+                and charge == self._mass_args[1] and mdid == self._mass_args[2]\
+                and ion_type == self._mass_args[3]:
             return self._mass
         else:
-            self._mass_args = (average, charge, mdid)
-            self._mass = calculate_mass(composition=self, average=average, charge=charge, mass_data=mass_data)
+            self._mass_args = (average, charge, mdid, ion_type)
+            self._mass = _calculate_mass(composition=self, average=average, charge=charge, mass_data=mass_data, ion_type=ion_type)
             return self._mass
 
     def __init__(self, *args, **kwargs):
@@ -554,46 +604,70 @@ cdef class CComposition(dict):
         """
         dict.__init__(self)
         cdef:
-            dict mass_data
+            dict mass_data, aa_comp
             str kwa
-            set kw_sources
+            set kw_sources, kw_given
         mass_data = kwargs.get('mass_data', nist_mass)
 
-        kw_sources = set(
-            ('formula',))
+        aa_comp=kwargs.get('aa_comp', std_aa_comp)
+        mass_data=kwargs.get('mass_data', nist_mass)
+
+        kw_sources = {'formula', 'sequence', 'parsed_sequence',
+                'split_sequence'}
         kw_given = kw_sources.intersection(kwargs)
         if len(kw_given) > 1:
-            raise PyteomicsError('Only one of {} can be specified!\n\
-                Given: {}'.format(', '.join(kw_sources),
-                                  ', '.join(kw_given)))
-
+            raise PyteomicsError('Only one of {} can be specified!\n'
+                    'Given: {}'.format(', '.join(kw_sources),
+                        ', '.join(kw_given)))
         elif kw_given:
             kwa = kw_given.pop()
-            if kwa == "formula":
-                self._from_formula(kwargs[kwa], mass_data)
+            getattr(self, '_from_' + kwa)(kwargs[kwa],
+                    mass_data if kwa == 'formula' else aa_comp)
+
         # can't build from kwargs
         elif args:
             if isinstance(args[0], dict):
                 self._from_dict(args[0])
             elif isinstance(args[0], str):
                 try:
-                    self._from_formula(args[0], mass_data)
+                    self._from_sequence(args[0], aa_comp)
                 except PyteomicsError:
-                    raise PyteomicsError(
-                        'Could not create a Composition object from '
-                        'string: "{}": not a valid sequence or '
-                        'formula'.format(args[0]))
+                    try:
+                        self._from_formula(args[0], mass_data)
+                    except PyteomicsError:
+                        raise PyteomicsError(
+                                'Could not create a Composition object from '
+                                'string: "{}": not a valid sequence or '
+                                'formula'.format(args[0]))
+            else:
+                try:
+                    self._from_sequence(cparser.tostring(args[0], True),
+                            aa_comp)
+                except:
+                    raise PyteomicsError('Could not create a Composition object'
+                            ' from `{}`. A Composition object must be '
+                            'specified by sequence, parsed or split sequence,'
+                            ' formula or dict.'.format(args[0]))
         else:
             self._from_dict(kwargs)
+
         self._mass = None
         self._mass_args = None
 
 Composition = CComposition
 
+def calculate_mass(CComposition composition=None, bint average=False, charge=None, mass_data=None, ion_type=None, **kwargs):
+    if composition is None:
+        composition = CComposition(mass_data=mass_data, **kwargs)
+    return composition.mass(average=average, charge=charge, mass_data=mass_data, ion_type=ion_type)
+
+    
 
 @cython.wraparound(False)
 @cython.boundscheck(False)
-cpdef inline double calculate_mass(CComposition composition=None, str formula=None, int average=False, charge=None, mass_data=None) except -1:
+cdef inline double _calculate_mass(CComposition composition,
+                                   int average=False, charge=None, mass_data=None,
+                                   ion_type=None) except -1:
     """Calculates the monoisotopic mass of a chemical formula or CComposition object.
 
     Parameters
@@ -624,6 +698,7 @@ cpdef inline double calculate_mass(CComposition composition=None, str formula=No
         long _charge
         str isotope_string, element_name
         dict mass_provider
+        CComposition ion_type_comp
         list key_list
         PyObject* interm
         Py_ssize_t iter_pos = 0
@@ -632,15 +707,6 @@ cpdef inline double calculate_mass(CComposition composition=None, str formula=No
         mass_provider = nist_mass
     else:
         mass_provider = mass_data
-
-    if composition is None:
-        if formula is not None:
-            composition = CComposition(formula)
-        else:
-            raise PyteomicsError("Must provide a composition or formula argument")
-    else:
-        if formula is not None:
-            raise PyteomicsError("Must provide a composition or formula argument, but not both")
 
     # Get charge.
     if charge is None:
@@ -677,11 +743,44 @@ cpdef inline double calculate_mass(CComposition composition=None, str formula=No
 
             mass += (composition.getitem(isotope_string) * isotope_mass)
 
+    if ion_type is not None:
+        interm = PyDict_GetItem(std_ion_comp, ion_type)
+        if interm == NULL:
+            raise KeyError("Unknown ion_type: {}".format(ion_type))
+        ion_type_comp = <CComposition>interm
+        key_list = PyDict_Keys(ion_type_comp)
+        for iter_pos in range(len(key_list)):
+            isotope_string = <str>PyList_GET_ITEM(key_list, iter_pos)
+            element_name = _parse_isotope_string(isotope_string, &isotope_num)
+
+            # Calculate average mass if required and the isotope number is
+            # not specified.
+            if (not isotope_num) and average:
+                for isotope in mass_provider[element_name]:
+                    if isotope != 0:
+                        quantity = ion_type_comp.getitem(element_name)
+                        isotope_mass = <double>mass_provider[element_name][isotope][0]
+                        isotope_frequency = <double>mass_provider[element_name][isotope][1]
+
+                        mass += quantity * isotope_mass * isotope_frequency
+            else:
+                interim = PyDict_GetItem(mass_provider, element_name)
+                interim = PyDict_GetItem(<dict>interim, isotope_num)
+                isotope_mass = PyFloat_AsDouble(<object>PyTuple_GetItem(<tuple>interim, 0))
+
+                mass += (ion_type_comp.getitem(isotope_string) * isotope_mass)
+
+
     # Calculate m/z if required.
     if _charge != 0:
-        mass /= _charge
+        mass /= abs(_charge)
 
-    composition.setitem('H+', old_charge)
+
+    if old_charge != 0:
+        composition.setitem('H+', old_charge)
+    else:
+        PyDict_DelItem(composition, "H+")
+
     return mass
 
 Composition = CComposition
