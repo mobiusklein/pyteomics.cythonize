@@ -607,10 +607,10 @@ cdef class CComposition(dict):
             dict mass_data, aa_comp
             str kwa
             set kw_sources, kw_given
-        mass_data = kwargs.get('mass_data', nist_mass)
-
         aa_comp=kwargs.get('aa_comp', std_aa_comp)
-        mass_data=kwargs.get('mass_data', nist_mass)
+        mass_data=kwargs.get('mass_data')
+        if mass_data is None:
+            mass_data = nist_mass
 
         kw_sources = {'formula', 'sequence', 'parsed_sequence',
                 'split_sequence'}
@@ -656,7 +656,7 @@ cdef class CComposition(dict):
 
 Composition = CComposition
 
-def calculate_mass(CComposition composition=None, bint average=False, charge=None, mass_data=None, ion_type=None, **kwargs):
+def calculate_mass(composition=None, average=False, charge=None, mass_data=None, ion_type=None, **kwargs):
     if composition is None:
         composition = CComposition(mass_data=mass_data, **kwargs)
     return composition.mass(average=average, charge=charge, mass_data=mass_data, ion_type=ion_type)
