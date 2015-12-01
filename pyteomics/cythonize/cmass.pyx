@@ -239,6 +239,20 @@ cdef:
 
 @cython.boundscheck(False)
 cdef inline str _parse_isotope_string(str label, int* isotope_num):
+    '''Parses an isotope string and extracts the element name and isotope number.
+    The element name is returned, but the isotope number is returned by indirection.
+
+    Parameters
+    ----------
+    label: str
+        An isotope string of the format "<element><[isotope_number]>"
+    isotope_num: int_ptr
+        A pointer to an integer which will contain the isotope number
+
+    Returns
+    -------
+    str: Element Name
+    '''
     cdef:
         # int isotope_num = 0
         int i = 0
