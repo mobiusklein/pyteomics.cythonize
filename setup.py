@@ -5,13 +5,19 @@ setup.py file for pyteomics
 '''
 
 from setuptools import setup, Extension, find_packages
-from Cython.Build import cythonize
 
+try:
+    from Cython.Build import cythonize
+    extensions = cythonize([
+        Extension(name="pyteomics.cythonize.cparser", sources=["pyteomics/cythonize/cparser.pyx"]),
+        Extension(name="pyteomics.cythonize.cmass", sources=["pyteomics/cythonize/cmass.pyx"])
+        ])
+except ImportError:
+    extensions = ([
+        Extension(name="pyteomics.cparser", sources=["pyteomics/cythonize/cparser.c"]),
+        Extension(name="pyteomics.cmass", sources=["pyteomics/cythonize/cmass.c"])
+        ])
 
-extensions = cythonize([
-    Extension(name="pyteomics.cparser", sources=["pyteomics/cparser.pyx"]),
-    Extension(name="pyteomics.cmass", sources=["pyteomics/cmass.pyx"])
-    ])
 
 setup(
     name='pyteomics.cythonize',
@@ -19,5 +25,5 @@ setup(
     packages=find_packages(),
     zip_safe=False,
     ext_modules=extensions,
-    namespace_packages=["pyteomics"]
+    namespace_packages=["pyteomics", "pyteomics.cythonize"]
     )

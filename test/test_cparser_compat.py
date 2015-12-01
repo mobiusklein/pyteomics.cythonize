@@ -1,7 +1,7 @@
 import unittest
 
 from pyteomics import parser
-from pyteomics import cparser
+from pyteomics.cythonize import cparser
 from string import ascii_uppercase as uppercase
 import random
 

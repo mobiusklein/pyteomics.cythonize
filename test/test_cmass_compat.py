@@ -1,9 +1,11 @@
 from os import path
 import pyteomics
+import pickle
 #pyteomics.__path__ = [path.abspath(path.join(path.dirname(__file__), path.pardir, 'pyteomics'))]
 import unittest
 import random
-from pyteomics import cmass, auxiliary, cparser, mass
+from pyteomics import auxiliary, mass
+from pyteomics.cythonize import cmass, cparser
 cmass.nist_mass = mass.nist_mass
 import gzip
 
@@ -217,7 +219,6 @@ class MassTest(unittest.TestCase):
         split_sequence = cmass.Composition(split_sequence=[('X',), ('Y',), ('Z',)],
                              aa_comp=self.aa_comp)
 
-        import pickle
         self.assertEqual(dict_, pickle.loads(pickle.dumps(dict_)))
         self.assertEqual(formula, pickle.loads(pickle.dumps(formula)))
         self.assertEqual(sequence, pickle.loads(pickle.dumps(sequence)))

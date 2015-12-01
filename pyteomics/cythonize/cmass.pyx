@@ -29,6 +29,16 @@ cdef:
 
 
 cdef inline double get_mass(dict mass_data, object key):
+    '''
+    Internal method to do neutral monoisotopic mass look ups
+
+    Parameters
+    ----------
+    mass_data: dict
+        The dictionary of symbol-to-mass mappings
+    key: object
+        The symbol to look up
+    '''
     cdef:
         PyObject* interm
         double mass
@@ -46,6 +56,37 @@ cdef inline double get_mass(dict mass_data, object key):
 cpdef double fast_mass(str sequence, str ion_type=None, int charge=0,
                        dict mass_data=nist_mass, dict aa_mass=std_aa_mass,
                        dict ion_comp=std_ion_comp):
+    """Calculate monoisotopic mass of an ion using the fast
+    algorithm. May be used only if amino acid residues are presented in
+    one-letter code.
+
+    Parameters
+    ----------
+    sequence : str
+        A polypeptide sequence string.
+    ion_type : str, optional
+        If specified, then the polypeptide is considered to be
+        in a form of corresponding ion. Do not forget to
+        specify the charge state!
+    charge : int, optional
+        If not 0 then m/z is calculated: the mass is increased
+        by the corresponding number of proton masses and divided
+        by z.
+    mass_data : dict, optional
+        A dict with the masses of chemical elements (the default
+        value is :py:data:`nist_mass`).
+    aa_mass : dict, optional
+        A dict with the monoisotopic mass of amino acid residues
+        (default is std_aa_mass);
+    ion_comp : dict, optional
+        A dict with the relative elemental compositions of peptide ion
+        fragments (default is :py:data:`std_ion_comp`).
+
+    Returns
+    -------
+    mass : float
+        Monoisotopic mass or m/z of a peptide molecule/ion.
+    """
     cdef:
         CComposition icomp
         double mass = 0
@@ -236,6 +277,10 @@ cdef inline str _make_isotope_string(str element_name, int isotope_num):
         return '%s[%d]' % parts
 
 
+def marshal_ccomposition(state):
+    return CComposition(state)
+
+
 cdef class CComposition(dict):
 
     '''Represent arbitrary elemental compositions'''
@@ -365,7 +410,7 @@ cdef class CComposition(dict):
         return result
 
     def __reduce__(self):
-        return CComposition, (dict(self),)
+        return marshal_ccomposition, (dict(self),)
 
     def __getstate__(self):
         return dict(self)
@@ -657,6 +702,60 @@ cdef class CComposition(dict):
 Composition = CComposition
 
 def calculate_mass(composition=None, average=False, charge=None, mass_data=None, ion_type=None, **kwargs):
+    """Calculates the monoisotopic mass of a polypeptide defined by a
+    sequence string, parsed sequence, chemical formula or
+    Composition object.
+
+    One or none of the following keyword arguments is required:
+    **formula**, **sequence**, **parsed_sequence**, **split_sequence**
+    or **composition**.
+    All arguments given are used to create a :py:class:`Composition` object,
+    unless an existing one is passed as a keyword argument.
+
+    Note that if a sequence string is supplied and terminal groups are not
+    explicitly shown, then the mass is calculated for a polypeptide with
+    standard terminal groups (NH2- and -OH).
+
+    .. warning::
+
+        Be careful when supplying a list with a parsed sequence. It must be
+        obtained with enabled `show_unmodified_termini` option.
+
+    Parameters
+    ----------
+    formula : str, optional
+        A string with a chemical formula.
+    sequence : str, optional
+        A polypeptide sequence string in modX notation.
+    parsed_sequence : list of str, optional
+        A polypeptide sequence parsed into a list of amino acids.
+    composition : Composition, optional
+        A Composition object with the elemental composition of a substance.
+    aa_comp : dict, optional
+        A dict with the elemental composition of the amino acids (the
+        default value is std_aa_comp).
+    average : bool, optional
+        If :py:const:`True` then the average mass is calculated. Note that mass
+        is not averaged for elements with specified isotopes. Default is
+        :py:const:`False`.
+    charge : int, optional
+        If not 0 then m/z is calculated: the mass is increased
+        by the corresponding number of proton masses and divided
+        by `charge`.
+    mass_data : dict, optional
+        A dict with the masses of the chemical elements (the default
+        value is :py:data:`nist_mass`).
+    ion_comp : dict, optional
+        A dict with the relative elemental compositions of peptide ion
+        fragments (default is :py:data:`std_ion_comp`).
+    ion_type : str, optional
+        If specified, then the polypeptide is considered to be in the form
+        of the corresponding ion. Do not forget to specify the charge state!
+
+    Returns
+    -------
+    mass : float
+    """
     if composition is None:
         composition = CComposition(mass_data=mass_data, **kwargs)
     return composition.mass(average=average, charge=charge, mass_data=mass_data, ion_type=ion_type)
@@ -668,14 +767,12 @@ def calculate_mass(composition=None, average=False, charge=None, mass_data=None,
 cdef inline double _calculate_mass(CComposition composition,
                                    int average=False, charge=None, mass_data=None,
                                    ion_type=None) except -1:
-    """Calculates the monoisotopic mass of a chemical formula or CComposition object.
+    """Calculates the monoisotopic mass of a CComposition object.
 
     Parameters
     ----------
     composition : CComposition
         A Composition object with the elemental composition of a substance. Exclusive with `formula`
-    formula: str
-        A string describing a chemical composition. Exclusive with `composition`
     average : bool, optional
         If :py:const:`True` then the average mass is calculated. Note that mass
         is not averaged for elements with specified isotopes. Default is
