@@ -1,5 +1,5 @@
 test: install
-	cd test && python test_cparser_compat.py && python test_cmass_compat.py 
+	nosetests test
 
 install:
 	python setup.py build

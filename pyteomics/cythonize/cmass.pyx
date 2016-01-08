@@ -1,3 +1,17 @@
+#   Copyright 2016 Joshua Klein, Lev Levitsky
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
 import re
 
 cimport cython
@@ -26,6 +40,10 @@ cdef:
     dict std_aa_mass = _std_aa_mass
     dict std_ion_comp = {k: CComposition(v) for k, v in _std_ion_comp.items()}
     dict std_aa_comp = {k: CComposition(v) for k, v in _std_aa_comp.items()}
+
+
+def __get_constants():
+    return nist_mass, std_aa_mass, std_ion_comp, std_aa_comp
 
 
 cdef inline double get_mass(dict mass_data, object key):
@@ -238,7 +256,7 @@ cdef:
 
 
 @cython.boundscheck(False)
-cdef inline str _parse_isotope_string(str label, int* isotope_num):
+cdef str _parse_isotope_string(str label, int* isotope_num):
     '''Parses an isotope string and extracts the element name and isotope number.
     The element name is returned, but the isotope number is returned by indirection.
 
@@ -280,7 +298,7 @@ cdef inline str _parse_isotope_string(str label, int* isotope_num):
     return element_name
 
 
-cdef inline str _make_isotope_string(str element_name, int isotope_num):
+cdef str _make_isotope_string(str element_name, int isotope_num):
     """Form a string label for an isotope."""
     cdef:
         tuple parts
@@ -296,8 +314,29 @@ def marshal_ccomposition(state):
 
 
 cdef class CComposition(dict):
+    """
+    A Composition object stores a chemical composition of a
+    substance. Basically it is a dict object, in which keys are the names
+    of chemical elements and values contain integer numbers of
+    corresponding atoms in a substance.
 
-    '''Represent arbitrary elemental compositions'''
+    The main improvement over dict is that Composition objects allow
+    addition and subtraction.
+
+    If ``formula`` is not specified, the constructor will look at the first
+    positional argument and try to build the object from it. Without
+    positional arguments, a Composition will be constructed directly from
+    keyword arguments.
+
+    Parameters
+    ----------
+    formula : str, optional
+        A string with a chemical formula. All elements must be present in
+        `mass_data`.
+    mass_data : dict, optional
+        A dict with the masses of chemical elements (the default
+        value is :py:data:`nist_mass`). It is used for formulae parsing only.
+    """
 
     def _from_parsed_sequence(self, parsed_sequence, aa_comp):
         self.clear()
@@ -497,6 +536,12 @@ cdef class CComposition(dict):
         self._mass_args = None
 
     cpdef CComposition clone(self):
+        '''Create a copy of this instance
+
+        Returns
+        -------
+        CComposition
+        '''
         return CComposition(self)
 
     def update(self, *args, **kwargs):
@@ -626,6 +671,9 @@ cdef class CComposition(dict):
 
 
     cpdef double mass(self, int average=False, charge=None, dict mass_data=nist_mass, ion_type=None) except -1:
+        '''
+        Calculate the mass or m/z of a Composition.
+        '''
         cdef long mdid
         mdid = id(mass_data)
         if self._mass_args is not None and average is self._mass_args[0]\
@@ -638,29 +686,6 @@ cdef class CComposition(dict):
             return self._mass
 
     def __init__(self, *args, **kwargs):
-        """
-        A Composition object stores a chemical composition of a
-        substance. Basically it is a dict object, in which keys are the names
-        of chemical elements and values contain integer numbers of
-        corresponding atoms in a substance.
-
-        The main improvement over dict is that Composition objects allow
-        addition and subtraction.
-
-        If ``formula`` is not specified, the constructor will look at the first
-        positional argument and try to build the object from it. Without
-        positional arguments, a Composition will be constructed directly from
-        keyword arguments.
-
-        Parameters
-        ----------
-        formula : str, optional
-            A string with a chemical formula. All elements must be present in
-            `mass_data`.
-        mass_data : dict, optional
-            A dict with the masses of chemical elements (the default
-            value is :py:data:`nist_mass`). It is used for formulae parsing only.
-        """
         dict.__init__(self)
         cdef:
             dict mass_data, aa_comp
@@ -778,7 +803,7 @@ def calculate_mass(composition=None, average=False, charge=None, mass_data=None,
 
 @cython.wraparound(False)
 @cython.boundscheck(False)
-cdef inline double _calculate_mass(CComposition composition,
+cdef double _calculate_mass(CComposition composition,
                                    int average=False, charge=None, mass_data=None,
                                    ion_type=None) except -1:
     """Calculates the monoisotopic mass of a CComposition object.

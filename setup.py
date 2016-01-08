@@ -14,16 +14,31 @@ try:
         ])
 except ImportError:
     extensions = ([
-        Extension(name="pyteomics.cparser", sources=["pyteomics/cythonize/cparser.c"]),
-        Extension(name="pyteomics.cmass", sources=["pyteomics/cythonize/cmass.c"])
+        Extension(name="pyteomics.cythonize.cparser", sources=["pyteomics/cythonize/cparser.c"]),
+        Extension(name="pyteomics.cythonize.cmass", sources=["pyteomics/cythonize/cmass.c"])
         ])
 
 
 setup(
     name='pyteomics.cythonize',
-    version=0.1,
+    description='An Cython-accelerated version of common pyteomics functions',
+    long_description=open("README.rst").read(),
+    version="0.1.0",
     packages=find_packages(),
     zip_safe=False,
+    install_requires=['pyteomics'],
     ext_modules=extensions,
-    namespace_packages=["pyteomics", "pyteomics.cythonize"]
+    maintainer='Joshua Klein',
+    maintainer_email="jaklein@bu.edu",
+    classifiers=[
+        'Intended Audience :: Science/Research',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Topic :: Education',
+        'Topic :: Scientific/Engineering :: Bio-Informatics',
+        'Topic :: Scientific/Engineering :: Chemistry',
+        'Topic :: Software Development :: Libraries'
+    ],
+    namespace_packages=["pyteomics", "pyteomics.cythonize"],
+    license='License :: OSI Approved :: Apache Software License'
     )

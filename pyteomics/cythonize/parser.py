@@ -1,4 +1,4 @@
-from . import parser
+from pyteomics import parser
 
 try:
     from . import cparser
