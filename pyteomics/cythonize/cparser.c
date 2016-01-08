@@ -463,7 +463,9 @@ struct __pyx_opt_args_9pyteomics_9cythonize_7cparser_parse;
 struct __pyx_opt_args_9pyteomics_9cythonize_7cparser_amino_acid_composition;
 struct __pyx_opt_args_9pyteomics_9cythonize_7cparser_length;
 
-/* "pyteomics\cythonize\cparser.pxd":1
+/* "pyteomics\cythonize\cparser.pxd":16
+ * 
+ * 
  * cpdef list parse(str sequence, int show_unmodified_termini=*, int split=*,             # <<<<<<<<<<<<<<
  *                  int allow_unknown_modifications=*, object  labels=*)
  * 
@@ -476,7 +478,7 @@ struct __pyx_opt_args_9pyteomics_9cythonize_7cparser_parse {
   PyObject *labels;
 };
 
-/* "pyteomics\cythonize\cparser.pxd":4
+/* "pyteomics\cythonize\cparser.pxd":19
  *                  int allow_unknown_modifications=*, object  labels=*)
  * 
  * cpdef dict amino_acid_composition(object sequence, int show_unmodified_termini=*, int term_aa=*,             # <<<<<<<<<<<<<<
@@ -491,7 +493,7 @@ struct __pyx_opt_args_9pyteomics_9cythonize_7cparser_amino_acid_composition {
   PyObject *labels;
 };
 
-/* "pyteomics\cythonize\cparser.pyx":82
+/* "pyteomics\cythonize\cparser.pyx":96
  *     return bool(match_modX(label))
  * 
  * cpdef int length(object sequence,             # <<<<<<<<<<<<<<
@@ -899,8 +901,8 @@ static char __pyx_k_itertools[] = "itertools";
 static char __pyx_k_collections[] = "collections";
 static char __pyx_k_Unknown_label[] = "Unknown label: {}";
 static char __pyx_k_PyteomicsError[] = "PyteomicsError";
-static char __pyx_k_length_line_82[] = "length (line 82)";
-static char __pyx_k_parse_line_151[] = "parse (line 151)";
+static char __pyx_k_length_line_96[] = "length (line 96)";
+static char __pyx_k_parse_line_165[] = "parse (line 165)";
 static char __pyx_k_parsed_sequence[] = "parsed_sequence";
 static char __pyx_k_BasicComposition[] = "BasicComposition";
 static char __pyx_k_pyteomics_auxiliary[] = "pyteomics.auxiliary";
@@ -911,7 +913,7 @@ static char __pyx_k_pyteomics_cythonize_cparser[] = "pyteomics.cythonize.cparser
 static char __pyx_k_Unsupported_type_of_sequence[] = "Unsupported type of sequence.";
 static char __pyx_k_Cannot_split_a_non_modX_label_s[] = "Cannot split a non-modX label: %s";
 static char __pyx_k_Parse_a_sequence_string_written[] = "Parse a sequence string written in modX notation into a list of\n    labels or (if `split` argument is :py:const:`True`) into a list of\n    tuples representing amino acid residues and their modifications.\n\n    Parameters\n    ----------\n    sequence : str\n        The sequence of a polypeptide.\n    show_unmodified_termini : bool, optional\n        If :py:const:`True` then the unmodified N- and C-termini are explicitly\n        shown in the returned list. Default value is :py:const:`False`.\n    split : bool, optional\n        If :py:const:`True` then the result will be a list of tuples with 1 to 4\n        elements: terminal modification, modification, residue. Default value is\n        :py:const:`False`.\n    allow_unknown_modifications : bool, optional\n        If :py:const:`True` then do not raise an exception when an unknown\n        modification of a known amino acid residue is found in the sequence.\n        This also includes terminal groups.\n        Default value is :py:const:`False`.\n\n        .. note::\n            Since version 2.5, this parameter has effect only if `labels`\n            are provided.\n    labels : container, optional\n        A container of allowed labels for amino acids,\n        modifications and terminal modifications.\n        If not provided, no checks will be done.\n        Separate labels for modifications (such as 'p' or 'ox')\n        can be supplied, which means they are applicable to all residues.\n\n        .. warning::\n            If `show_unmodified_termini` is set to :py:const:`True`, standard\n            terminal groups need to be present in `labels`.\n\n        .. warning::\n            Avoid using sequences with only one terminal group, as they are\n            ambiguous. If you provide one, `labels` (or :py:const:`std_labels`)\n            will be used to resolve the ambiguity.\n\n    Returns\n    -------\n    out : list\n        List of tuples with labels of modifications and amino acid residues.\n\n    Examp""les\n    --------\n    >>> parse('PEPTIDE', split=True)\n    [('P',), ('E',), ('P',), ('T',), ('I',), ('D',), ('E',)]\n    >>> parse('H-PEPTIDE')\n    ['P', 'E', 'P', 'T', 'I', 'D', 'E']\n    >>> parse('PEPTIDE', show_unmodified_termini=True)\n    ['H-', 'P', 'E', 'P', 'T', 'I', 'D', 'E', '-OH']\n    >>> parse('TEpSToxM', labels=std_labels + ['pS', 'oxM'])\n    ['T', 'E', 'pS', 'T', 'oxM']\n    >>> parse('zPEPzTIDzE', True, True, labels=std_labels+['z'])\n    [('H-', 'z', 'P'), ('E',), ('P',), ('z', 'T'), ('I',), ('D',), ('z', 'E', '-OH')]\n    ";
-static char __pyx_k_amino_acid_composition_line_343[] = "amino_acid_composition (line 343)";
+static char __pyx_k_amino_acid_composition_line_357[] = "amino_acid_composition (line 357)";
 static char __pyx_k_Calculate_amino_acid_composition[] = "Calculate amino acid composition of a polypeptide.\n\n    Parameters\n    ----------\n    sequence : str or list\n        The sequence of a polypeptide or a list with a parsed sequence.\n    show_unmodified_termini : bool, optional\n        If :py:const:`True` then the unmodified N- and C-terminus are explicitly\n        shown in the returned dict. Default value is :py:const:`False`.\n    term_aa : bool, optional\n        If :py:const:`True` then the terminal amino acid residues are\n        artificially modified with `nterm` or `cterm` modification.\n        Default value is :py:const:`False`.\n    allow_unknown_modifications : bool, optional\n        If :py:const:`True` then do not raise an exception when an unknown\n        modification of a known amino acid residue is found in the sequence.\n        Default value is :py:const:`False`.\n    labels : list, optional\n        A list of allowed labels for amino acids and terminal modifications.\n\n    Returns\n    -------\n    out : dict\n        A dictionary of amino acid composition.\n\n    Examples\n    --------\n    >>> amino_acid_composition('PEPTIDE') ==     {'I': 1, 'P': 2, 'E': 2, 'T': 1, 'D': 1}\n    True\n    >>> amino_acid_composition('PEPTDE', term_aa=True) ==     {'ctermE': 1, 'E': 1, 'D': 1, 'P': 1, 'T': 1, 'ntermP': 1}\n    True\n    >>> amino_acid_composition('PEPpTIDE', labels=std_labels+['pT']) ==     {'I': 1, 'P': 2, 'E': 2, 'D': 1, 'pT': 1}\n    True\n    ";
 static char __pyx_k_Calculate_the_number_of_amino_ac[] = "Calculate the number of amino acid residues in a polypeptide\n    written in modX notation.\n\n    Parameters\n    ----------\n    sequence : str or list or dict\n        A string with a polypeptide sequence, a list with a parsed sequence or\n        a dict of amino acid composition.\n    labels : list, optional\n        A list of allowed labels for amino acids and terminal modifications.\n\n    Examples\n    --------\n    >>> length('PEPTIDE')\n    7\n    >>> length('H-PEPTIDE-OH')\n    7\n    ";
 static char __pyx_k_D_Programming_cython_pyteomics_p[] = "D:\\Programming\\cython-pyteomics\\pyteomics\\cythonize\\cparser.pyx";
@@ -955,7 +957,7 @@ static PyObject *__pyx_kp_s_a_z_A_Z;
 static PyObject *__pyx_kp_s_a_z_A_Z_2;
 static PyObject *__pyx_kp_s_a_z_A_Z_3;
 static PyObject *__pyx_n_s_allow_unknown_modifications;
-static PyObject *__pyx_kp_u_amino_acid_composition_line_343;
+static PyObject *__pyx_kp_u_amino_acid_composition_line_357;
 static PyObject *__pyx_n_s_collections;
 static PyObject *__pyx_n_s_compile;
 static PyObject *__pyx_n_s_cterm;
@@ -971,12 +973,12 @@ static PyObject *__pyx_n_s_items;
 static PyObject *__pyx_n_s_itertools;
 static PyObject *__pyx_n_s_join;
 static PyObject *__pyx_n_s_labels;
-static PyObject *__pyx_kp_u_length_line_82;
+static PyObject *__pyx_kp_u_length_line_96;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_match;
 static PyObject *__pyx_n_s_memoize;
 static PyObject *__pyx_n_s_nterm;
-static PyObject *__pyx_kp_u_parse_line_151;
+static PyObject *__pyx_kp_u_parse_line_165;
 static PyObject *__pyx_n_s_parsed_sequence;
 static PyObject *__pyx_n_s_pop;
 static PyObject *__pyx_n_s_pyteomics_auxiliary;
@@ -1009,7 +1011,7 @@ static PyObject *__pyx_tuple__9;
 static PyObject *__pyx_tuple__10;
 static PyObject *__pyx_codeobj__11;
 
-/* "pyteomics\cythonize\cparser.pyx":43
+/* "pyteomics\cythonize\cparser.pyx":57
  * 
  * 
  * cpdef inline int is_term_mod(str label):             # <<<<<<<<<<<<<<
@@ -1032,39 +1034,39 @@ static CYTHON_INLINE int __pyx_f_9pyteomics_9cythonize_7cparser_is_term_mod(PyOb
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("is_term_mod", 0);
 
-  /* "pyteomics\cythonize\cparser.pyx":54
+  /* "pyteomics\cythonize\cparser.pyx":68
  *     out : bool
  *     """
  *     return (PySequence_GetItem(label, 0) == '-') or (PySequence_GetItem(label, len(label) - 1) == '-')             # <<<<<<<<<<<<<<
  * 
  * cdef inline object match_modX(str label):
  */
-  __pyx_t_2 = PySequence_GetItem(__pyx_v_label, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PySequence_GetItem(__pyx_v_label, 0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyObject_RichCompare(__pyx_t_2, __pyx_kp_s_, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyObject_RichCompare(__pyx_t_2, __pyx_kp_s_, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (!__pyx_t_4) {
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_1 = __pyx_t_5;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     goto __pyx_L3_bool_binop_done;
   }
-  __pyx_t_6 = PyObject_Length(__pyx_v_label); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_3 = PySequence_GetItem(__pyx_v_label, (__pyx_t_6 - 1)); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = PyObject_Length(__pyx_v_label); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PySequence_GetItem(__pyx_v_label, (__pyx_t_6 - 1)); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = PyObject_RichCompare(__pyx_t_3, __pyx_kp_s_, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_RichCompare(__pyx_t_3, __pyx_kp_s_, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_1 = __pyx_t_5;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_L3_bool_binop_done:;
   __pyx_r = __pyx_t_1;
   goto __pyx_L0;
 
-  /* "pyteomics\cythonize\cparser.pyx":43
+  /* "pyteomics\cythonize\cparser.pyx":57
  * 
  * 
  * cpdef inline int is_term_mod(str label):             # <<<<<<<<<<<<<<
@@ -1093,7 +1095,7 @@ static PyObject *__pyx_pw_9pyteomics_9cythonize_7cparser_1is_term_mod(PyObject *
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("is_term_mod (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_label), (&PyString_Type), 1, "label", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 43; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_label), (&PyString_Type), 1, "label", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_r = __pyx_pf_9pyteomics_9cythonize_7cparser_is_term_mod(__pyx_self, ((PyObject*)__pyx_v_label));
 
   /* function exit code */
@@ -1114,7 +1116,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_is_term_mod(CYTHON_UNUS
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("is_term_mod", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyteomics_9cythonize_7cparser_is_term_mod(__pyx_v_label, 0)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 43; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_9pyteomics_9cythonize_7cparser_is_term_mod(__pyx_v_label, 0)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -1131,7 +1133,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_is_term_mod(CYTHON_UNUS
   return __pyx_r;
 }
 
-/* "pyteomics\cythonize\cparser.pyx":56
+/* "pyteomics\cythonize\cparser.pyx":70
  *     return (PySequence_GetItem(label, 0) == '-') or (PySequence_GetItem(label, len(label) - 1) == '-')
  * 
  * cdef inline object match_modX(str label):             # <<<<<<<<<<<<<<
@@ -1149,7 +1151,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_match_modX
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("match_modX", 0);
 
-  /* "pyteomics\cythonize\cparser.pyx":67
+  /* "pyteomics\cythonize\cparser.pyx":81
  *     out : re.match or None
  *     """
  *     return PyObject_CallMethodObjArgs(_modX_split, "match", <PyObject*>label, NULL)             # <<<<<<<<<<<<<<
@@ -1159,14 +1161,14 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_match_modX
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_v_9pyteomics_9cythonize_7cparser__modX_split;
   __Pyx_INCREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_CallMethodObjArgs(__pyx_t_1, __pyx_n_s_match, ((PyObject *)__pyx_v_label), NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_CallMethodObjArgs(__pyx_t_1, __pyx_n_s_match, ((PyObject *)__pyx_v_label), NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "pyteomics\cythonize\cparser.pyx":56
+  /* "pyteomics\cythonize\cparser.pyx":70
  *     return (PySequence_GetItem(label, 0) == '-') or (PySequence_GetItem(label, len(label) - 1) == '-')
  * 
  * cdef inline object match_modX(str label):             # <<<<<<<<<<<<<<
@@ -1186,7 +1188,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_match_modX
   return __pyx_r;
 }
 
-/* "pyteomics\cythonize\cparser.pyx":69
+/* "pyteomics\cythonize\cparser.pyx":83
  *     return PyObject_CallMethodObjArgs(_modX_split, "match", <PyObject*>label, NULL)
  * 
  * cdef inline int is_modX(str label):             # <<<<<<<<<<<<<<
@@ -1204,21 +1206,21 @@ static CYTHON_INLINE int __pyx_f_9pyteomics_9cythonize_7cparser_is_modX(PyObject
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("is_modX", 0);
 
-  /* "pyteomics\cythonize\cparser.pyx":80
+  /* "pyteomics\cythonize\cparser.pyx":94
  *     out : bool
  *     """
  *     return bool(match_modX(label))             # <<<<<<<<<<<<<<
  * 
  * cpdef int length(object sequence,
  */
-  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_match_modX(__pyx_v_label); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_match_modX(__pyx_v_label); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = (!(!__pyx_t_2));
   goto __pyx_L0;
 
-  /* "pyteomics\cythonize\cparser.pyx":69
+  /* "pyteomics\cythonize\cparser.pyx":83
  *     return PyObject_CallMethodObjArgs(_modX_split, "match", <PyObject*>label, NULL)
  * 
  * cdef inline int is_modX(str label):             # <<<<<<<<<<<<<<
@@ -1236,7 +1238,7 @@ static CYTHON_INLINE int __pyx_f_9pyteomics_9cythonize_7cparser_is_modX(PyObject
   return __pyx_r;
 }
 
-/* "pyteomics\cythonize\cparser.pyx":82
+/* "pyteomics\cythonize\cparser.pyx":96
  *     return bool(match_modX(label))
  * 
  * cpdef int length(object sequence,             # <<<<<<<<<<<<<<
@@ -1289,21 +1291,21 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
     }
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":103
+  /* "pyteomics\cythonize\cparser.pyx":117
  *     7
  *     """
  *     if not sequence: return 0             # <<<<<<<<<<<<<<
  * 
  *     if isinstance(sequence, str) or isinstance(sequence, list):
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_sequence); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_sequence); if (unlikely(__pyx_t_1 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 117; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_2 = ((!__pyx_t_1) != 0);
   if (__pyx_t_2) {
     __pyx_r = 0;
     goto __pyx_L0;
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":105
+  /* "pyteomics\cythonize\cparser.pyx":119
  *     if not sequence: return 0
  * 
  *     if isinstance(sequence, str) or isinstance(sequence, list):             # <<<<<<<<<<<<<<
@@ -1323,7 +1325,7 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
   __pyx_L5_bool_binop_done:;
   if (__pyx_t_2) {
 
-    /* "pyteomics\cythonize\cparser.pyx":106
+    /* "pyteomics\cythonize\cparser.pyx":120
  * 
  *     if isinstance(sequence, str) or isinstance(sequence, list):
  *         if isinstance(sequence, str):             # <<<<<<<<<<<<<<
@@ -1334,16 +1336,16 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
     __pyx_t_1 = (__pyx_t_2 != 0);
     if (__pyx_t_1) {
 
-      /* "pyteomics\cythonize\cparser.pyx":107
+      /* "pyteomics\cythonize\cparser.pyx":121
  *     if isinstance(sequence, str) or isinstance(sequence, list):
  *         if isinstance(sequence, str):
  *             parsed_sequence = parse(sequence, show_unmodified_termini,             # <<<<<<<<<<<<<<
  *                                     split, allow_unknown_modifications, labels)
  *         else:
  */
-      if (!(likely(PyString_CheckExact(__pyx_v_sequence))||((__pyx_v_sequence) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_v_sequence)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyString_CheckExact(__pyx_v_sequence))||((__pyx_v_sequence) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_v_sequence)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "pyteomics\cythonize\cparser.pyx":108
+      /* "pyteomics\cythonize\cparser.pyx":122
  *         if isinstance(sequence, str):
  *             parsed_sequence = parse(sequence, show_unmodified_termini,
  *                                     split, allow_unknown_modifications, labels)             # <<<<<<<<<<<<<<
@@ -1355,12 +1357,12 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
       __pyx_t_5.split = __pyx_v_split;
       __pyx_t_5.allow_unknown_modifications = __pyx_v_allow_unknown_modifications;
       __pyx_t_5.labels = __pyx_v_labels;
-      __pyx_t_4 = __pyx_f_9pyteomics_9cythonize_7cparser_parse(((PyObject*)__pyx_v_sequence), 0, &__pyx_t_5); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __pyx_f_9pyteomics_9cythonize_7cparser_parse(((PyObject*)__pyx_v_sequence), 0, &__pyx_t_5); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_v_parsed_sequence = __pyx_t_4;
       __pyx_t_4 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":106
+      /* "pyteomics\cythonize\cparser.pyx":120
  * 
  *     if isinstance(sequence, str) or isinstance(sequence, list):
  *         if isinstance(sequence, str):             # <<<<<<<<<<<<<<
@@ -1370,7 +1372,7 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
       goto __pyx_L7;
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":110
+    /* "pyteomics\cythonize\cparser.pyx":124
  *                                     split, allow_unknown_modifications, labels)
  *         else:
  *             parsed_sequence = sequence             # <<<<<<<<<<<<<<
@@ -1383,7 +1385,7 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
     }
     __pyx_L7:;
 
-    /* "pyteomics\cythonize\cparser.pyx":111
+    /* "pyteomics\cythonize\cparser.pyx":125
  *         else:
  *             parsed_sequence = sequence
  *         num_term_groups = 0             # <<<<<<<<<<<<<<
@@ -1393,33 +1395,33 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
     __Pyx_INCREF(__pyx_int_0);
     __pyx_v_num_term_groups = __pyx_int_0;
 
-    /* "pyteomics\cythonize\cparser.pyx":112
+    /* "pyteomics\cythonize\cparser.pyx":126
  *             parsed_sequence = sequence
  *         num_term_groups = 0
  *         if is_term_mod(parsed_sequence[0]):             # <<<<<<<<<<<<<<
  *             num_term_groups += 1
  *         if is_term_mod(parsed_sequence[-1]):
  */
-    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_parsed_sequence, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_parsed_sequence, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_4);
-    if (!(likely(PyString_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_t_4)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!(likely(PyString_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_t_4)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 126; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_1 = (__pyx_f_9pyteomics_9cythonize_7cparser_is_term_mod(((PyObject*)__pyx_t_4), 0) != 0);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_1) {
 
-      /* "pyteomics\cythonize\cparser.pyx":113
+      /* "pyteomics\cythonize\cparser.pyx":127
  *         num_term_groups = 0
  *         if is_term_mod(parsed_sequence[0]):
  *             num_term_groups += 1             # <<<<<<<<<<<<<<
  *         if is_term_mod(parsed_sequence[-1]):
  *             num_term_groups += 1
  */
-      __pyx_t_4 = __Pyx_PyInt_AddObjC(__pyx_v_num_term_groups, __pyx_int_1, 1, 1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyInt_AddObjC(__pyx_v_num_term_groups, __pyx_int_1, 1, 1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF_SET(__pyx_v_num_term_groups, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":112
+      /* "pyteomics\cythonize\cparser.pyx":126
  *             parsed_sequence = sequence
  *         num_term_groups = 0
  *         if is_term_mod(parsed_sequence[0]):             # <<<<<<<<<<<<<<
@@ -1428,33 +1430,33 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
  */
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":114
+    /* "pyteomics\cythonize\cparser.pyx":128
  *         if is_term_mod(parsed_sequence[0]):
  *             num_term_groups += 1
  *         if is_term_mod(parsed_sequence[-1]):             # <<<<<<<<<<<<<<
  *             num_term_groups += 1
  *         return len(parsed_sequence) - num_term_groups
  */
-    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_parsed_sequence, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_parsed_sequence, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_4);
-    if (!(likely(PyString_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_t_4)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!(likely(PyString_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_t_4)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_1 = (__pyx_f_9pyteomics_9cythonize_7cparser_is_term_mod(((PyObject*)__pyx_t_4), 0) != 0);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_1) {
 
-      /* "pyteomics\cythonize\cparser.pyx":115
+      /* "pyteomics\cythonize\cparser.pyx":129
  *             num_term_groups += 1
  *         if is_term_mod(parsed_sequence[-1]):
  *             num_term_groups += 1             # <<<<<<<<<<<<<<
  *         return len(parsed_sequence) - num_term_groups
  *     elif isinstance(sequence, dict):
  */
-      __pyx_t_4 = __Pyx_PyInt_AddObjC(__pyx_v_num_term_groups, __pyx_int_1, 1, 1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyInt_AddObjC(__pyx_v_num_term_groups, __pyx_int_1, 1, 1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF_SET(__pyx_v_num_term_groups, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":114
+      /* "pyteomics\cythonize\cparser.pyx":128
  *         if is_term_mod(parsed_sequence[0]):
  *             num_term_groups += 1
  *         if is_term_mod(parsed_sequence[-1]):             # <<<<<<<<<<<<<<
@@ -1463,25 +1465,25 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
  */
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":116
+    /* "pyteomics\cythonize\cparser.pyx":130
  *         if is_term_mod(parsed_sequence[-1]):
  *             num_term_groups += 1
  *         return len(parsed_sequence) - num_term_groups             # <<<<<<<<<<<<<<
  *     elif isinstance(sequence, dict):
  *         return sum([amount for aa, amount in sequence.items()
  */
-    __pyx_t_6 = PyObject_Length(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_6); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = PyObject_Length(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_6); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_7 = PyNumber_Subtract(__pyx_t_4, __pyx_v_num_term_groups); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = PyNumber_Subtract(__pyx_t_4, __pyx_v_num_term_groups); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_t_7); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_t_7); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_r = __pyx_t_8;
     goto __pyx_L0;
 
-    /* "pyteomics\cythonize\cparser.pyx":105
+    /* "pyteomics\cythonize\cparser.pyx":119
  *     if not sequence: return 0
  * 
  *     if isinstance(sequence, str) or isinstance(sequence, list):             # <<<<<<<<<<<<<<
@@ -1490,7 +1492,7 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
  */
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":117
+  /* "pyteomics\cythonize\cparser.pyx":131
  *             num_term_groups += 1
  *         return len(parsed_sequence) - num_term_groups
  *     elif isinstance(sequence, dict):             # <<<<<<<<<<<<<<
@@ -1501,16 +1503,16 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "pyteomics\cythonize\cparser.pyx":118
+    /* "pyteomics\cythonize\cparser.pyx":132
  *         return len(parsed_sequence) - num_term_groups
  *     elif isinstance(sequence, dict):
  *         return sum([amount for aa, amount in sequence.items()             # <<<<<<<<<<<<<<
  *                     if not is_term_mod(aa)])
  * 
  */
-    __pyx_t_7 = PyList_New(0); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = PyList_New(0); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_sequence, __pyx_n_s_items); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_sequence, __pyx_n_s_items); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_9);
     __pyx_t_10 = NULL;
     if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_9))) {
@@ -1523,10 +1525,10 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
       }
     }
     if (__pyx_t_10) {
-      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_t_10); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_t_10); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     } else {
-      __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_9); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_9); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -1534,9 +1536,9 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
       __pyx_t_9 = __pyx_t_4; __Pyx_INCREF(__pyx_t_9); __pyx_t_6 = 0;
       __pyx_t_11 = NULL;
     } else {
-      __pyx_t_6 = -1; __pyx_t_9 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = -1; __pyx_t_9 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_11 = Py_TYPE(__pyx_t_9)->tp_iternext; if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = Py_TYPE(__pyx_t_9)->tp_iternext; if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     for (;;) {
@@ -1544,17 +1546,17 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
         if (likely(PyList_CheckExact(__pyx_t_9))) {
           if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_9)) break;
           #if CYTHON_COMPILING_IN_CPYTHON
-          __pyx_t_4 = PyList_GET_ITEM(__pyx_t_9, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_4 = PyList_GET_ITEM(__pyx_t_9, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           #else
-          __pyx_t_4 = PySequence_ITEM(__pyx_t_9, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_4 = PySequence_ITEM(__pyx_t_9, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_4);
           #endif
         } else {
           if (__pyx_t_6 >= PyTuple_GET_SIZE(__pyx_t_9)) break;
           #if CYTHON_COMPILING_IN_CPYTHON
-          __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_9, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_9, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           #else
-          __pyx_t_4 = PySequence_ITEM(__pyx_t_9, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_4 = PySequence_ITEM(__pyx_t_9, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_4);
           #endif
         }
@@ -1564,7 +1566,7 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           }
           break;
         }
@@ -1580,7 +1582,7 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
         if (unlikely(size != 2)) {
           if (size > 2) __Pyx_RaiseTooManyValuesError(2);
           else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         #if CYTHON_COMPILING_IN_CPYTHON
         if (likely(PyTuple_CheckExact(sequence))) {
@@ -1593,15 +1595,15 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
         __Pyx_INCREF(__pyx_t_10);
         __Pyx_INCREF(__pyx_t_12);
         #else
-        __pyx_t_10 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_10 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_10);
-        __pyx_t_12 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_12 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_12);
         #endif
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else {
         Py_ssize_t index = -1;
-        __pyx_t_13 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_13);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __pyx_t_14 = Py_TYPE(__pyx_t_13)->tp_iternext;
@@ -1609,7 +1611,7 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
         __Pyx_GOTREF(__pyx_t_10);
         index = 1; __pyx_t_12 = __pyx_t_14(__pyx_t_13); if (unlikely(!__pyx_t_12)) goto __pyx_L12_unpacking_failed;
         __Pyx_GOTREF(__pyx_t_12);
-        if (__Pyx_IternextUnpackEndCheck(__pyx_t_14(__pyx_t_13), 2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        if (__Pyx_IternextUnpackEndCheck(__pyx_t_14(__pyx_t_13), 2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __pyx_t_14 = NULL;
         __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
         goto __pyx_L13_unpacking_done;
@@ -1617,7 +1619,7 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
         __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
         __pyx_t_14 = NULL;
         if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __pyx_L13_unpacking_done:;
       }
       __Pyx_XDECREF_SET(__pyx_v_aa, __pyx_t_10);
@@ -1625,27 +1627,27 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
       __Pyx_XDECREF_SET(__pyx_v_amount, __pyx_t_12);
       __pyx_t_12 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":119
+      /* "pyteomics\cythonize\cparser.pyx":133
  *     elif isinstance(sequence, dict):
  *         return sum([amount for aa, amount in sequence.items()
  *                     if not is_term_mod(aa)])             # <<<<<<<<<<<<<<
  * 
  *     raise PyteomicsError('Unsupported type of sequence.')
  */
-      if (!(likely(PyString_CheckExact(__pyx_v_aa))||((__pyx_v_aa) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_v_aa)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 119; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyString_CheckExact(__pyx_v_aa))||((__pyx_v_aa) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_v_aa)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_2 = ((!(__pyx_f_9pyteomics_9cythonize_7cparser_is_term_mod(((PyObject*)__pyx_v_aa), 0) != 0)) != 0);
       if (__pyx_t_2) {
 
-        /* "pyteomics\cythonize\cparser.pyx":118
+        /* "pyteomics\cythonize\cparser.pyx":132
  *         return len(parsed_sequence) - num_term_groups
  *     elif isinstance(sequence, dict):
  *         return sum([amount for aa, amount in sequence.items()             # <<<<<<<<<<<<<<
  *                     if not is_term_mod(aa)])
  * 
  */
-        if (unlikely(__Pyx_ListComp_Append(__pyx_t_7, (PyObject*)__pyx_v_amount))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_7, (PyObject*)__pyx_v_amount))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "pyteomics\cythonize\cparser.pyx":119
+        /* "pyteomics\cythonize\cparser.pyx":133
  *     elif isinstance(sequence, dict):
  *         return sum([amount for aa, amount in sequence.items()
  *                     if not is_term_mod(aa)])             # <<<<<<<<<<<<<<
@@ -1654,7 +1656,7 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
  */
       }
 
-      /* "pyteomics\cythonize\cparser.pyx":118
+      /* "pyteomics\cythonize\cparser.pyx":132
  *         return len(parsed_sequence) - num_term_groups
  *     elif isinstance(sequence, dict):
  *         return sum([amount for aa, amount in sequence.items()             # <<<<<<<<<<<<<<
@@ -1663,20 +1665,20 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
  */
     }
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __pyx_t_9 = PyTuple_New(1); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = PyTuple_New(1); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_9);
     __Pyx_GIVEREF(__pyx_t_7);
     PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_7);
     __pyx_t_7 = 0;
-    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_sum, __pyx_t_9, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_sum, __pyx_t_9, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_t_7); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_t_7); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_r = __pyx_t_8;
     goto __pyx_L0;
 
-    /* "pyteomics\cythonize\cparser.pyx":117
+    /* "pyteomics\cythonize\cparser.pyx":131
  *             num_term_groups += 1
  *         return len(parsed_sequence) - num_term_groups
  *     elif isinstance(sequence, dict):             # <<<<<<<<<<<<<<
@@ -1685,23 +1687,23 @@ static int __pyx_f_9pyteomics_9cythonize_7cparser_length(PyObject *__pyx_v_seque
  */
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":121
+  /* "pyteomics\cythonize\cparser.pyx":135
  *                     if not is_term_mod(aa)])
  * 
  *     raise PyteomicsError('Unsupported type of sequence.')             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_Raise(__pyx_t_9, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "pyteomics\cythonize\cparser.pyx":82
+  /* "pyteomics\cythonize\cparser.pyx":96
  *     return bool(match_modX(label))
  * 
  * cpdef int length(object sequence,             # <<<<<<<<<<<<<<
@@ -1786,7 +1788,7 @@ static PyObject *__pyx_pw_9pyteomics_9cythonize_7cparser_3length(PyObject *__pyx
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "length") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "length") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 96; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -1801,17 +1803,17 @@ static PyObject *__pyx_pw_9pyteomics_9cythonize_7cparser_3length(PyObject *__pyx
     }
     __pyx_v_sequence = values[0];
     if (values[1]) {
-      __pyx_v_show_unmodified_termini = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_show_unmodified_termini == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 83; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_show_unmodified_termini = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_show_unmodified_termini == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 97; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_show_unmodified_termini = ((int)0);
     }
     if (values[2]) {
-      __pyx_v_split = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_split == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 83; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_split = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_split == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 97; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_split = ((int)0);
     }
     if (values[3]) {
-      __pyx_v_allow_unknown_modifications = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_allow_unknown_modifications == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_allow_unknown_modifications = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_allow_unknown_modifications == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 98; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_allow_unknown_modifications = ((int)0);
     }
@@ -1819,7 +1821,7 @@ static PyObject *__pyx_pw_9pyteomics_9cythonize_7cparser_3length(PyObject *__pyx
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("length", 0, 1, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("length", 0, 1, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 96; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("pyteomics.cythonize.cparser.length", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1849,7 +1851,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_2length(CYTHON_UNUSED P
   __pyx_t_2.allow_unknown_modifications = __pyx_v_allow_unknown_modifications;
   __pyx_t_2.labels = __pyx_v_labels;
   __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_length(__pyx_v_sequence, 0, &__pyx_t_2); 
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_t_1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_t_1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 96; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
@@ -1866,7 +1868,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_2length(CYTHON_UNUSED P
   return __pyx_r;
 }
 
-/* "pyteomics\cythonize\cparser.pyx":124
+/* "pyteomics\cythonize\cparser.pyx":138
  * 
  * 
  * cdef inline list interpolate_labels(object labels):             # <<<<<<<<<<<<<<
@@ -1887,7 +1889,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_interpolat
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("interpolate_labels", 0);
 
-  /* "pyteomics\cythonize\cparser.pyx":126
+  /* "pyteomics\cythonize\cparser.pyx":140
  * cdef inline list interpolate_labels(object labels):
  *     cdef list _labels
  *     if isinstance(labels, list):             # <<<<<<<<<<<<<<
@@ -1898,7 +1900,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_interpolat
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "pyteomics\cythonize\cparser.pyx":127
+    /* "pyteomics\cythonize\cparser.pyx":141
  *     cdef list _labels
  *     if isinstance(labels, list):
  *         _labels = <list>labels             # <<<<<<<<<<<<<<
@@ -1910,7 +1912,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_interpolat
     __pyx_v__labels = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "pyteomics\cythonize\cparser.pyx":126
+    /* "pyteomics\cythonize\cparser.pyx":140
  * cdef inline list interpolate_labels(object labels):
  *     cdef list _labels
  *     if isinstance(labels, list):             # <<<<<<<<<<<<<<
@@ -1920,7 +1922,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_interpolat
     goto __pyx_L3;
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":129
+  /* "pyteomics\cythonize\cparser.pyx":143
  *         _labels = <list>labels
  *     else:
  *         _labels = list(labels)             # <<<<<<<<<<<<<<
@@ -1928,14 +1930,14 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_interpolat
  *     return _labels
  */
   /*else*/ {
-    __pyx_t_3 = PySequence_List(__pyx_v_labels); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = PySequence_List(__pyx_v_labels); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 143; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v__labels = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
   }
   __pyx_L3:;
 
-  /* "pyteomics\cythonize\cparser.pyx":130
+  /* "pyteomics\cythonize\cparser.pyx":144
  *     else:
  *         _labels = list(labels)
  *     _labels.extend((std_cterm, std_nterm))             # <<<<<<<<<<<<<<
@@ -1944,9 +1946,9 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_interpolat
  */
   if (unlikely(__pyx_v__labels == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%s'", "extend");
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_cterm);
   __Pyx_GIVEREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_cterm);
@@ -1954,10 +1956,10 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_interpolat
   __Pyx_INCREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_nterm);
   __Pyx_GIVEREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_nterm);
   PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_v_9pyteomics_9cythonize_7cparser_std_nterm);
-  __pyx_t_4 = __Pyx_PyList_Extend(__pyx_v__labels, __pyx_t_3); if (unlikely(__pyx_t_4 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyList_Extend(__pyx_v__labels, __pyx_t_3); if (unlikely(__pyx_t_4 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":131
+  /* "pyteomics\cythonize\cparser.pyx":145
  *         _labels = list(labels)
  *     _labels.extend((std_cterm, std_nterm))
  *     return _labels             # <<<<<<<<<<<<<<
@@ -1969,7 +1971,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_interpolat
   __pyx_r = __pyx_v__labels;
   goto __pyx_L0;
 
-  /* "pyteomics\cythonize\cparser.pyx":124
+  /* "pyteomics\cythonize\cparser.pyx":138
  * 
  * 
  * cdef inline list interpolate_labels(object labels):             # <<<<<<<<<<<<<<
@@ -1989,7 +1991,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_interpolat
   return __pyx_r;
 }
 
-/* "pyteomics\cythonize\cparser.pyx":134
+/* "pyteomics\cythonize\cparser.pyx":148
  * 
  * 
  * cpdef inline tuple _split_label(str label):             # <<<<<<<<<<<<<<
@@ -2017,16 +2019,16 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser__split_lab
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_split_label", 0);
 
-  /* "pyteomics\cythonize\cparser.pyx":140
+  /* "pyteomics\cythonize\cparser.pyx":154
  * 
  * 
  *     temp = <tuple>PyObject_CallMethodObjArgs(match_modX(label), "groups", NULL)             # <<<<<<<<<<<<<<
  *     if <PyObject*>temp == NULL:
  *         raise PyteomicsError('Cannot split a non-modX label: %s' % label)
  */
-  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_match_modX(__pyx_v_label); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_match_modX(__pyx_v_label); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_CallMethodObjArgs(__pyx_t_1, __pyx_n_s_groups, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_CallMethodObjArgs(__pyx_t_1, __pyx_n_s_groups, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = __pyx_t_2;
@@ -2035,7 +2037,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser__split_lab
   __pyx_v_temp = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":141
+  /* "pyteomics\cythonize\cparser.pyx":155
  * 
  *     temp = <tuple>PyObject_CallMethodObjArgs(match_modX(label), "groups", NULL)
  *     if <PyObject*>temp == NULL:             # <<<<<<<<<<<<<<
@@ -2045,16 +2047,16 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser__split_lab
   __pyx_t_3 = ((((PyObject *)__pyx_v_temp) == NULL) != 0);
   if (__pyx_t_3) {
 
-    /* "pyteomics\cythonize\cparser.pyx":142
+    /* "pyteomics\cythonize\cparser.pyx":156
  *     temp = <tuple>PyObject_CallMethodObjArgs(match_modX(label), "groups", NULL)
  *     if <PyObject*>temp == NULL:
  *         raise PyteomicsError('Cannot split a non-modX label: %s' % label)             # <<<<<<<<<<<<<<
  *     mod = <str>PyTuple_GET_ITEM(<tuple>temp, 0)
  *     X = <str>PyTuple_GET_ITEM(<tuple>temp, 1)
  */
-    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 142; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_Cannot_split_a_non_modX_label_s, __pyx_v_label); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 142; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_Cannot_split_a_non_modX_label_s, __pyx_v_label); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_2))) {
@@ -2067,26 +2069,26 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser__split_lab
       }
     }
     if (!__pyx_t_5) {
-      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 142; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else {
-      __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 142; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
       __Pyx_GIVEREF(__pyx_t_4);
       PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_4);
       __pyx_t_4 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 142; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 142; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "pyteomics\cythonize\cparser.pyx":141
+    /* "pyteomics\cythonize\cparser.pyx":155
  * 
  *     temp = <tuple>PyObject_CallMethodObjArgs(match_modX(label), "groups", NULL)
  *     if <PyObject*>temp == NULL:             # <<<<<<<<<<<<<<
@@ -2095,7 +2097,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser__split_lab
  */
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":143
+  /* "pyteomics\cythonize\cparser.pyx":157
  *     if <PyObject*>temp == NULL:
  *         raise PyteomicsError('Cannot split a non-modX label: %s' % label)
  *     mod = <str>PyTuple_GET_ITEM(<tuple>temp, 0)             # <<<<<<<<<<<<<<
@@ -2108,7 +2110,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser__split_lab
   __pyx_v_mod = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":144
+  /* "pyteomics\cythonize\cparser.pyx":158
  *         raise PyteomicsError('Cannot split a non-modX label: %s' % label)
  *     mod = <str>PyTuple_GET_ITEM(<tuple>temp, 0)
  *     X = <str>PyTuple_GET_ITEM(<tuple>temp, 1)             # <<<<<<<<<<<<<<
@@ -2121,18 +2123,18 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser__split_lab
   __pyx_v_X = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":145
+  /* "pyteomics\cythonize\cparser.pyx":159
  *     mod = <str>PyTuple_GET_ITEM(<tuple>temp, 0)
  *     X = <str>PyTuple_GET_ITEM(<tuple>temp, 1)
  *     if not mod:             # <<<<<<<<<<<<<<
  *         return (X,)
  *     else:
  */
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_mod); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_mod); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_8 = ((!__pyx_t_3) != 0);
   if (__pyx_t_8) {
 
-    /* "pyteomics\cythonize\cparser.pyx":146
+    /* "pyteomics\cythonize\cparser.pyx":160
  *     X = <str>PyTuple_GET_ITEM(<tuple>temp, 1)
  *     if not mod:
  *         return (X,)             # <<<<<<<<<<<<<<
@@ -2140,7 +2142,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser__split_lab
  *         return temp
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 146; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 160; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_INCREF(__pyx_v_X);
     __Pyx_GIVEREF(__pyx_v_X);
@@ -2149,7 +2151,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser__split_lab
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "pyteomics\cythonize\cparser.pyx":145
+    /* "pyteomics\cythonize\cparser.pyx":159
  *     mod = <str>PyTuple_GET_ITEM(<tuple>temp, 0)
  *     X = <str>PyTuple_GET_ITEM(<tuple>temp, 1)
  *     if not mod:             # <<<<<<<<<<<<<<
@@ -2158,7 +2160,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser__split_lab
  */
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":148
+  /* "pyteomics\cythonize\cparser.pyx":162
  *         return (X,)
  *     else:
  *         return temp             # <<<<<<<<<<<<<<
@@ -2172,7 +2174,7 @@ static CYTHON_INLINE PyObject *__pyx_f_9pyteomics_9cythonize_7cparser__split_lab
     goto __pyx_L0;
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":134
+  /* "pyteomics\cythonize\cparser.pyx":148
  * 
  * 
  * cpdef inline tuple _split_label(str label):             # <<<<<<<<<<<<<<
@@ -2207,7 +2209,7 @@ static PyObject *__pyx_pw_9pyteomics_9cythonize_7cparser_5_split_label(PyObject 
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("_split_label (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_label), (&PyString_Type), 1, "label", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_label), (&PyString_Type), 1, "label", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 148; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_r = __pyx_pf_9pyteomics_9cythonize_7cparser_4_split_label(__pyx_self, ((PyObject*)__pyx_v_label));
 
   /* function exit code */
@@ -2228,7 +2230,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_4_split_label(CYTHON_UN
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_split_label", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser__split_label(__pyx_v_label, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser__split_label(__pyx_v_label, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 148; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2245,7 +2247,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_4_split_label(CYTHON_UN
   return __pyx_r;
 }
 
-/* "pyteomics\cythonize\cparser.pyx":151
+/* "pyteomics\cythonize\cparser.pyx":165
  * 
  * 
  * cpdef list parse(str sequence, int show_unmodified_termini=0, int split=0,             # <<<<<<<<<<<<<<
@@ -2314,19 +2316,19 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
     }
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":224
+  /* "pyteomics\cythonize\cparser.pyx":238
  *         int is_mod, is_residue, in_labels
  * 
  *     _labels = interpolate_labels(labels)             # <<<<<<<<<<<<<<
  * 
  *     match = PyObject_CallMethodObjArgs(_modX_sequence, "match", <PyObject*>sequence, NULL)
  */
-  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_interpolate_labels(__pyx_v_labels); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 224; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_interpolate_labels(__pyx_v_labels); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 238; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v__labels = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":226
+  /* "pyteomics\cythonize\cparser.pyx":240
  *     _labels = interpolate_labels(labels)
  * 
  *     match = PyObject_CallMethodObjArgs(_modX_sequence, "match", <PyObject*>sequence, NULL)             # <<<<<<<<<<<<<<
@@ -2335,13 +2337,13 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
   __pyx_t_1 = __pyx_v_9pyteomics_9cythonize_7cparser__modX_sequence;
   __Pyx_INCREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_CallMethodObjArgs(__pyx_t_1, __pyx_n_s_match, ((PyObject *)__pyx_v_sequence), NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 226; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_CallMethodObjArgs(__pyx_t_1, __pyx_n_s_match, ((PyObject *)__pyx_v_sequence), NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 240; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_match = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":227
+  /* "pyteomics\cythonize\cparser.pyx":241
  * 
  *     match = PyObject_CallMethodObjArgs(_modX_sequence, "match", <PyObject*>sequence, NULL)
  *     if match is None:             # <<<<<<<<<<<<<<
@@ -2352,16 +2354,16 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   __pyx_t_4 = (__pyx_t_3 != 0);
   if (__pyx_t_4) {
 
-    /* "pyteomics\cythonize\cparser.pyx":228
+    /* "pyteomics\cythonize\cparser.pyx":242
  *     match = PyObject_CallMethodObjArgs(_modX_sequence, "match", <PyObject*>sequence, NULL)
  *     if match is None:
  *         raise PyteomicsError('Not a valid modX sequence: ' + sequence)             # <<<<<<<<<<<<<<
  *     temp = <tuple>PyObject_CallMethodObjArgs(match, "groups", NULL)
  *     n = <str>PyTuple_GET_ITEM(temp, 0)
  */
-    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 242; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = PyNumber_Add(__pyx_kp_s_Not_a_valid_modX_sequence, __pyx_v_sequence); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyNumber_Add(__pyx_kp_s_Not_a_valid_modX_sequence, __pyx_v_sequence); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 242; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_6 = NULL;
     if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_1))) {
@@ -2374,26 +2376,26 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       }
     }
     if (!__pyx_t_6) {
-      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 242; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else {
-      __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 242; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_6); __pyx_t_6 = NULL;
       __Pyx_GIVEREF(__pyx_t_5);
       PyTuple_SET_ITEM(__pyx_t_7, 0+1, __pyx_t_5);
       __pyx_t_5 = 0;
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 242; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 242; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-    /* "pyteomics\cythonize\cparser.pyx":227
+    /* "pyteomics\cythonize\cparser.pyx":241
  * 
  *     match = PyObject_CallMethodObjArgs(_modX_sequence, "match", <PyObject*>sequence, NULL)
  *     if match is None:             # <<<<<<<<<<<<<<
@@ -2402,14 +2404,14 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":229
+  /* "pyteomics\cythonize\cparser.pyx":243
  *     if match is None:
  *         raise PyteomicsError('Not a valid modX sequence: ' + sequence)
  *     temp = <tuple>PyObject_CallMethodObjArgs(match, "groups", NULL)             # <<<<<<<<<<<<<<
  *     n = <str>PyTuple_GET_ITEM(temp, 0)
  *     body = <str>PyTuple_GET_ITEM(temp, 1)
  */
-  __pyx_t_2 = PyObject_CallMethodObjArgs(__pyx_v_match, __pyx_n_s_groups, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_CallMethodObjArgs(__pyx_v_match, __pyx_n_s_groups, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 243; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_1 = __pyx_t_2;
   __Pyx_INCREF(__pyx_t_1);
@@ -2417,7 +2419,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   __pyx_v_temp = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":230
+  /* "pyteomics\cythonize\cparser.pyx":244
  *         raise PyteomicsError('Not a valid modX sequence: ' + sequence)
  *     temp = <tuple>PyObject_CallMethodObjArgs(match, "groups", NULL)
  *     n = <str>PyTuple_GET_ITEM(temp, 0)             # <<<<<<<<<<<<<<
@@ -2430,7 +2432,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   __pyx_v_n = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":231
+  /* "pyteomics\cythonize\cparser.pyx":245
  *     temp = <tuple>PyObject_CallMethodObjArgs(match, "groups", NULL)
  *     n = <str>PyTuple_GET_ITEM(temp, 0)
  *     body = <str>PyTuple_GET_ITEM(temp, 1)             # <<<<<<<<<<<<<<
@@ -2443,7 +2445,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   __pyx_v_body = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":232
+  /* "pyteomics\cythonize\cparser.pyx":246
  *     n = <str>PyTuple_GET_ITEM(temp, 0)
  *     body = <str>PyTuple_GET_ITEM(temp, 1)
  *     c = <str>PyTuple_GET_ITEM(temp, 2)             # <<<<<<<<<<<<<<
@@ -2456,19 +2458,19 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   __pyx_v_c = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":233
+  /* "pyteomics\cythonize\cparser.pyx":247
  *     body = <str>PyTuple_GET_ITEM(temp, 1)
  *     c = <str>PyTuple_GET_ITEM(temp, 2)
  *     slabels = set(_labels)             # <<<<<<<<<<<<<<
  *     # labels help save the day when only one terminal group is given
  *     if c is None and n is not None:
  */
-  __pyx_t_1 = PySet_New(__pyx_v__labels); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PySet_New(__pyx_v__labels); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 247; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_slabels = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":235
+  /* "pyteomics\cythonize\cparser.pyx":249
  *     slabels = set(_labels)
  *     # labels help save the day when only one terminal group is given
  *     if c is None and n is not None:             # <<<<<<<<<<<<<<
@@ -2488,39 +2490,39 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   __pyx_L5_bool_binop_done:;
   if (__pyx_t_4) {
 
-    /* "pyteomics\cythonize\cparser.pyx":237
+    /* "pyteomics\cythonize\cparser.pyx":251
  *     if c is None and n is not None:
  *         # we can try to resolve the ambiguity
  *         if n != std_nterm and n not in slabels:             # <<<<<<<<<<<<<<
  *             # n is the body then
  *             c = '-' + body
  */
-    __pyx_t_3 = (__Pyx_PyString_Equals(__pyx_v_n, __pyx_v_9pyteomics_9cythonize_7cparser_std_nterm, Py_NE)); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 237; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = (__Pyx_PyString_Equals(__pyx_v_n, __pyx_v_9pyteomics_9cythonize_7cparser_std_nterm, Py_NE)); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 251; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_9 = (__pyx_t_3 != 0);
     if (__pyx_t_9) {
     } else {
       __pyx_t_4 = __pyx_t_9;
       goto __pyx_L8_bool_binop_done;
     }
-    __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_n, __pyx_v_slabels, Py_NE)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 237; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_n, __pyx_v_slabels, Py_NE)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 251; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_3 = (__pyx_t_9 != 0);
     __pyx_t_4 = __pyx_t_3;
     __pyx_L8_bool_binop_done:;
     if (__pyx_t_4) {
 
-      /* "pyteomics\cythonize\cparser.pyx":239
+      /* "pyteomics\cythonize\cparser.pyx":253
  *         if n != std_nterm and n not in slabels:
  *             # n is the body then
  *             c = '-' + body             # <<<<<<<<<<<<<<
  *             body = n[:-1]
  *             n = None
  */
-      __pyx_t_1 = PyNumber_Add(__pyx_kp_s_, __pyx_v_body); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PyNumber_Add(__pyx_kp_s_, __pyx_v_body); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF_SET(__pyx_v_c, ((PyObject*)__pyx_t_1));
       __pyx_t_1 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":240
+      /* "pyteomics\cythonize\cparser.pyx":254
  *             # n is the body then
  *             c = '-' + body
  *             body = n[:-1]             # <<<<<<<<<<<<<<
@@ -2529,14 +2531,14 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
       if (unlikely(__pyx_v_n == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 240; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 254; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_1 = PySequence_GetSlice(__pyx_v_n, 0, -1L); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 240; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PySequence_GetSlice(__pyx_v_n, 0, -1L); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 254; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF_SET(__pyx_v_body, ((PyObject*)__pyx_t_1));
       __pyx_t_1 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":241
+      /* "pyteomics\cythonize\cparser.pyx":255
  *             c = '-' + body
  *             body = n[:-1]
  *             n = None             # <<<<<<<<<<<<<<
@@ -2546,7 +2548,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __Pyx_INCREF(Py_None);
       __Pyx_DECREF_SET(__pyx_v_n, ((PyObject*)Py_None));
 
-      /* "pyteomics\cythonize\cparser.pyx":237
+      /* "pyteomics\cythonize\cparser.pyx":251
  *     if c is None and n is not None:
  *         # we can try to resolve the ambiguity
  *         if n != std_nterm and n not in slabels:             # <<<<<<<<<<<<<<
@@ -2555,7 +2557,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":235
+    /* "pyteomics\cythonize\cparser.pyx":249
  *     slabels = set(_labels)
  *     # labels help save the day when only one terminal group is given
  *     if c is None and n is not None:             # <<<<<<<<<<<<<<
@@ -2564,7 +2566,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":244
+  /* "pyteomics\cythonize\cparser.pyx":258
  * 
  *     # Actual parsing
  *     if split:             # <<<<<<<<<<<<<<
@@ -2574,22 +2576,22 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   __pyx_t_4 = (__pyx_v_split != 0);
   if (__pyx_t_4) {
 
-    /* "pyteomics\cythonize\cparser.pyx":245
+    /* "pyteomics\cythonize\cparser.pyx":259
  *     # Actual parsing
  *     if split:
  *         parsed_sequence = [g if g[0] else (g[1],) for g in re.findall(             # <<<<<<<<<<<<<<
  *             _modX_split, body)]
  *     else:
  */
-    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_re); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_re); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_findall); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_findall); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "pyteomics\cythonize\cparser.pyx":246
+    /* "pyteomics\cythonize\cparser.pyx":260
  *     if split:
  *         parsed_sequence = [g if g[0] else (g[1],) for g in re.findall(
  *             _modX_split, body)]             # <<<<<<<<<<<<<<
@@ -2608,7 +2610,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
         __pyx_t_10 = 1;
       }
     }
-    __pyx_t_6 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_6);
     if (__pyx_t_7) {
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -2619,12 +2621,12 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
     __Pyx_INCREF(__pyx_v_body);
     __Pyx_GIVEREF(__pyx_v_body);
     PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_10, __pyx_v_body);
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "pyteomics\cythonize\cparser.pyx":245
+    /* "pyteomics\cythonize\cparser.pyx":259
  *     # Actual parsing
  *     if split:
  *         parsed_sequence = [g if g[0] else (g[1],) for g in re.findall(             # <<<<<<<<<<<<<<
@@ -2635,9 +2637,9 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __pyx_t_5 = __pyx_t_2; __Pyx_INCREF(__pyx_t_5); __pyx_t_10 = 0;
       __pyx_t_11 = NULL;
     } else {
-      __pyx_t_10 = -1; __pyx_t_5 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_10 = -1; __pyx_t_5 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_11 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     for (;;) {
@@ -2645,17 +2647,17 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
         if (likely(PyList_CheckExact(__pyx_t_5))) {
           if (__pyx_t_10 >= PyList_GET_SIZE(__pyx_t_5)) break;
           #if CYTHON_COMPILING_IN_CPYTHON
-          __pyx_t_2 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_10); __Pyx_INCREF(__pyx_t_2); __pyx_t_10++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_2 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_10); __Pyx_INCREF(__pyx_t_2); __pyx_t_10++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           #else
-          __pyx_t_2 = PySequence_ITEM(__pyx_t_5, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_2 = PySequence_ITEM(__pyx_t_5, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_2);
           #endif
         } else {
           if (__pyx_t_10 >= PyTuple_GET_SIZE(__pyx_t_5)) break;
           #if CYTHON_COMPILING_IN_CPYTHON
-          __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_5, __pyx_t_10); __Pyx_INCREF(__pyx_t_2); __pyx_t_10++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_5, __pyx_t_10); __Pyx_INCREF(__pyx_t_2); __pyx_t_10++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           #else
-          __pyx_t_2 = PySequence_ITEM(__pyx_t_5, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_2 = PySequence_ITEM(__pyx_t_5, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_2);
           #endif
         }
@@ -2665,7 +2667,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           }
           break;
         }
@@ -2673,17 +2675,17 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       }
       __Pyx_XDECREF_SET(__pyx_v_g, __pyx_t_2);
       __pyx_t_2 = 0;
-      __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_g, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_g, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       if (__pyx_t_4) {
         __Pyx_INCREF(__pyx_v_g);
         __pyx_t_2 = __pyx_v_g;
       } else {
-        __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_g, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+        __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_g, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
         __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_7 = PyTuple_New(1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_7 = PyTuple_New(1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_GIVEREF(__pyx_t_6);
         PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_6);
@@ -2691,14 +2693,14 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
         __pyx_t_2 = __pyx_t_7;
         __pyx_t_7 = 0;
       }
-      if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_2))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 245; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_2))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     }
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_parsed_sequence = ((PyObject*)__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "pyteomics\cythonize\cparser.pyx":244
+    /* "pyteomics\cythonize\cparser.pyx":258
  * 
  *     # Actual parsing
  *     if split:             # <<<<<<<<<<<<<<
@@ -2708,7 +2710,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
     goto __pyx_L10;
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":248
+  /* "pyteomics\cythonize\cparser.pyx":262
  *             _modX_split, body)]
  *     else:
  *         parsed_sequence = <list>PyObject_CallMethodObjArgs(_modX_group, "findall", <PyObject*>body, NULL)             # <<<<<<<<<<<<<<
@@ -2718,7 +2720,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   /*else*/ {
     __pyx_t_1 = __pyx_v_9pyteomics_9cythonize_7cparser__modX_group;
     __Pyx_INCREF(__pyx_t_1);
-    __pyx_t_5 = PyObject_CallMethodObjArgs(__pyx_t_1, __pyx_n_s_findall, ((PyObject *)__pyx_v_body), NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 248; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyObject_CallMethodObjArgs(__pyx_t_1, __pyx_n_s_findall, ((PyObject *)__pyx_v_body), NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 262; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_1 = __pyx_t_5;
@@ -2729,14 +2731,14 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   }
   __pyx_L10:;
 
-  /* "pyteomics\cythonize\cparser.pyx":249
+  /* "pyteomics\cythonize\cparser.pyx":263
  *     else:
  *         parsed_sequence = <list>PyObject_CallMethodObjArgs(_modX_group, "findall", <PyObject*>body, NULL)
  *     nterm, cterm = (n or std_nterm), (c or std_cterm)             # <<<<<<<<<<<<<<
  * 
  *     if not allow_unknown_modifications:
  */
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_n); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 249; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_n); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 263; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (!__pyx_t_4) {
   } else {
     __Pyx_INCREF(__pyx_v_n);
@@ -2746,7 +2748,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   __Pyx_INCREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_nterm);
   __pyx_t_1 = __pyx_v_9pyteomics_9cythonize_7cparser_std_nterm;
   __pyx_L13_bool_binop_done:;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_c); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 249; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_c); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 263; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (!__pyx_t_4) {
   } else {
     __Pyx_INCREF(__pyx_v_c);
@@ -2761,7 +2763,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   __pyx_v_cterm = ((PyObject*)__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":251
+  /* "pyteomics\cythonize\cparser.pyx":265
  *     nterm, cterm = (n or std_nterm), (c or std_cterm)
  * 
  *     if not allow_unknown_modifications:             # <<<<<<<<<<<<<<
@@ -2771,7 +2773,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   __pyx_t_4 = ((!(__pyx_v_allow_unknown_modifications != 0)) != 0);
   if (__pyx_t_4) {
 
-    /* "pyteomics\cythonize\cparser.pyx":252
+    /* "pyteomics\cythonize\cparser.pyx":266
  * 
  *     if not allow_unknown_modifications:
  *         if nterm is not None and nterm not in slabels:             # <<<<<<<<<<<<<<
@@ -2785,22 +2787,22 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __pyx_t_4 = __pyx_t_9;
       goto __pyx_L19_bool_binop_done;
     }
-    __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_nterm, __pyx_v_slabels, Py_NE)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 252; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_nterm, __pyx_v_slabels, Py_NE)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 266; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_3 = (__pyx_t_9 != 0);
     __pyx_t_4 = __pyx_t_3;
     __pyx_L19_bool_binop_done:;
     if (__pyx_t_4) {
 
-      /* "pyteomics\cythonize\cparser.pyx":253
+      /* "pyteomics\cythonize\cparser.pyx":267
  *     if not allow_unknown_modifications:
  *         if nterm is not None and nterm not in slabels:
  *             raise PyteomicsError('Unknown label: {}'.format(nterm))             # <<<<<<<<<<<<<<
  *         if cterm is not None and cterm not in slabels:
  *             raise PyteomicsError('Unknown label: {}'.format(cterm))
  */
-      __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_Unknown_label, __pyx_n_s_format); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_Unknown_label, __pyx_n_s_format); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __pyx_t_6 = NULL;
       if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_7))) {
@@ -2813,16 +2815,16 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
         }
       }
       if (!__pyx_t_6) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_v_nterm); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_v_nterm); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
       } else {
-        __pyx_t_12 = PyTuple_New(1+1); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_12 = PyTuple_New(1+1); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_12);
         __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_6); __pyx_t_6 = NULL;
         __Pyx_INCREF(__pyx_v_nterm);
         __Pyx_GIVEREF(__pyx_v_nterm);
         PyTuple_SET_ITEM(__pyx_t_12, 0+1, __pyx_v_nterm);
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_12, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_12, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       }
@@ -2838,26 +2840,26 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
         }
       }
       if (!__pyx_t_7) {
-        __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         __Pyx_GOTREF(__pyx_t_5);
       } else {
-        __pyx_t_12 = PyTuple_New(1+1); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_12 = PyTuple_New(1+1); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_12);
         __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_7); __pyx_t_7 = NULL;
         __Pyx_GIVEREF(__pyx_t_2);
         PyTuple_SET_ITEM(__pyx_t_12, 0+1, __pyx_t_2);
         __pyx_t_2 = 0;
-        __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_12, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_12, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       }
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_Raise(__pyx_t_5, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 253; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "pyteomics\cythonize\cparser.pyx":252
+      /* "pyteomics\cythonize\cparser.pyx":266
  * 
  *     if not allow_unknown_modifications:
  *         if nterm is not None and nterm not in slabels:             # <<<<<<<<<<<<<<
@@ -2866,7 +2868,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":254
+    /* "pyteomics\cythonize\cparser.pyx":268
  *         if nterm is not None and nterm not in slabels:
  *             raise PyteomicsError('Unknown label: {}'.format(nterm))
  *         if cterm is not None and cterm not in slabels:             # <<<<<<<<<<<<<<
@@ -2880,22 +2882,22 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __pyx_t_4 = __pyx_t_9;
       goto __pyx_L22_bool_binop_done;
     }
-    __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_cterm, __pyx_v_slabels, Py_NE)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 254; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_cterm, __pyx_v_slabels, Py_NE)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_3 = (__pyx_t_9 != 0);
     __pyx_t_4 = __pyx_t_3;
     __pyx_L22_bool_binop_done:;
     if (__pyx_t_4) {
 
-      /* "pyteomics\cythonize\cparser.pyx":255
+      /* "pyteomics\cythonize\cparser.pyx":269
  *             raise PyteomicsError('Unknown label: {}'.format(nterm))
  *         if cterm is not None and cterm not in slabels:
  *             raise PyteomicsError('Unknown label: {}'.format(cterm))             # <<<<<<<<<<<<<<
  * 
  *     if split:
  */
-      __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 255; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_Unknown_label, __pyx_n_s_format); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 255; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_Unknown_label, __pyx_n_s_format); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_t_7 = NULL;
       if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_2))) {
@@ -2908,16 +2910,16 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
         }
       }
       if (!__pyx_t_7) {
-        __pyx_t_12 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_cterm); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 255; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_12 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_cterm); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_12);
       } else {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 255; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_7); __pyx_t_7 = NULL;
         __Pyx_INCREF(__pyx_v_cterm);
         __Pyx_GIVEREF(__pyx_v_cterm);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_v_cterm);
-        __pyx_t_12 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 255; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_12 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_12);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
@@ -2933,26 +2935,26 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
         }
       }
       if (!__pyx_t_2) {
-        __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_12); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 255; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_12); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
         __Pyx_GOTREF(__pyx_t_5);
       } else {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 255; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_2); __pyx_t_2 = NULL;
         __Pyx_GIVEREF(__pyx_t_12);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_12);
         __pyx_t_12 = 0;
-        __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 255; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_Raise(__pyx_t_5, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 255; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "pyteomics\cythonize\cparser.pyx":254
+      /* "pyteomics\cythonize\cparser.pyx":268
  *         if nterm is not None and nterm not in slabels:
  *             raise PyteomicsError('Unknown label: {}'.format(nterm))
  *         if cterm is not None and cterm not in slabels:             # <<<<<<<<<<<<<<
@@ -2961,7 +2963,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":251
+    /* "pyteomics\cythonize\cparser.pyx":265
  *     nterm, cterm = (n or std_nterm), (c or std_cterm)
  * 
  *     if not allow_unknown_modifications:             # <<<<<<<<<<<<<<
@@ -2970,7 +2972,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":257
+  /* "pyteomics\cythonize\cparser.pyx":271
  *             raise PyteomicsError('Unknown label: {}'.format(cterm))
  * 
  *     if split:             # <<<<<<<<<<<<<<
@@ -2980,7 +2982,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   __pyx_t_4 = (__pyx_v_split != 0);
   if (__pyx_t_4) {
 
-    /* "pyteomics\cythonize\cparser.pyx":258
+    /* "pyteomics\cythonize\cparser.pyx":272
  * 
  *     if split:
  *         i = 0             # <<<<<<<<<<<<<<
@@ -2989,18 +2991,18 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
     __pyx_v_i = 0;
 
-    /* "pyteomics\cythonize\cparser.pyx":259
+    /* "pyteomics\cythonize\cparser.pyx":273
  *     if split:
  *         i = 0
  *         for i in range(PyList_Size(parsed_sequence)):             # <<<<<<<<<<<<<<
  *             tgroup = <tuple>PyList_GET_ITEM(parsed_sequence, i)
  *             if len(tgroup) == 2:
  */
-    __pyx_t_10 = PyList_Size(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_10 == -1L)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = PyList_Size(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_10 == -1L)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 273; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_10; __pyx_t_13+=1) {
       __pyx_v_i = __pyx_t_13;
 
-      /* "pyteomics\cythonize\cparser.pyx":260
+      /* "pyteomics\cythonize\cparser.pyx":274
  *         i = 0
  *         for i in range(PyList_Size(parsed_sequence)):
  *             tgroup = <tuple>PyList_GET_ITEM(parsed_sequence, i)             # <<<<<<<<<<<<<<
@@ -3013,7 +3015,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __Pyx_XDECREF_SET(__pyx_v_tgroup, ((PyObject*)__pyx_t_5));
       __pyx_t_5 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":261
+      /* "pyteomics\cythonize\cparser.pyx":275
  *         for i in range(PyList_Size(parsed_sequence)):
  *             tgroup = <tuple>PyList_GET_ITEM(parsed_sequence, i)
  *             if len(tgroup) == 2:             # <<<<<<<<<<<<<<
@@ -3022,13 +3024,13 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
       if (unlikely(__pyx_v_tgroup == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 261; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 275; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_14 = PyTuple_GET_SIZE(__pyx_v_tgroup); if (unlikely(__pyx_t_14 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 261; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_14 = PyTuple_GET_SIZE(__pyx_v_tgroup); if (unlikely(__pyx_t_14 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 275; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_4 = ((__pyx_t_14 == 2) != 0);
       if (__pyx_t_4) {
 
-        /* "pyteomics\cythonize\cparser.pyx":262
+        /* "pyteomics\cythonize\cparser.pyx":276
  *             tgroup = <tuple>PyList_GET_ITEM(parsed_sequence, i)
  *             if len(tgroup) == 2:
  *                 mod = <str>PyTuple_GET_ITEM(tgroup, 0)             # <<<<<<<<<<<<<<
@@ -3041,7 +3043,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
         __Pyx_XDECREF_SET(__pyx_v_mod, ((PyObject*)__pyx_t_5));
         __pyx_t_5 = 0;
 
-        /* "pyteomics\cythonize\cparser.pyx":263
+        /* "pyteomics\cythonize\cparser.pyx":277
  *             if len(tgroup) == 2:
  *                 mod = <str>PyTuple_GET_ITEM(tgroup, 0)
  *                 X = <str>PyTuple_GET_ITEM(tgroup, 1)             # <<<<<<<<<<<<<<
@@ -3054,7 +3056,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
         __Pyx_XDECREF_SET(__pyx_v_X, ((PyObject*)__pyx_t_5));
         __pyx_t_5 = 0;
 
-        /* "pyteomics\cythonize\cparser.pyx":261
+        /* "pyteomics\cythonize\cparser.pyx":275
  *         for i in range(PyList_Size(parsed_sequence)):
  *             tgroup = <tuple>PyList_GET_ITEM(parsed_sequence, i)
  *             if len(tgroup) == 2:             # <<<<<<<<<<<<<<
@@ -3064,7 +3066,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
         goto __pyx_L27;
       }
 
-      /* "pyteomics\cythonize\cparser.pyx":265
+      /* "pyteomics\cythonize\cparser.pyx":279
  *                 X = <str>PyTuple_GET_ITEM(tgroup, 1)
  *             else:
  *                 mod = ''             # <<<<<<<<<<<<<<
@@ -3075,7 +3077,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
         __Pyx_INCREF(__pyx_kp_s__5);
         __Pyx_XDECREF_SET(__pyx_v_mod, __pyx_kp_s__5);
 
-        /* "pyteomics\cythonize\cparser.pyx":266
+        /* "pyteomics\cythonize\cparser.pyx":280
  *             else:
  *                 mod = ''
  *                 X = <str>PyTuple_GET_ITEM(tgroup, 0)             # <<<<<<<<<<<<<<
@@ -3090,20 +3092,20 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       }
       __pyx_L27:;
 
-      /* "pyteomics\cythonize\cparser.pyx":267
+      /* "pyteomics\cythonize\cparser.pyx":281
  *                 mod = ''
  *                 X = <str>PyTuple_GET_ITEM(tgroup, 0)
  *             if ((not mod) and X not in slabels) or\             # <<<<<<<<<<<<<<
  *                 not ((mod+X in slabels) or\
  *                 (X in slabels and (mod in slabels or allow_unknown_modifications))):
  */
-      __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_mod); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_mod); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_9 = ((!__pyx_t_3) != 0);
       if (!__pyx_t_9) {
         goto __pyx_L30_next_or;
       } else {
       }
-      __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_X, __pyx_v_slabels, Py_NE)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 267; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_X, __pyx_v_slabels, Py_NE)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_3 = (__pyx_t_9 != 0);
       if (!__pyx_t_3) {
       } else {
@@ -3112,16 +3114,16 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       }
       __pyx_L30_next_or:;
 
-      /* "pyteomics\cythonize\cparser.pyx":268
+      /* "pyteomics\cythonize\cparser.pyx":282
  *                 X = <str>PyTuple_GET_ITEM(tgroup, 0)
  *             if ((not mod) and X not in slabels) or\
  *                 not ((mod+X in slabels) or\             # <<<<<<<<<<<<<<
  *                 (X in slabels and (mod in slabels or allow_unknown_modifications))):
  *                 raise PyteomicsError('Unknown label: {}'.format(tgroup))
  */
-      __pyx_t_5 = PyNumber_Add(__pyx_v_mod, __pyx_v_X); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = PyNumber_Add(__pyx_v_mod, __pyx_v_X); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 282; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_t_5, __pyx_v_slabels, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 268; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_t_5, __pyx_v_slabels, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 282; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_t_15 = (__pyx_t_9 != 0);
       if (!__pyx_t_15) {
@@ -3130,21 +3132,21 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
         goto __pyx_L32_bool_binop_done;
       }
 
-      /* "pyteomics\cythonize\cparser.pyx":269
+      /* "pyteomics\cythonize\cparser.pyx":283
  *             if ((not mod) and X not in slabels) or\
  *                 not ((mod+X in slabels) or\
  *                 (X in slabels and (mod in slabels or allow_unknown_modifications))):             # <<<<<<<<<<<<<<
  *                 raise PyteomicsError('Unknown label: {}'.format(tgroup))
  * 
  */
-      __pyx_t_15 = (__Pyx_PySequence_ContainsTF(__pyx_v_X, __pyx_v_slabels, Py_EQ)); if (unlikely(__pyx_t_15 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_15 = (__Pyx_PySequence_ContainsTF(__pyx_v_X, __pyx_v_slabels, Py_EQ)); if (unlikely(__pyx_t_15 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 283; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_9 = (__pyx_t_15 != 0);
       if (__pyx_t_9) {
       } else {
         __pyx_t_3 = __pyx_t_9;
         goto __pyx_L32_bool_binop_done;
       }
-      __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_mod, __pyx_v_slabels, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 269; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_mod, __pyx_v_slabels, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 283; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_15 = (__pyx_t_9 != 0);
       if (!__pyx_t_15) {
       } else {
@@ -3155,7 +3157,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __pyx_t_3 = __pyx_t_15;
       __pyx_L32_bool_binop_done:;
 
-      /* "pyteomics\cythonize\cparser.pyx":268
+      /* "pyteomics\cythonize\cparser.pyx":282
  *                 X = <str>PyTuple_GET_ITEM(tgroup, 0)
  *             if ((not mod) and X not in slabels) or\
  *                 not ((mod+X in slabels) or\             # <<<<<<<<<<<<<<
@@ -3166,7 +3168,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __pyx_t_4 = __pyx_t_15;
       __pyx_L29_bool_binop_done:;
 
-      /* "pyteomics\cythonize\cparser.pyx":267
+      /* "pyteomics\cythonize\cparser.pyx":281
  *                 mod = ''
  *                 X = <str>PyTuple_GET_ITEM(tgroup, 0)
  *             if ((not mod) and X not in slabels) or\             # <<<<<<<<<<<<<<
@@ -3175,16 +3177,16 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
       if (__pyx_t_4) {
 
-        /* "pyteomics\cythonize\cparser.pyx":270
+        /* "pyteomics\cythonize\cparser.pyx":284
  *                 not ((mod+X in slabels) or\
  *                 (X in slabels and (mod in slabels or allow_unknown_modifications))):
  *                 raise PyteomicsError('Unknown label: {}'.format(tgroup))             # <<<<<<<<<<<<<<
  * 
  *     else:
  */
-        __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 270; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_Unknown_label, __pyx_n_s_format); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 270; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_Unknown_label, __pyx_n_s_format); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_12);
         __pyx_t_2 = NULL;
         if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_12))) {
@@ -3197,16 +3199,16 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
           }
         }
         if (!__pyx_t_2) {
-          __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_12, __pyx_v_tgroup); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 270; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_12, __pyx_v_tgroup); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_6);
         } else {
-          __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 270; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_7);
           __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_2); __pyx_t_2 = NULL;
           __Pyx_INCREF(__pyx_v_tgroup);
           __Pyx_GIVEREF(__pyx_v_tgroup);
           PyTuple_SET_ITEM(__pyx_t_7, 0+1, __pyx_v_tgroup);
-          __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_12, __pyx_t_7, NULL); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 270; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_12, __pyx_t_7, NULL); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         }
@@ -3222,26 +3224,26 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
           }
         }
         if (!__pyx_t_12) {
-          __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 270; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           __Pyx_GOTREF(__pyx_t_5);
         } else {
-          __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 270; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_7);
           __Pyx_GIVEREF(__pyx_t_12); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_12); __pyx_t_12 = NULL;
           __Pyx_GIVEREF(__pyx_t_6);
           PyTuple_SET_ITEM(__pyx_t_7, 0+1, __pyx_t_6);
           __pyx_t_6 = 0;
-          __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 270; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         }
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_Raise(__pyx_t_5, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 270; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "pyteomics\cythonize\cparser.pyx":267
+        /* "pyteomics\cythonize\cparser.pyx":281
  *                 mod = ''
  *                 X = <str>PyTuple_GET_ITEM(tgroup, 0)
  *             if ((not mod) and X not in slabels) or\             # <<<<<<<<<<<<<<
@@ -3251,7 +3253,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       }
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":257
+    /* "pyteomics\cythonize\cparser.pyx":271
  *             raise PyteomicsError('Unknown label: {}'.format(cterm))
  * 
  *     if split:             # <<<<<<<<<<<<<<
@@ -3261,7 +3263,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
     goto __pyx_L24;
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":273
+  /* "pyteomics\cythonize\cparser.pyx":287
  * 
  *     else:
  *         i = 0             # <<<<<<<<<<<<<<
@@ -3271,18 +3273,18 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   /*else*/ {
     __pyx_v_i = 0;
 
-    /* "pyteomics\cythonize\cparser.pyx":274
+    /* "pyteomics\cythonize\cparser.pyx":288
  *     else:
  *         i = 0
  *         for i in range(PyList_Size(parsed_sequence)):             # <<<<<<<<<<<<<<
  *             sgroup = <str>PyList_GET_ITEM(parsed_sequence, i)
  * 
  */
-    __pyx_t_10 = PyList_Size(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_10 == -1L)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 274; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = PyList_Size(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_10 == -1L)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 288; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_10; __pyx_t_13+=1) {
       __pyx_v_i = __pyx_t_13;
 
-      /* "pyteomics\cythonize\cparser.pyx":275
+      /* "pyteomics\cythonize\cparser.pyx":289
  *         i = 0
  *         for i in range(PyList_Size(parsed_sequence)):
  *             sgroup = <str>PyList_GET_ITEM(parsed_sequence, i)             # <<<<<<<<<<<<<<
@@ -3295,7 +3297,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __Pyx_XDECREF_SET(__pyx_v_sgroup, ((PyObject*)__pyx_t_5));
       __pyx_t_5 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":277
+      /* "pyteomics\cythonize\cparser.pyx":291
  *             sgroup = <str>PyList_GET_ITEM(parsed_sequence, i)
  * 
  *             match = PyObject_CallMethodObjArgs(_modX_split, "match", <PyObject*>sgroup, NULL)             # <<<<<<<<<<<<<<
@@ -3304,20 +3306,20 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
       __pyx_t_5 = __pyx_v_9pyteomics_9cythonize_7cparser__modX_split;
       __Pyx_INCREF(__pyx_t_5);
-      __pyx_t_1 = PyObject_CallMethodObjArgs(__pyx_t_5, __pyx_n_s_match, ((PyObject *)__pyx_v_sgroup), NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 277; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PyObject_CallMethodObjArgs(__pyx_t_5, __pyx_n_s_match, ((PyObject *)__pyx_v_sgroup), NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 291; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF_SET(__pyx_v_match, __pyx_t_1);
       __pyx_t_1 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":278
+      /* "pyteomics\cythonize\cparser.pyx":292
  * 
  *             match = PyObject_CallMethodObjArgs(_modX_split, "match", <PyObject*>sgroup, NULL)
  *             temp = <tuple>PyObject_CallMethodObjArgs(match, "groups", NULL)             # <<<<<<<<<<<<<<
  *             mod = <str>PyTuple_GET_ITEM(temp, 0)
  *             X = <str>PyTuple_GET_ITEM(temp, 1)
  */
-      __pyx_t_1 = PyObject_CallMethodObjArgs(__pyx_v_match, __pyx_n_s_groups, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 278; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PyObject_CallMethodObjArgs(__pyx_v_match, __pyx_n_s_groups, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_t_5 = __pyx_t_1;
       __Pyx_INCREF(__pyx_t_5);
@@ -3325,7 +3327,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __Pyx_DECREF_SET(__pyx_v_temp, ((PyObject*)__pyx_t_5));
       __pyx_t_5 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":279
+      /* "pyteomics\cythonize\cparser.pyx":293
  *             match = PyObject_CallMethodObjArgs(_modX_split, "match", <PyObject*>sgroup, NULL)
  *             temp = <tuple>PyObject_CallMethodObjArgs(match, "groups", NULL)
  *             mod = <str>PyTuple_GET_ITEM(temp, 0)             # <<<<<<<<<<<<<<
@@ -3338,7 +3340,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __Pyx_XDECREF_SET(__pyx_v_mod, ((PyObject*)__pyx_t_5));
       __pyx_t_5 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":280
+      /* "pyteomics\cythonize\cparser.pyx":294
  *             temp = <tuple>PyObject_CallMethodObjArgs(match, "groups", NULL)
  *             mod = <str>PyTuple_GET_ITEM(temp, 0)
  *             X = <str>PyTuple_GET_ITEM(temp, 1)             # <<<<<<<<<<<<<<
@@ -3351,27 +3353,27 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __Pyx_XDECREF_SET(__pyx_v_X, ((PyObject*)__pyx_t_5));
       __pyx_t_5 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":281
+      /* "pyteomics\cythonize\cparser.pyx":295
  *             mod = <str>PyTuple_GET_ITEM(temp, 0)
  *             X = <str>PyTuple_GET_ITEM(temp, 1)
  *             is_mod = PyObject_IsTrue(mod)             # <<<<<<<<<<<<<<
  *             in_labels = X not in slabels
  *             if ((not is_mod) and in_labels) or\
  */
-      __pyx_t_4 = PyObject_IsTrue(__pyx_v_mod); if (unlikely(__pyx_t_4 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 281; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = PyObject_IsTrue(__pyx_v_mod); if (unlikely(__pyx_t_4 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 295; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_v_is_mod = __pyx_t_4;
 
-      /* "pyteomics\cythonize\cparser.pyx":282
+      /* "pyteomics\cythonize\cparser.pyx":296
  *             X = <str>PyTuple_GET_ITEM(temp, 1)
  *             is_mod = PyObject_IsTrue(mod)
  *             in_labels = X not in slabels             # <<<<<<<<<<<<<<
  *             if ((not is_mod) and in_labels) or\
  *                 not ((mod+X in slabels) or\
  */
-      __pyx_t_4 = (__Pyx_PySequence_ContainsTF(__pyx_v_X, __pyx_v_slabels, Py_NE)); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 282; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = (__Pyx_PySequence_ContainsTF(__pyx_v_X, __pyx_v_slabels, Py_NE)); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 296; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_v_in_labels = __pyx_t_4;
 
-      /* "pyteomics\cythonize\cparser.pyx":283
+      /* "pyteomics\cythonize\cparser.pyx":297
  *             is_mod = PyObject_IsTrue(mod)
  *             in_labels = X not in slabels
  *             if ((not is_mod) and in_labels) or\             # <<<<<<<<<<<<<<
@@ -3391,16 +3393,16 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       }
       __pyx_L40_next_or:;
 
-      /* "pyteomics\cythonize\cparser.pyx":284
+      /* "pyteomics\cythonize\cparser.pyx":298
  *             in_labels = X not in slabels
  *             if ((not is_mod) and in_labels) or\
  *                 not ((mod+X in slabels) or\             # <<<<<<<<<<<<<<
  *                 (X in slabels and (mod in slabels or allow_unknown_modifications))):
  *                 raise PyteomicsError('Unknown label: {}'.format(sgroup))
  */
-      __pyx_t_5 = PyNumber_Add(__pyx_v_mod, __pyx_v_X); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = PyNumber_Add(__pyx_v_mod, __pyx_v_X); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 298; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_3 = (__Pyx_PySequence_ContainsTF(__pyx_t_5, __pyx_v_slabels, Py_EQ)); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 284; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = (__Pyx_PySequence_ContainsTF(__pyx_t_5, __pyx_v_slabels, Py_EQ)); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 298; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_t_9 = (__pyx_t_3 != 0);
       if (!__pyx_t_9) {
@@ -3409,21 +3411,21 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
         goto __pyx_L42_bool_binop_done;
       }
 
-      /* "pyteomics\cythonize\cparser.pyx":285
+      /* "pyteomics\cythonize\cparser.pyx":299
  *             if ((not is_mod) and in_labels) or\
  *                 not ((mod+X in slabels) or\
  *                 (X in slabels and (mod in slabels or allow_unknown_modifications))):             # <<<<<<<<<<<<<<
  *                 raise PyteomicsError('Unknown label: {}'.format(sgroup))
  * 
  */
-      __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_X, __pyx_v_slabels, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 285; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_X, __pyx_v_slabels, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 299; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_3 = (__pyx_t_9 != 0);
       if (__pyx_t_3) {
       } else {
         __pyx_t_15 = __pyx_t_3;
         goto __pyx_L42_bool_binop_done;
       }
-      __pyx_t_3 = (__Pyx_PySequence_ContainsTF(__pyx_v_mod, __pyx_v_slabels, Py_EQ)); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 285; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = (__Pyx_PySequence_ContainsTF(__pyx_v_mod, __pyx_v_slabels, Py_EQ)); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 299; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_9 = (__pyx_t_3 != 0);
       if (!__pyx_t_9) {
       } else {
@@ -3434,7 +3436,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __pyx_t_15 = __pyx_t_9;
       __pyx_L42_bool_binop_done:;
 
-      /* "pyteomics\cythonize\cparser.pyx":284
+      /* "pyteomics\cythonize\cparser.pyx":298
  *             in_labels = X not in slabels
  *             if ((not is_mod) and in_labels) or\
  *                 not ((mod+X in slabels) or\             # <<<<<<<<<<<<<<
@@ -3445,7 +3447,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __pyx_t_4 = __pyx_t_9;
       __pyx_L39_bool_binop_done:;
 
-      /* "pyteomics\cythonize\cparser.pyx":283
+      /* "pyteomics\cythonize\cparser.pyx":297
  *             is_mod = PyObject_IsTrue(mod)
  *             in_labels = X not in slabels
  *             if ((not is_mod) and in_labels) or\             # <<<<<<<<<<<<<<
@@ -3454,16 +3456,16 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
       if (__pyx_t_4) {
 
-        /* "pyteomics\cythonize\cparser.pyx":286
+        /* "pyteomics\cythonize\cparser.pyx":300
  *                 not ((mod+X in slabels) or\
  *                 (X in slabels and (mod in slabels or allow_unknown_modifications))):
  *                 raise PyteomicsError('Unknown label: {}'.format(sgroup))             # <<<<<<<<<<<<<<
  * 
  *     # Append terminal labels
  */
-        __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 286; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_Unknown_label, __pyx_n_s_format); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 286; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_Unknown_label, __pyx_n_s_format); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_6);
         __pyx_t_12 = NULL;
         if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_6))) {
@@ -3476,16 +3478,16 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
           }
         }
         if (!__pyx_t_12) {
-          __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_sgroup); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 286; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_sgroup); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_7);
         } else {
-          __pyx_t_2 = PyTuple_New(1+1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 286; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_2 = PyTuple_New(1+1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_GIVEREF(__pyx_t_12); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_12); __pyx_t_12 = NULL;
           __Pyx_INCREF(__pyx_v_sgroup);
           __Pyx_GIVEREF(__pyx_v_sgroup);
           PyTuple_SET_ITEM(__pyx_t_2, 0+1, __pyx_v_sgroup);
-          __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_2, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 286; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_2, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_7);
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         }
@@ -3501,26 +3503,26 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
           }
         }
         if (!__pyx_t_6) {
-          __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_7); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 286; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_7); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
           __Pyx_GOTREF(__pyx_t_5);
         } else {
-          __pyx_t_2 = PyTuple_New(1+1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 286; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_2 = PyTuple_New(1+1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_6); __pyx_t_6 = NULL;
           __Pyx_GIVEREF(__pyx_t_7);
           PyTuple_SET_ITEM(__pyx_t_2, 0+1, __pyx_t_7);
           __pyx_t_7 = 0;
-          __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 286; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         }
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_Raise(__pyx_t_5, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 286; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "pyteomics\cythonize\cparser.pyx":283
+        /* "pyteomics\cythonize\cparser.pyx":297
  *             is_mod = PyObject_IsTrue(mod)
  *             in_labels = X not in slabels
  *             if ((not is_mod) and in_labels) or\             # <<<<<<<<<<<<<<
@@ -3532,7 +3534,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   }
   __pyx_L24:;
 
-  /* "pyteomics\cythonize\cparser.pyx":289
+  /* "pyteomics\cythonize\cparser.pyx":303
  * 
  *     # Append terminal labels
  *     if show_unmodified_termini or nterm != std_nterm:             # <<<<<<<<<<<<<<
@@ -3545,13 +3547,13 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
     __pyx_t_4 = __pyx_t_9;
     goto __pyx_L47_bool_binop_done;
   }
-  __pyx_t_9 = (__Pyx_PyString_Equals(__pyx_v_nterm, __pyx_v_9pyteomics_9cythonize_7cparser_std_nterm, Py_NE)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 289; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_9 = (__Pyx_PyString_Equals(__pyx_v_nterm, __pyx_v_9pyteomics_9cythonize_7cparser_std_nterm, Py_NE)); if (unlikely(__pyx_t_9 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 303; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_15 = (__pyx_t_9 != 0);
   __pyx_t_4 = __pyx_t_15;
   __pyx_L47_bool_binop_done:;
   if (__pyx_t_4) {
 
-    /* "pyteomics\cythonize\cparser.pyx":290
+    /* "pyteomics\cythonize\cparser.pyx":304
  *     # Append terminal labels
  *     if show_unmodified_termini or nterm != std_nterm:
  *         if split:             # <<<<<<<<<<<<<<
@@ -3561,7 +3563,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
     __pyx_t_4 = (__pyx_v_split != 0);
     if (__pyx_t_4) {
 
-      /* "pyteomics\cythonize\cparser.pyx":291
+      /* "pyteomics\cythonize\cparser.pyx":305
  *     if show_unmodified_termini or nterm != std_nterm:
  *         if split:
  *             temp = <tuple>PyList_GET_ITEM(parsed_sequence, 0)             # <<<<<<<<<<<<<<
@@ -3574,25 +3576,25 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       __Pyx_DECREF_SET(__pyx_v_temp, ((PyObject*)__pyx_t_5));
       __pyx_t_5 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":292
+      /* "pyteomics\cythonize\cparser.pyx":306
  *         if split:
  *             temp = <tuple>PyList_GET_ITEM(parsed_sequence, 0)
  *             temp = (<str>nterm, ) + temp             # <<<<<<<<<<<<<<
  *             Py_INCREF(temp)
  *             PyList_SET_ITEM(<list>parsed_sequence, 0, tuple(temp))
  */
-      __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 306; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_INCREF(((PyObject*)__pyx_v_nterm));
       __Pyx_GIVEREF(__pyx_v_nterm);
       PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_v_nterm);
-      __pyx_t_1 = PyNumber_Add(__pyx_t_5, __pyx_v_temp); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 292; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PyNumber_Add(__pyx_t_5, __pyx_v_temp); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 306; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF_SET(__pyx_v_temp, ((PyObject*)__pyx_t_1));
       __pyx_t_1 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":293
+      /* "pyteomics\cythonize\cparser.pyx":307
  *             temp = <tuple>PyList_GET_ITEM(parsed_sequence, 0)
  *             temp = (<str>nterm, ) + temp
  *             Py_INCREF(temp)             # <<<<<<<<<<<<<<
@@ -3601,7 +3603,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
       Py_INCREF(__pyx_v_temp);
 
-      /* "pyteomics\cythonize\cparser.pyx":294
+      /* "pyteomics\cythonize\cparser.pyx":308
  *             temp = (<str>nterm, ) + temp
  *             Py_INCREF(temp)
  *             PyList_SET_ITEM(<list>parsed_sequence, 0, tuple(temp))             # <<<<<<<<<<<<<<
@@ -3610,7 +3612,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
       PyList_SET_ITEM(__pyx_v_parsed_sequence, 0, __pyx_v_temp);
 
-      /* "pyteomics\cythonize\cparser.pyx":290
+      /* "pyteomics\cythonize\cparser.pyx":304
  *     # Append terminal labels
  *     if show_unmodified_termini or nterm != std_nterm:
  *         if split:             # <<<<<<<<<<<<<<
@@ -3620,7 +3622,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       goto __pyx_L49;
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":296
+    /* "pyteomics\cythonize\cparser.pyx":310
  *             PyList_SET_ITEM(<list>parsed_sequence, 0, tuple(temp))
  *         else:
  *             PyList_Insert(parsed_sequence, 0, nterm)             # <<<<<<<<<<<<<<
@@ -3628,11 +3630,11 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  *         if split:
  */
     /*else*/ {
-      __pyx_t_16 = PyList_Insert(__pyx_v_parsed_sequence, 0, __pyx_v_nterm); if (unlikely(__pyx_t_16 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 296; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_16 = PyList_Insert(__pyx_v_parsed_sequence, 0, __pyx_v_nterm); if (unlikely(__pyx_t_16 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 310; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_L49:;
 
-    /* "pyteomics\cythonize\cparser.pyx":289
+    /* "pyteomics\cythonize\cparser.pyx":303
  * 
  *     # Append terminal labels
  *     if show_unmodified_termini or nterm != std_nterm:             # <<<<<<<<<<<<<<
@@ -3641,7 +3643,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":297
+  /* "pyteomics\cythonize\cparser.pyx":311
  *         else:
  *             PyList_Insert(parsed_sequence, 0, nterm)
  *     if show_unmodified_termini or cterm != std_cterm:             # <<<<<<<<<<<<<<
@@ -3654,13 +3656,13 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
     __pyx_t_4 = __pyx_t_15;
     goto __pyx_L51_bool_binop_done;
   }
-  __pyx_t_15 = (__Pyx_PyString_Equals(__pyx_v_cterm, __pyx_v_9pyteomics_9cythonize_7cparser_std_cterm, Py_NE)); if (unlikely(__pyx_t_15 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 297; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_15 = (__Pyx_PyString_Equals(__pyx_v_cterm, __pyx_v_9pyteomics_9cythonize_7cparser_std_cterm, Py_NE)); if (unlikely(__pyx_t_15 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 311; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_9 = (__pyx_t_15 != 0);
   __pyx_t_4 = __pyx_t_9;
   __pyx_L51_bool_binop_done:;
   if (__pyx_t_4) {
 
-    /* "pyteomics\cythonize\cparser.pyx":298
+    /* "pyteomics\cythonize\cparser.pyx":312
  *             PyList_Insert(parsed_sequence, 0, nterm)
  *     if show_unmodified_termini or cterm != std_cterm:
  *         if split:             # <<<<<<<<<<<<<<
@@ -3670,7 +3672,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
     __pyx_t_4 = (__pyx_v_split != 0);
     if (__pyx_t_4) {
 
-      /* "pyteomics\cythonize\cparser.pyx":299
+      /* "pyteomics\cythonize\cparser.pyx":313
  *     if show_unmodified_termini or cterm != std_cterm:
  *         if split:
  *             temp = <tuple>PyList_GET_ITEM(parsed_sequence, len(parsed_sequence) - 1)             # <<<<<<<<<<<<<<
@@ -3679,34 +3681,34 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
       if (unlikely(__pyx_v_parsed_sequence == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 299; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 313; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_10 = PyList_GET_SIZE(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_10 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 299; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_10 = PyList_GET_SIZE(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_10 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 313; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_8 = PyList_GET_ITEM(__pyx_v_parsed_sequence, (__pyx_t_10 - 1));
       __pyx_t_1 = ((PyObject *)__pyx_t_8);
       __Pyx_INCREF(__pyx_t_1);
       __Pyx_DECREF_SET(__pyx_v_temp, ((PyObject*)__pyx_t_1));
       __pyx_t_1 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":300
+      /* "pyteomics\cythonize\cparser.pyx":314
  *         if split:
  *             temp = <tuple>PyList_GET_ITEM(parsed_sequence, len(parsed_sequence) - 1)
  *             temp = temp + (cterm,)             # <<<<<<<<<<<<<<
  *             Py_INCREF(temp)
  *             PyList_SET_ITEM(parsed_sequence, len(parsed_sequence) - 1, temp)
  */
-      __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 314; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_INCREF(__pyx_v_cterm);
       __Pyx_GIVEREF(__pyx_v_cterm);
       PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_cterm);
-      __pyx_t_5 = PyNumber_Add(__pyx_v_temp, __pyx_t_1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 300; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_5 = PyNumber_Add(__pyx_v_temp, __pyx_t_1); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 314; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF_SET(__pyx_v_temp, ((PyObject*)__pyx_t_5));
       __pyx_t_5 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":301
+      /* "pyteomics\cythonize\cparser.pyx":315
  *             temp = <tuple>PyList_GET_ITEM(parsed_sequence, len(parsed_sequence) - 1)
  *             temp = temp + (cterm,)
  *             Py_INCREF(temp)             # <<<<<<<<<<<<<<
@@ -3715,7 +3717,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
       Py_INCREF(__pyx_v_temp);
 
-      /* "pyteomics\cythonize\cparser.pyx":302
+      /* "pyteomics\cythonize\cparser.pyx":316
  *             temp = temp + (cterm,)
  *             Py_INCREF(temp)
  *             PyList_SET_ITEM(parsed_sequence, len(parsed_sequence) - 1, temp)             # <<<<<<<<<<<<<<
@@ -3724,12 +3726,12 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
       if (unlikely(__pyx_v_parsed_sequence == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 302; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 316; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
-      __pyx_t_10 = PyList_GET_SIZE(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_10 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 302; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_10 = PyList_GET_SIZE(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_10 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 316; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       PyList_SET_ITEM(__pyx_v_parsed_sequence, (__pyx_t_10 - 1), __pyx_v_temp);
 
-      /* "pyteomics\cythonize\cparser.pyx":298
+      /* "pyteomics\cythonize\cparser.pyx":312
  *             PyList_Insert(parsed_sequence, 0, nterm)
  *     if show_unmodified_termini or cterm != std_cterm:
  *         if split:             # <<<<<<<<<<<<<<
@@ -3739,7 +3741,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
       goto __pyx_L53;
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":304
+    /* "pyteomics\cythonize\cparser.pyx":318
  *             PyList_SET_ITEM(parsed_sequence, len(parsed_sequence) - 1, temp)
  *         else:
  *             PyList_Append(parsed_sequence, cterm)             # <<<<<<<<<<<<<<
@@ -3747,11 +3749,11 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  * 
  */
     /*else*/ {
-      __pyx_t_16 = PyList_Append(__pyx_v_parsed_sequence, __pyx_v_cterm); if (unlikely(__pyx_t_16 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 304; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_16 = PyList_Append(__pyx_v_parsed_sequence, __pyx_v_cterm); if (unlikely(__pyx_t_16 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 318; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_L53:;
 
-    /* "pyteomics\cythonize\cparser.pyx":297
+    /* "pyteomics\cythonize\cparser.pyx":311
  *         else:
  *             PyList_Insert(parsed_sequence, 0, nterm)
  *     if show_unmodified_termini or cterm != std_cterm:             # <<<<<<<<<<<<<<
@@ -3760,7 +3762,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
  */
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":307
+  /* "pyteomics\cythonize\cparser.pyx":321
  * 
  * 
  *     return parsed_sequence             # <<<<<<<<<<<<<<
@@ -3772,7 +3774,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_parse(PyObject *__pyx_v_
   __pyx_r = __pyx_v_parsed_sequence;
   goto __pyx_L0;
 
-  /* "pyteomics\cythonize\cparser.pyx":151
+  /* "pyteomics\cythonize\cparser.pyx":165
  * 
  * 
  * cpdef list parse(str sequence, int show_unmodified_termini=0, int split=0,             # <<<<<<<<<<<<<<
@@ -3869,7 +3871,7 @@ static PyObject *__pyx_pw_9pyteomics_9cythonize_7cparser_7parse(PyObject *__pyx_
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "parse") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "parse") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3884,17 +3886,17 @@ static PyObject *__pyx_pw_9pyteomics_9cythonize_7cparser_7parse(PyObject *__pyx_
     }
     __pyx_v_sequence = ((PyObject*)values[0]);
     if (values[1]) {
-      __pyx_v_show_unmodified_termini = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_show_unmodified_termini == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_show_unmodified_termini = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_show_unmodified_termini == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_show_unmodified_termini = ((int)0);
     }
     if (values[2]) {
-      __pyx_v_split = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_split == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_split = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_split == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_split = ((int)0);
     }
     if (values[3]) {
-      __pyx_v_allow_unknown_modifications = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_allow_unknown_modifications == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_allow_unknown_modifications = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_allow_unknown_modifications == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 166; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_allow_unknown_modifications = ((int)0);
     }
@@ -3902,13 +3904,13 @@ static PyObject *__pyx_pw_9pyteomics_9cythonize_7cparser_7parse(PyObject *__pyx_
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("parse", 0, 1, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("parse", 0, 1, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("pyteomics.cythonize.cparser.parse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_sequence), (&PyString_Type), 1, "sequence", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_sequence), (&PyString_Type), 1, "sequence", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_r = __pyx_pf_9pyteomics_9cythonize_7cparser_6parse(__pyx_self, __pyx_v_sequence, __pyx_v_show_unmodified_termini, __pyx_v_split, __pyx_v_allow_unknown_modifications, __pyx_v_labels);
 
   /* function exit code */
@@ -3935,7 +3937,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_6parse(CYTHON_UNUSED Py
   __pyx_t_2.split = __pyx_v_split;
   __pyx_t_2.allow_unknown_modifications = __pyx_v_allow_unknown_modifications;
   __pyx_t_2.labels = __pyx_v_labels;
-  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_parse(__pyx_v_sequence, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 151; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_parse(__pyx_v_sequence, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3952,7 +3954,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_6parse(CYTHON_UNUSED Py
   return __pyx_r;
 }
 
-/* "pyteomics\cythonize\cparser.pyx":310
+/* "pyteomics\cythonize\cparser.pyx":324
  * 
  * 
  * def tostring(parsed_sequence, show_unmodified_termini=True):             # <<<<<<<<<<<<<<
@@ -3998,7 +4000,7 @@ static PyObject *__pyx_pw_9pyteomics_9cythonize_7cparser_9tostring(PyObject *__p
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "tostring") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 310; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "tostring") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 324; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -4013,7 +4015,7 @@ static PyObject *__pyx_pw_9pyteomics_9cythonize_7cparser_9tostring(PyObject *__p
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("tostring", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 310; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("tostring", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 324; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("pyteomics.cythonize.cparser.tostring", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4048,19 +4050,19 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("tostring", 0);
 
-  /* "pyteomics\cythonize\cparser.pyx":329
+  /* "pyteomics\cythonize\cparser.pyx":343
  *     sequence : str
  *     """
  *     labels = []             # <<<<<<<<<<<<<<
  *     for group in parsed_sequence:
  *         if isinstance(group, str):
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 329; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 343; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_labels = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":330
+  /* "pyteomics\cythonize\cparser.pyx":344
  *     """
  *     labels = []
  *     for group in parsed_sequence:             # <<<<<<<<<<<<<<
@@ -4071,26 +4073,26 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
     __pyx_t_1 = __pyx_v_parsed_sequence; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_parsed_sequence); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 330; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_parsed_sequence); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 344; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 330; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 344; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 330; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 344; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 330; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 344; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 330; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 344; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 330; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 344; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -4100,7 +4102,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 330; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 344; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         break;
       }
@@ -4109,7 +4111,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
     __Pyx_XDECREF_SET(__pyx_v_group, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "pyteomics\cythonize\cparser.pyx":331
+    /* "pyteomics\cythonize\cparser.pyx":345
  *     labels = []
  *     for group in parsed_sequence:
  *         if isinstance(group, str):             # <<<<<<<<<<<<<<
@@ -4120,7 +4122,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
     __pyx_t_6 = (__pyx_t_5 != 0);
     if (__pyx_t_6) {
 
-      /* "pyteomics\cythonize\cparser.pyx":332
+      /* "pyteomics\cythonize\cparser.pyx":346
  *     for group in parsed_sequence:
  *         if isinstance(group, str):
  *             if (group not in (std_cterm, std_nterm)) or show_unmodified_termini:             # <<<<<<<<<<<<<<
@@ -4129,13 +4131,13 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
  */
       __Pyx_INCREF(__pyx_v_group);
       __pyx_t_4 = __pyx_v_group;
-      __pyx_t_7 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_v_9pyteomics_9cythonize_7cparser_std_cterm, Py_NE)); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 332; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_v_9pyteomics_9cythonize_7cparser_std_cterm, Py_NE)); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       if (__pyx_t_7) {
       } else {
         __pyx_t_5 = __pyx_t_7;
         goto __pyx_L9_bool_binop_done;
       }
-      __pyx_t_7 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_v_9pyteomics_9cythonize_7cparser_std_nterm, Py_NE)); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 332; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_v_9pyteomics_9cythonize_7cparser_std_nterm, Py_NE)); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_5 = __pyx_t_7;
       __pyx_L9_bool_binop_done:;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -4145,21 +4147,21 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
         __pyx_t_6 = __pyx_t_7;
         goto __pyx_L7_bool_binop_done;
       }
-      __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_show_unmodified_termini); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 332; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_v_show_unmodified_termini); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 346; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_6 = __pyx_t_7;
       __pyx_L7_bool_binop_done:;
       if (__pyx_t_6) {
 
-        /* "pyteomics\cythonize\cparser.pyx":333
+        /* "pyteomics\cythonize\cparser.pyx":347
  *         if isinstance(group, str):
  *             if (group not in (std_cterm, std_nterm)) or show_unmodified_termini:
  *                 labels.append(group)             # <<<<<<<<<<<<<<
  *         else: # treat `group` as a tuple
  *             group_l = list(group)
  */
-        __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_labels, __pyx_v_group); if (unlikely(__pyx_t_8 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 333; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_labels, __pyx_v_group); if (unlikely(__pyx_t_8 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 347; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-        /* "pyteomics\cythonize\cparser.pyx":332
+        /* "pyteomics\cythonize\cparser.pyx":346
  *     for group in parsed_sequence:
  *         if isinstance(group, str):
  *             if (group not in (std_cterm, std_nterm)) or show_unmodified_termini:             # <<<<<<<<<<<<<<
@@ -4168,7 +4170,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
  */
       }
 
-      /* "pyteomics\cythonize\cparser.pyx":331
+      /* "pyteomics\cythonize\cparser.pyx":345
  *     labels = []
  *     for group in parsed_sequence:
  *         if isinstance(group, str):             # <<<<<<<<<<<<<<
@@ -4178,7 +4180,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
       goto __pyx_L5;
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":335
+    /* "pyteomics\cythonize\cparser.pyx":349
  *                 labels.append(group)
  *         else: # treat `group` as a tuple
  *             group_l = list(group)             # <<<<<<<<<<<<<<
@@ -4186,33 +4188,33 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
  *                 if std_cterm in group_l: group_l.remove(std_cterm)
  */
     /*else*/ {
-      __pyx_t_4 = PySequence_List(__pyx_v_group); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 335; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = PySequence_List(__pyx_v_group); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 349; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_XDECREF_SET(__pyx_v_group_l, ((PyObject*)__pyx_t_4));
       __pyx_t_4 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":336
+      /* "pyteomics\cythonize\cparser.pyx":350
  *         else: # treat `group` as a tuple
  *             group_l = list(group)
  *             if not show_unmodified_termini:             # <<<<<<<<<<<<<<
  *                 if std_cterm in group_l: group_l.remove(std_cterm)
  *                 if std_nterm in group_l: group_l.remove(std_nterm)
  */
-      __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_show_unmodified_termini); if (unlikely(__pyx_t_6 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 336; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_v_show_unmodified_termini); if (unlikely(__pyx_t_6 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 350; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_7 = ((!__pyx_t_6) != 0);
       if (__pyx_t_7) {
 
-        /* "pyteomics\cythonize\cparser.pyx":337
+        /* "pyteomics\cythonize\cparser.pyx":351
  *             group_l = list(group)
  *             if not show_unmodified_termini:
  *                 if std_cterm in group_l: group_l.remove(std_cterm)             # <<<<<<<<<<<<<<
  *                 if std_nterm in group_l: group_l.remove(std_nterm)
  *             labels.append(''.join(group_l))
  */
-        __pyx_t_7 = (__Pyx_PySequence_ContainsTF(__pyx_v_9pyteomics_9cythonize_7cparser_std_cterm, __pyx_v_group_l, Py_EQ)); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 337; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_7 = (__Pyx_PySequence_ContainsTF(__pyx_v_9pyteomics_9cythonize_7cparser_std_cterm, __pyx_v_group_l, Py_EQ)); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __pyx_t_6 = (__pyx_t_7 != 0);
         if (__pyx_t_6) {
-          __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_group_l, __pyx_n_s_remove); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 337; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_group_l, __pyx_n_s_remove); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_9);
           __pyx_t_10 = NULL;
           if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_9))) {
@@ -4225,16 +4227,16 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
             }
           }
           if (!__pyx_t_10) {
-            __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_v_9pyteomics_9cythonize_7cparser_std_cterm); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 337; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_v_9pyteomics_9cythonize_7cparser_std_cterm); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __Pyx_GOTREF(__pyx_t_4);
           } else {
-            __pyx_t_11 = PyTuple_New(1+1); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 337; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            __pyx_t_11 = PyTuple_New(1+1); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __Pyx_GOTREF(__pyx_t_11);
             __Pyx_GIVEREF(__pyx_t_10); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_10); __pyx_t_10 = NULL;
             __Pyx_INCREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_cterm);
             __Pyx_GIVEREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_cterm);
             PyTuple_SET_ITEM(__pyx_t_11, 0+1, __pyx_v_9pyteomics_9cythonize_7cparser_std_cterm);
-            __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_11, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 337; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_11, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 351; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __Pyx_GOTREF(__pyx_t_4);
             __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
           }
@@ -4242,17 +4244,17 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         }
 
-        /* "pyteomics\cythonize\cparser.pyx":338
+        /* "pyteomics\cythonize\cparser.pyx":352
  *             if not show_unmodified_termini:
  *                 if std_cterm in group_l: group_l.remove(std_cterm)
  *                 if std_nterm in group_l: group_l.remove(std_nterm)             # <<<<<<<<<<<<<<
  *             labels.append(''.join(group_l))
  *     return ''.join(labels)
  */
-        __pyx_t_6 = (__Pyx_PySequence_ContainsTF(__pyx_v_9pyteomics_9cythonize_7cparser_std_nterm, __pyx_v_group_l, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 338; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = (__Pyx_PySequence_ContainsTF(__pyx_v_9pyteomics_9cythonize_7cparser_std_nterm, __pyx_v_group_l, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 352; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __pyx_t_7 = (__pyx_t_6 != 0);
         if (__pyx_t_7) {
-          __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_group_l, __pyx_n_s_remove); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 338; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_group_l, __pyx_n_s_remove); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 352; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           __Pyx_GOTREF(__pyx_t_9);
           __pyx_t_11 = NULL;
           if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_9))) {
@@ -4265,16 +4267,16 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
             }
           }
           if (!__pyx_t_11) {
-            __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_v_9pyteomics_9cythonize_7cparser_std_nterm); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 338; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_v_9pyteomics_9cythonize_7cparser_std_nterm); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 352; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __Pyx_GOTREF(__pyx_t_4);
           } else {
-            __pyx_t_10 = PyTuple_New(1+1); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 338; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            __pyx_t_10 = PyTuple_New(1+1); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 352; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __Pyx_GOTREF(__pyx_t_10);
             __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_11); __pyx_t_11 = NULL;
             __Pyx_INCREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_nterm);
             __Pyx_GIVEREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_nterm);
             PyTuple_SET_ITEM(__pyx_t_10, 0+1, __pyx_v_9pyteomics_9cythonize_7cparser_std_nterm);
-            __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_10, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 338; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_10, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 352; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
             __Pyx_GOTREF(__pyx_t_4);
             __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
           }
@@ -4282,7 +4284,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         }
 
-        /* "pyteomics\cythonize\cparser.pyx":336
+        /* "pyteomics\cythonize\cparser.pyx":350
  *         else: # treat `group` as a tuple
  *             group_l = list(group)
  *             if not show_unmodified_termini:             # <<<<<<<<<<<<<<
@@ -4291,21 +4293,21 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
  */
       }
 
-      /* "pyteomics\cythonize\cparser.pyx":339
+      /* "pyteomics\cythonize\cparser.pyx":353
  *                 if std_cterm in group_l: group_l.remove(std_cterm)
  *                 if std_nterm in group_l: group_l.remove(std_nterm)
  *             labels.append(''.join(group_l))             # <<<<<<<<<<<<<<
  *     return ''.join(labels)
  * 
  */
-      __pyx_t_4 = __Pyx_PyString_Join(__pyx_kp_s__5, __pyx_v_group_l); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 339; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyString_Join(__pyx_kp_s__5, __pyx_v_group_l); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 353; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_labels, __pyx_t_4); if (unlikely(__pyx_t_8 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 339; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_labels, __pyx_t_4); if (unlikely(__pyx_t_8 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 353; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
     __pyx_L5:;
 
-    /* "pyteomics\cythonize\cparser.pyx":330
+    /* "pyteomics\cythonize\cparser.pyx":344
  *     """
  *     labels = []
  *     for group in parsed_sequence:             # <<<<<<<<<<<<<<
@@ -4315,7 +4317,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":340
+  /* "pyteomics\cythonize\cparser.pyx":354
  *                 if std_nterm in group_l: group_l.remove(std_nterm)
  *             labels.append(''.join(group_l))
  *     return ''.join(labels)             # <<<<<<<<<<<<<<
@@ -4323,13 +4325,13 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyString_Join(__pyx_kp_s__5, __pyx_v_labels); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 340; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyString_Join(__pyx_kp_s__5, __pyx_v_labels); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 354; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyteomics\cythonize\cparser.pyx":310
+  /* "pyteomics\cythonize\cparser.pyx":324
  * 
  * 
  * def tostring(parsed_sequence, show_unmodified_termini=True):             # <<<<<<<<<<<<<<
@@ -4355,7 +4357,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_8tostring(CYTHON_UNUSED
   return __pyx_r;
 }
 
-/* "pyteomics\cythonize\cparser.pyx":343
+/* "pyteomics\cythonize\cparser.pyx":357
  * 
  * 
  * cpdef dict amino_acid_composition(object sequence, int show_unmodified_termini=0, int term_aa=0,             # <<<<<<<<<<<<<<
@@ -4414,19 +4416,19 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
     }
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":392
+  /* "pyteomics\cythonize\cparser.pyx":406
  *         Py_ssize_t i
  * 
  *     _labels = interpolate_labels(labels)             # <<<<<<<<<<<<<<
  * 
  *     if isinstance(sequence, str):
  */
-  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_interpolate_labels(__pyx_v_labels); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 392; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_interpolate_labels(__pyx_v_labels); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 406; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v__labels = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":394
+  /* "pyteomics\cythonize\cparser.pyx":408
  *     _labels = interpolate_labels(labels)
  * 
  *     if isinstance(sequence, str):             # <<<<<<<<<<<<<<
@@ -4437,7 +4439,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "pyteomics\cythonize\cparser.pyx":395
+    /* "pyteomics\cythonize\cparser.pyx":409
  * 
  *     if isinstance(sequence, str):
  *         parsed_sequence = parse(<str>sequence, show_unmodified_termini, split=False,             # <<<<<<<<<<<<<<
@@ -4449,12 +4451,12 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
     __pyx_t_4.split = 0;
     __pyx_t_4.allow_unknown_modifications = __pyx_v_allow_unknown_modifications;
     __pyx_t_4.labels = __pyx_v__labels;
-    __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_parse(((PyObject*)__pyx_v_sequence), 0, &__pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 395; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_parse(((PyObject*)__pyx_v_sequence), 0, &__pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 409; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_v_parsed_sequence = ((PyObject*)__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "pyteomics\cythonize\cparser.pyx":394
+    /* "pyteomics\cythonize\cparser.pyx":408
  *     _labels = interpolate_labels(labels)
  * 
  *     if isinstance(sequence, str):             # <<<<<<<<<<<<<<
@@ -4464,7 +4466,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
     goto __pyx_L3;
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":398
+  /* "pyteomics\cythonize\cparser.pyx":412
  *                                 allow_unknown_modifications=allow_unknown_modifications,
  *                                 labels=_labels)
  *     elif isinstance(sequence, list):             # <<<<<<<<<<<<<<
@@ -4475,34 +4477,34 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
   __pyx_t_2 = (__pyx_t_3 != 0);
   if (__pyx_t_2) {
 
-    /* "pyteomics\cythonize\cparser.pyx":399
+    /* "pyteomics\cythonize\cparser.pyx":413
  *                                 labels=_labels)
  *     elif isinstance(sequence, list):
  *         if sequence and isinstance(<object>PyList_GetItem(sequence, 0), tuple):             # <<<<<<<<<<<<<<
  *             parsed_sequence = parse(tostring(sequence, True),
  *                 show_unmodified_termini,
  */
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_sequence); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 399; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_sequence); if (unlikely(__pyx_t_3 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 413; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     if (__pyx_t_3) {
     } else {
       __pyx_t_2 = __pyx_t_3;
       goto __pyx_L5_bool_binop_done;
     }
-    __pyx_t_5 = PyList_GetItem(__pyx_v_sequence, 0); if (unlikely(__pyx_t_5 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 399; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyList_GetItem(__pyx_v_sequence, 0); if (unlikely(__pyx_t_5 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 413; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_3 = PyTuple_Check(((PyObject *)__pyx_t_5)); 
     __pyx_t_6 = (__pyx_t_3 != 0);
     __pyx_t_2 = __pyx_t_6;
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_2) {
 
-      /* "pyteomics\cythonize\cparser.pyx":400
+      /* "pyteomics\cythonize\cparser.pyx":414
  *     elif isinstance(sequence, list):
  *         if sequence and isinstance(<object>PyList_GetItem(sequence, 0), tuple):
  *             parsed_sequence = parse(tostring(sequence, True),             # <<<<<<<<<<<<<<
  *                 show_unmodified_termini,
  *                 split=False,
  */
-      __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_tostring); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 400; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_tostring); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 414; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __pyx_t_8 = NULL;
       __pyx_t_9 = 0;
@@ -4516,7 +4518,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
           __pyx_t_9 = 1;
         }
       }
-      __pyx_t_10 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 400; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_10 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 414; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_10);
       if (__pyx_t_8) {
         __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_8); __pyx_t_8 = NULL;
@@ -4527,13 +4529,13 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
       __Pyx_INCREF(Py_True);
       __Pyx_GIVEREF(Py_True);
       PyTuple_SET_ITEM(__pyx_t_10, 1+__pyx_t_9, Py_True);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_10, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 400; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_10, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 414; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      if (!(likely(PyString_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_t_1)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 400; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyString_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_t_1)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 414; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-      /* "pyteomics\cythonize\cparser.pyx":404
+      /* "pyteomics\cythonize\cparser.pyx":418
  *                 split=False,
  *                 allow_unknown_modifications=allow_unknown_modifications,
  *                 labels=_labels)             # <<<<<<<<<<<<<<
@@ -4545,13 +4547,13 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
       __pyx_t_4.split = 0;
       __pyx_t_4.allow_unknown_modifications = __pyx_v_allow_unknown_modifications;
       __pyx_t_4.labels = __pyx_v__labels;
-      __pyx_t_7 = __pyx_f_9pyteomics_9cythonize_7cparser_parse(((PyObject*)__pyx_t_1), 0, &__pyx_t_4); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 400; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __pyx_f_9pyteomics_9cythonize_7cparser_parse(((PyObject*)__pyx_t_1), 0, &__pyx_t_4); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 414; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_v_parsed_sequence = ((PyObject*)__pyx_t_7);
       __pyx_t_7 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":399
+      /* "pyteomics\cythonize\cparser.pyx":413
  *                                 labels=_labels)
  *     elif isinstance(sequence, list):
  *         if sequence and isinstance(<object>PyList_GetItem(sequence, 0), tuple):             # <<<<<<<<<<<<<<
@@ -4561,7 +4563,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
       goto __pyx_L4;
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":406
+    /* "pyteomics\cythonize\cparser.pyx":420
  *                 labels=_labels)
  *         else:
  *             parsed_sequence = sequence             # <<<<<<<<<<<<<<
@@ -4569,7 +4571,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
  *         raise PyteomicsError('Unsupported type of a sequence.'
  */
     /*else*/ {
-      if (!(likely(PyList_CheckExact(__pyx_v_sequence))||((__pyx_v_sequence) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_v_sequence)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 406; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      if (!(likely(PyList_CheckExact(__pyx_v_sequence))||((__pyx_v_sequence) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_v_sequence)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 420; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_7 = __pyx_v_sequence;
       __Pyx_INCREF(__pyx_t_7);
       __pyx_v_parsed_sequence = ((PyObject*)__pyx_t_7);
@@ -4577,7 +4579,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
     }
     __pyx_L4:;
 
-    /* "pyteomics\cythonize\cparser.pyx":398
+    /* "pyteomics\cythonize\cparser.pyx":412
  *                                 allow_unknown_modifications=allow_unknown_modifications,
  *                                 labels=_labels)
  *     elif isinstance(sequence, list):             # <<<<<<<<<<<<<<
@@ -4587,7 +4589,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
     goto __pyx_L3;
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":408
+  /* "pyteomics\cythonize\cparser.pyx":422
  *             parsed_sequence = sequence
  *     else:
  *         raise PyteomicsError('Unsupported type of a sequence.'             # <<<<<<<<<<<<<<
@@ -4595,17 +4597,17 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
  * 
  */
   /*else*/ {
-    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 408; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
 
-    /* "pyteomics\cythonize\cparser.pyx":409
+    /* "pyteomics\cythonize\cparser.pyx":423
  *     else:
  *         raise PyteomicsError('Unsupported type of a sequence.'
  *                 'Must be str or list, not %s' % type(sequence))             # <<<<<<<<<<<<<<
  * 
  *     aa_dict = {}
  */
-    __pyx_t_10 = __Pyx_PyString_Format(__pyx_kp_s_Unsupported_type_of_a_sequence_M, ((PyObject *)Py_TYPE(__pyx_v_sequence))); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 409; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = __Pyx_PyString_Format(__pyx_kp_s_Unsupported_type_of_a_sequence_M, ((PyObject *)Py_TYPE(__pyx_v_sequence))); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 423; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_10);
     __pyx_t_8 = NULL;
     if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_1))) {
@@ -4618,40 +4620,40 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
       }
     }
     if (!__pyx_t_8) {
-      __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_10); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 408; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_10); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_GOTREF(__pyx_t_7);
     } else {
-      __pyx_t_11 = PyTuple_New(1+1); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 408; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = PyTuple_New(1+1); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_11);
       __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_8); __pyx_t_8 = NULL;
       __Pyx_GIVEREF(__pyx_t_10);
       PyTuple_SET_ITEM(__pyx_t_11, 0+1, __pyx_t_10);
       __pyx_t_10 = 0;
-      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_11, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 408; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_11, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_Raise(__pyx_t_7, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 408; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_L3:;
 
-  /* "pyteomics\cythonize\cparser.pyx":411
+  /* "pyteomics\cythonize\cparser.pyx":425
  *                 'Must be str or list, not %s' % type(sequence))
  * 
  *     aa_dict = {}             # <<<<<<<<<<<<<<
  *     # Process terminal amino acids.
  *     if term_aa:
  */
-  __pyx_t_7 = PyDict_New(); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 411; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = PyDict_New(); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 425; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_v_aa_dict = ((PyObject*)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":413
+  /* "pyteomics\cythonize\cparser.pyx":427
  *     aa_dict = {}
  *     # Process terminal amino acids.
  *     if term_aa:             # <<<<<<<<<<<<<<
@@ -4661,19 +4663,19 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
   __pyx_t_2 = (__pyx_v_term_aa != 0);
   if (__pyx_t_2) {
 
-    /* "pyteomics\cythonize\cparser.pyx":414
+    /* "pyteomics\cythonize\cparser.pyx":428
  *     # Process terminal amino acids.
  *     if term_aa:
  *         if is_term_mod(<object>PyList_GetItem(parsed_sequence, 0)):             # <<<<<<<<<<<<<<
  *             nterm_aa_position = 1
  *         else:
  */
-    __pyx_t_5 = PyList_GetItem(__pyx_v_parsed_sequence, 0); if (unlikely(__pyx_t_5 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 414; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (!(likely(PyString_CheckExact(((PyObject *)__pyx_t_5)))||((((PyObject *)__pyx_t_5)) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(((PyObject *)__pyx_t_5))->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 414; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = PyList_GetItem(__pyx_v_parsed_sequence, 0); if (unlikely(__pyx_t_5 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 428; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!(likely(PyString_CheckExact(((PyObject *)__pyx_t_5)))||((((PyObject *)__pyx_t_5)) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(((PyObject *)__pyx_t_5))->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 428; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_2 = (__pyx_f_9pyteomics_9cythonize_7cparser_is_term_mod(((PyObject*)((PyObject *)__pyx_t_5)), 0) != 0);
     if (__pyx_t_2) {
 
-      /* "pyteomics\cythonize\cparser.pyx":415
+      /* "pyteomics\cythonize\cparser.pyx":429
  *     if term_aa:
  *         if is_term_mod(<object>PyList_GetItem(parsed_sequence, 0)):
  *             nterm_aa_position = 1             # <<<<<<<<<<<<<<
@@ -4682,7 +4684,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
  */
       __pyx_v_nterm_aa_position = 1;
 
-      /* "pyteomics\cythonize\cparser.pyx":414
+      /* "pyteomics\cythonize\cparser.pyx":428
  *     # Process terminal amino acids.
  *     if term_aa:
  *         if is_term_mod(<object>PyList_GetItem(parsed_sequence, 0)):             # <<<<<<<<<<<<<<
@@ -4692,7 +4694,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
       goto __pyx_L8;
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":417
+    /* "pyteomics\cythonize\cparser.pyx":431
  *             nterm_aa_position = 1
  *         else:
  *             nterm_aa_position = 0             # <<<<<<<<<<<<<<
@@ -4704,7 +4706,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
     }
     __pyx_L8:;
 
-    /* "pyteomics\cythonize\cparser.pyx":418
+    /* "pyteomics\cythonize\cparser.pyx":432
  *         else:
  *             nterm_aa_position = 0
  *         if is_term_mod(parsed_sequence[-1]):             # <<<<<<<<<<<<<<
@@ -4713,26 +4715,26 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
  */
     if (unlikely(__pyx_v_parsed_sequence == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 418; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 432; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
-    __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_parsed_sequence, -1L, long, 1, __Pyx_PyInt_From_long, 1, 1, 1); if (unlikely(__pyx_t_7 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 418; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_parsed_sequence, -1L, long, 1, __Pyx_PyInt_From_long, 1, 1, 1); if (unlikely(__pyx_t_7 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 432; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_7);
-    if (!(likely(PyString_CheckExact(__pyx_t_7))||((__pyx_t_7) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_t_7)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 418; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!(likely(PyString_CheckExact(__pyx_t_7))||((__pyx_t_7) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "str", Py_TYPE(__pyx_t_7)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 432; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_2 = (__pyx_f_9pyteomics_9cythonize_7cparser_is_term_mod(((PyObject*)__pyx_t_7), 0) != 0);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     if (__pyx_t_2) {
 
-      /* "pyteomics\cythonize\cparser.pyx":419
+      /* "pyteomics\cythonize\cparser.pyx":433
  *             nterm_aa_position = 0
  *         if is_term_mod(parsed_sequence[-1]):
  *             cterm_aa_position = PyList_Size(parsed_sequence) - 2             # <<<<<<<<<<<<<<
  *         else:
  *             cterm_aa_position = PyList_Size(parsed_sequence) - 1
  */
-      __pyx_t_9 = PyList_Size(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_9 == -1L)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 419; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = PyList_Size(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_9 == -1L)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 433; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_v_cterm_aa_position = (__pyx_t_9 - 2);
 
-      /* "pyteomics\cythonize\cparser.pyx":418
+      /* "pyteomics\cythonize\cparser.pyx":432
  *         else:
  *             nterm_aa_position = 0
  *         if is_term_mod(parsed_sequence[-1]):             # <<<<<<<<<<<<<<
@@ -4742,7 +4744,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
       goto __pyx_L9;
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":421
+    /* "pyteomics\cythonize\cparser.pyx":435
  *             cterm_aa_position = PyList_Size(parsed_sequence) - 2
  *         else:
  *             cterm_aa_position = PyList_Size(parsed_sequence) - 1             # <<<<<<<<<<<<<<
@@ -4750,59 +4752,59 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
  *             temp = PyInt_FromLong(cterm_aa_position)
  */
     /*else*/ {
-      __pyx_t_9 = PyList_Size(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_9 == -1L)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 421; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_9 = PyList_Size(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_9 == -1L)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 435; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_v_cterm_aa_position = (__pyx_t_9 - 1);
     }
     __pyx_L9:;
 
-    /* "pyteomics\cythonize\cparser.pyx":422
+    /* "pyteomics\cythonize\cparser.pyx":436
  *         else:
  *             cterm_aa_position = PyList_Size(parsed_sequence) - 1
  *         if PyList_Size(parsed_sequence) > 1:             # <<<<<<<<<<<<<<
  *             temp = PyInt_FromLong(cterm_aa_position)
  *             temp = PyObject_CallMethodObjArgs(parsed_sequence, "pop", <PyObject*>temp, NULL)
  */
-    __pyx_t_9 = PyList_Size(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_9 == -1L)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 422; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = PyList_Size(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_9 == -1L)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 436; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_2 = ((__pyx_t_9 > 1) != 0);
     if (__pyx_t_2) {
 
-      /* "pyteomics\cythonize\cparser.pyx":423
+      /* "pyteomics\cythonize\cparser.pyx":437
  *             cterm_aa_position = PyList_Size(parsed_sequence) - 1
  *         if PyList_Size(parsed_sequence) > 1:
  *             temp = PyInt_FromLong(cterm_aa_position)             # <<<<<<<<<<<<<<
  *             temp = PyObject_CallMethodObjArgs(parsed_sequence, "pop", <PyObject*>temp, NULL)
  *             PyDict_SetItem(aa_dict, 'cterm' + temp, 1)
  */
-      __pyx_t_7 = PyInt_FromLong(__pyx_v_cterm_aa_position); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 423; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = PyInt_FromLong(__pyx_v_cterm_aa_position); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 437; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __pyx_v_temp = __pyx_t_7;
       __pyx_t_7 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":424
+      /* "pyteomics\cythonize\cparser.pyx":438
  *         if PyList_Size(parsed_sequence) > 1:
  *             temp = PyInt_FromLong(cterm_aa_position)
  *             temp = PyObject_CallMethodObjArgs(parsed_sequence, "pop", <PyObject*>temp, NULL)             # <<<<<<<<<<<<<<
  *             PyDict_SetItem(aa_dict, 'cterm' + temp, 1)
  *         temp = PyInt_FromLong(nterm_aa_position)
  */
-      __pyx_t_7 = PyObject_CallMethodObjArgs(__pyx_v_parsed_sequence, __pyx_n_s_pop, ((PyObject *)__pyx_v_temp), NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 424; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = PyObject_CallMethodObjArgs(__pyx_v_parsed_sequence, __pyx_n_s_pop, ((PyObject *)__pyx_v_temp), NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 438; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF_SET(__pyx_v_temp, __pyx_t_7);
       __pyx_t_7 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":425
+      /* "pyteomics\cythonize\cparser.pyx":439
  *             temp = PyInt_FromLong(cterm_aa_position)
  *             temp = PyObject_CallMethodObjArgs(parsed_sequence, "pop", <PyObject*>temp, NULL)
  *             PyDict_SetItem(aa_dict, 'cterm' + temp, 1)             # <<<<<<<<<<<<<<
  *         temp = PyInt_FromLong(nterm_aa_position)
  *         temp = PyObject_CallMethodObjArgs(parsed_sequence, "pop", <PyObject*>temp, NULL)
  */
-      __pyx_t_7 = PyNumber_Add(__pyx_n_s_cterm, __pyx_v_temp); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 425; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = PyNumber_Add(__pyx_n_s_cterm, __pyx_v_temp); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 439; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_12 = PyDict_SetItem(__pyx_v_aa_dict, __pyx_t_7, __pyx_int_1); if (unlikely(__pyx_t_12 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 425; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_12 = PyDict_SetItem(__pyx_v_aa_dict, __pyx_t_7, __pyx_int_1); if (unlikely(__pyx_t_12 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 439; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":422
+      /* "pyteomics\cythonize\cparser.pyx":436
  *         else:
  *             cterm_aa_position = PyList_Size(parsed_sequence) - 1
  *         if PyList_Size(parsed_sequence) > 1:             # <<<<<<<<<<<<<<
@@ -4811,43 +4813,43 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
  */
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":426
+    /* "pyteomics\cythonize\cparser.pyx":440
  *             temp = PyObject_CallMethodObjArgs(parsed_sequence, "pop", <PyObject*>temp, NULL)
  *             PyDict_SetItem(aa_dict, 'cterm' + temp, 1)
  *         temp = PyInt_FromLong(nterm_aa_position)             # <<<<<<<<<<<<<<
  *         temp = PyObject_CallMethodObjArgs(parsed_sequence, "pop", <PyObject*>temp, NULL)
  *         PyDict_SetItem(aa_dict, 'nterm' + temp, 1)
  */
-    __pyx_t_7 = PyInt_FromLong(__pyx_v_nterm_aa_position); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 426; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = PyInt_FromLong(__pyx_v_nterm_aa_position); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 440; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_XDECREF_SET(__pyx_v_temp, __pyx_t_7);
     __pyx_t_7 = 0;
 
-    /* "pyteomics\cythonize\cparser.pyx":427
+    /* "pyteomics\cythonize\cparser.pyx":441
  *             PyDict_SetItem(aa_dict, 'cterm' + temp, 1)
  *         temp = PyInt_FromLong(nterm_aa_position)
  *         temp = PyObject_CallMethodObjArgs(parsed_sequence, "pop", <PyObject*>temp, NULL)             # <<<<<<<<<<<<<<
  *         PyDict_SetItem(aa_dict, 'nterm' + temp, 1)
  *     # Process core amino acids.
  */
-    __pyx_t_7 = PyObject_CallMethodObjArgs(__pyx_v_parsed_sequence, __pyx_n_s_pop, ((PyObject *)__pyx_v_temp), NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 427; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = PyObject_CallMethodObjArgs(__pyx_v_parsed_sequence, __pyx_n_s_pop, ((PyObject *)__pyx_v_temp), NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 441; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF_SET(__pyx_v_temp, __pyx_t_7);
     __pyx_t_7 = 0;
 
-    /* "pyteomics\cythonize\cparser.pyx":428
+    /* "pyteomics\cythonize\cparser.pyx":442
  *         temp = PyInt_FromLong(nterm_aa_position)
  *         temp = PyObject_CallMethodObjArgs(parsed_sequence, "pop", <PyObject*>temp, NULL)
  *         PyDict_SetItem(aa_dict, 'nterm' + temp, 1)             # <<<<<<<<<<<<<<
  *     # Process core amino acids.
  *     i = 0
  */
-    __pyx_t_7 = PyNumber_Add(__pyx_n_s_nterm, __pyx_v_temp); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 428; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = PyNumber_Add(__pyx_n_s_nterm, __pyx_v_temp); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_12 = PyDict_SetItem(__pyx_v_aa_dict, __pyx_t_7, __pyx_int_1); if (unlikely(__pyx_t_12 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 428; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_12 = PyDict_SetItem(__pyx_v_aa_dict, __pyx_t_7, __pyx_int_1); if (unlikely(__pyx_t_12 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 442; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "pyteomics\cythonize\cparser.pyx":413
+    /* "pyteomics\cythonize\cparser.pyx":427
  *     aa_dict = {}
  *     # Process terminal amino acids.
  *     if term_aa:             # <<<<<<<<<<<<<<
@@ -4856,7 +4858,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
  */
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":430
+  /* "pyteomics\cythonize\cparser.pyx":444
  *         PyDict_SetItem(aa_dict, 'nterm' + temp, 1)
  *     # Process core amino acids.
  *     i = 0             # <<<<<<<<<<<<<<
@@ -4865,18 +4867,18 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
  */
   __pyx_v_i = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":431
+  /* "pyteomics\cythonize\cparser.pyx":445
  *     # Process core amino acids.
  *     i = 0
  *     for i in range(PyList_Size(parsed_sequence)):             # <<<<<<<<<<<<<<
  *         aa = <tuple>PyList_GET_ITEM(parsed_sequence, i)
  *         pvalue = PyDict_GetItem(aa_dict, aa)
  */
-  __pyx_t_9 = PyList_Size(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_9 == -1L)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 431; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_9 = PyList_Size(__pyx_v_parsed_sequence); if (unlikely(__pyx_t_9 == -1L)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 445; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_9; __pyx_t_13+=1) {
     __pyx_v_i = __pyx_t_13;
 
-    /* "pyteomics\cythonize\cparser.pyx":432
+    /* "pyteomics\cythonize\cparser.pyx":446
  *     i = 0
  *     for i in range(PyList_Size(parsed_sequence)):
  *         aa = <tuple>PyList_GET_ITEM(parsed_sequence, i)             # <<<<<<<<<<<<<<
@@ -4889,7 +4891,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
     __Pyx_XDECREF_SET(__pyx_v_aa, ((PyObject*)__pyx_t_7));
     __pyx_t_7 = 0;
 
-    /* "pyteomics\cythonize\cparser.pyx":433
+    /* "pyteomics\cythonize\cparser.pyx":447
  *     for i in range(PyList_Size(parsed_sequence)):
  *         aa = <tuple>PyList_GET_ITEM(parsed_sequence, i)
  *         pvalue = PyDict_GetItem(aa_dict, aa)             # <<<<<<<<<<<<<<
@@ -4898,7 +4900,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
  */
     __pyx_v_pvalue = PyDict_GetItem(__pyx_v_aa_dict, __pyx_v_aa);
 
-    /* "pyteomics\cythonize\cparser.pyx":434
+    /* "pyteomics\cythonize\cparser.pyx":448
  *         aa = <tuple>PyList_GET_ITEM(parsed_sequence, i)
  *         pvalue = PyDict_GetItem(aa_dict, aa)
  *         if pvalue == NULL:             # <<<<<<<<<<<<<<
@@ -4908,7 +4910,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
     __pyx_t_2 = ((__pyx_v_pvalue == NULL) != 0);
     if (__pyx_t_2) {
 
-      /* "pyteomics\cythonize\cparser.pyx":435
+      /* "pyteomics\cythonize\cparser.pyx":449
  *         pvalue = PyDict_GetItem(aa_dict, aa)
  *         if pvalue == NULL:
  *             aa_count = 0             # <<<<<<<<<<<<<<
@@ -4917,7 +4919,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
  */
       __pyx_v_aa_count = 0;
 
-      /* "pyteomics\cythonize\cparser.pyx":434
+      /* "pyteomics\cythonize\cparser.pyx":448
  *         aa = <tuple>PyList_GET_ITEM(parsed_sequence, i)
  *         pvalue = PyDict_GetItem(aa_dict, aa)
  *         if pvalue == NULL:             # <<<<<<<<<<<<<<
@@ -4927,7 +4929,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
       goto __pyx_L13;
     }
 
-    /* "pyteomics\cythonize\cparser.pyx":437
+    /* "pyteomics\cythonize\cparser.pyx":451
  *             aa_count = 0
  *         else:
  *             aa_count = PyInt_AsLong(<object>pvalue)             # <<<<<<<<<<<<<<
@@ -4935,12 +4937,12 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
  *         PyDict_SetItem(aa_dict, aa, aa_count)
  */
     /*else*/ {
-      __pyx_t_14 = PyInt_AsLong(((PyObject *)__pyx_v_pvalue)); if (unlikely(__pyx_t_14 == -1L && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 437; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_14 = PyInt_AsLong(((PyObject *)__pyx_v_pvalue)); if (unlikely(__pyx_t_14 == -1L && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 451; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_v_aa_count = __pyx_t_14;
     }
     __pyx_L13:;
 
-    /* "pyteomics\cythonize\cparser.pyx":438
+    /* "pyteomics\cythonize\cparser.pyx":452
  *         else:
  *             aa_count = PyInt_AsLong(<object>pvalue)
  *         aa_count += 1             # <<<<<<<<<<<<<<
@@ -4949,20 +4951,20 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
  */
     __pyx_v_aa_count = (__pyx_v_aa_count + 1);
 
-    /* "pyteomics\cythonize\cparser.pyx":439
+    /* "pyteomics\cythonize\cparser.pyx":453
  *             aa_count = PyInt_AsLong(<object>pvalue)
  *         aa_count += 1
  *         PyDict_SetItem(aa_dict, aa, aa_count)             # <<<<<<<<<<<<<<
  * 
  *     return aa_dict
  */
-    __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_aa_count); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 439; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_aa_count); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 453; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_12 = PyDict_SetItem(__pyx_v_aa_dict, __pyx_v_aa, __pyx_t_7); if (unlikely(__pyx_t_12 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 439; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_12 = PyDict_SetItem(__pyx_v_aa_dict, __pyx_v_aa, __pyx_t_7); if (unlikely(__pyx_t_12 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 453; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
 
-  /* "pyteomics\cythonize\cparser.pyx":441
+  /* "pyteomics\cythonize\cparser.pyx":455
  *         PyDict_SetItem(aa_dict, aa, aa_count)
  * 
  *     return aa_dict             # <<<<<<<<<<<<<<
@@ -4972,7 +4974,7 @@ static PyObject *__pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(P
   __pyx_r = __pyx_v_aa_dict;
   goto __pyx_L0;
 
-  /* "pyteomics\cythonize\cparser.pyx":343
+  /* "pyteomics\cythonize\cparser.pyx":357
  * 
  * 
  * cpdef dict amino_acid_composition(object sequence, int show_unmodified_termini=0, int term_aa=0,             # <<<<<<<<<<<<<<
@@ -5058,7 +5060,7 @@ static PyObject *__pyx_pw_9pyteomics_9cythonize_7cparser_11amino_acid_compositio
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "amino_acid_composition") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 343; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "amino_acid_composition") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 357; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -5073,17 +5075,17 @@ static PyObject *__pyx_pw_9pyteomics_9cythonize_7cparser_11amino_acid_compositio
     }
     __pyx_v_sequence = values[0];
     if (values[1]) {
-      __pyx_v_show_unmodified_termini = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_show_unmodified_termini == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 343; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_show_unmodified_termini = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_show_unmodified_termini == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 357; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_show_unmodified_termini = ((int)0);
     }
     if (values[2]) {
-      __pyx_v_term_aa = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_term_aa == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 343; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_term_aa = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_term_aa == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 357; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_term_aa = ((int)0);
     }
     if (values[3]) {
-      __pyx_v_allow_unknown_modifications = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_allow_unknown_modifications == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 344; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      __pyx_v_allow_unknown_modifications = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_allow_unknown_modifications == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 358; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
     } else {
       __pyx_v_allow_unknown_modifications = ((int)0);
     }
@@ -5091,7 +5093,7 @@ static PyObject *__pyx_pw_9pyteomics_9cythonize_7cparser_11amino_acid_compositio
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("amino_acid_composition", 0, 1, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 343; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("amino_acid_composition", 0, 1, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 357; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("pyteomics.cythonize.cparser.amino_acid_composition", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5119,7 +5121,7 @@ static PyObject *__pyx_pf_9pyteomics_9cythonize_7cparser_10amino_acid_compositio
   __pyx_t_2.term_aa = __pyx_v_term_aa;
   __pyx_t_2.allow_unknown_modifications = __pyx_v_allow_unknown_modifications;
   __pyx_t_2.labels = __pyx_v_labels;
-  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(__pyx_v_sequence, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 343; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __pyx_f_9pyteomics_9cythonize_7cparser_amino_acid_composition(__pyx_v_sequence, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 357; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -5203,7 +5205,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_a_z_A_Z_2, __pyx_k_a_z_A_Z_2, sizeof(__pyx_k_a_z_A_Z_2), 0, 0, 1, 0},
   {&__pyx_kp_s_a_z_A_Z_3, __pyx_k_a_z_A_Z_3, sizeof(__pyx_k_a_z_A_Z_3), 0, 0, 1, 0},
   {&__pyx_n_s_allow_unknown_modifications, __pyx_k_allow_unknown_modifications, sizeof(__pyx_k_allow_unknown_modifications), 0, 0, 1, 1},
-  {&__pyx_kp_u_amino_acid_composition_line_343, __pyx_k_amino_acid_composition_line_343, sizeof(__pyx_k_amino_acid_composition_line_343), 0, 1, 0, 0},
+  {&__pyx_kp_u_amino_acid_composition_line_357, __pyx_k_amino_acid_composition_line_357, sizeof(__pyx_k_amino_acid_composition_line_357), 0, 1, 0, 0},
   {&__pyx_n_s_collections, __pyx_k_collections, sizeof(__pyx_k_collections), 0, 0, 1, 1},
   {&__pyx_n_s_compile, __pyx_k_compile, sizeof(__pyx_k_compile), 0, 0, 1, 1},
   {&__pyx_n_s_cterm, __pyx_k_cterm, sizeof(__pyx_k_cterm), 0, 0, 1, 1},
@@ -5219,12 +5221,12 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_itertools, __pyx_k_itertools, sizeof(__pyx_k_itertools), 0, 0, 1, 1},
   {&__pyx_n_s_join, __pyx_k_join, sizeof(__pyx_k_join), 0, 0, 1, 1},
   {&__pyx_n_s_labels, __pyx_k_labels, sizeof(__pyx_k_labels), 0, 0, 1, 1},
-  {&__pyx_kp_u_length_line_82, __pyx_k_length_line_82, sizeof(__pyx_k_length_line_82), 0, 1, 0, 0},
+  {&__pyx_kp_u_length_line_96, __pyx_k_length_line_96, sizeof(__pyx_k_length_line_96), 0, 1, 0, 0},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_match, __pyx_k_match, sizeof(__pyx_k_match), 0, 0, 1, 1},
   {&__pyx_n_s_memoize, __pyx_k_memoize, sizeof(__pyx_k_memoize), 0, 0, 1, 1},
   {&__pyx_n_s_nterm, __pyx_k_nterm, sizeof(__pyx_k_nterm), 0, 0, 1, 1},
-  {&__pyx_kp_u_parse_line_151, __pyx_k_parse_line_151, sizeof(__pyx_k_parse_line_151), 0, 1, 0, 0},
+  {&__pyx_kp_u_parse_line_165, __pyx_k_parse_line_165, sizeof(__pyx_k_parse_line_165), 0, 1, 0, 0},
   {&__pyx_n_s_parsed_sequence, __pyx_k_parsed_sequence, sizeof(__pyx_k_parsed_sequence), 0, 0, 1, 1},
   {&__pyx_n_s_pop, __pyx_k_pop, sizeof(__pyx_k_pop), 0, 0, 1, 1},
   {&__pyx_n_s_pyteomics_auxiliary, __pyx_k_pyteomics_auxiliary, sizeof(__pyx_k_pyteomics_auxiliary), 0, 0, 1, 1},
@@ -5242,8 +5244,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_sum = __Pyx_GetBuiltinName(__pyx_n_s_sum); if (!__pyx_builtin_sum) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 118; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 259; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_sum = __Pyx_GetBuiltinName(__pyx_n_s_sum); if (!__pyx_builtin_sum) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 273; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -5253,61 +5255,61 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "pyteomics\cythonize\cparser.pyx":121
+  /* "pyteomics\cythonize\cparser.pyx":135
  *                     if not is_term_mod(aa)])
  * 
  *     raise PyteomicsError('Unsupported type of sequence.')             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_Unsupported_type_of_sequence); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_Unsupported_type_of_sequence); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "pyteomics\cythonize\cparser.pyx":38
+  /* "pyteomics\cythonize\cparser.pyx":52
  * """modX labels for the standard amino acids and unmodified termini."""
  * 
  * _modX_sequence = re.compile(r'^([^-]+-)?((?:[a-z]*[A-Z])+)(-[^-]+)?$')             # <<<<<<<<<<<<<<
  * _modX_group = re.compile(r'[a-z]*[A-Z]')
  * _modX_split = re.compile(r'([a-z]*)([A-Z])')
  */
-  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_s_a_z_A_Z); if (unlikely(!__pyx_tuple__7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_s_a_z_A_Z); if (unlikely(!__pyx_tuple__7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "pyteomics\cythonize\cparser.pyx":39
+  /* "pyteomics\cythonize\cparser.pyx":53
  * 
  * _modX_sequence = re.compile(r'^([^-]+-)?((?:[a-z]*[A-Z])+)(-[^-]+)?$')
  * _modX_group = re.compile(r'[a-z]*[A-Z]')             # <<<<<<<<<<<<<<
  * _modX_split = re.compile(r'([a-z]*)([A-Z])')
  * 
  */
-  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_s_a_z_A_Z_2); if (unlikely(!__pyx_tuple__8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_s_a_z_A_Z_2); if (unlikely(!__pyx_tuple__8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 53; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
 
-  /* "pyteomics\cythonize\cparser.pyx":40
+  /* "pyteomics\cythonize\cparser.pyx":54
  * _modX_sequence = re.compile(r'^([^-]+-)?((?:[a-z]*[A-Z])+)(-[^-]+)?$')
  * _modX_group = re.compile(r'[a-z]*[A-Z]')
  * _modX_split = re.compile(r'([a-z]*)([A-Z])')             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_s_a_z_A_Z_3); if (unlikely(!__pyx_tuple__9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 40; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_s_a_z_A_Z_3); if (unlikely(!__pyx_tuple__9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
 
-  /* "pyteomics\cythonize\cparser.pyx":310
+  /* "pyteomics\cythonize\cparser.pyx":324
  * 
  * 
  * def tostring(parsed_sequence, show_unmodified_termini=True):             # <<<<<<<<<<<<<<
  *     """Create a string from a parsed sequence.
  * 
  */
-  __pyx_tuple__10 = PyTuple_Pack(5, __pyx_n_s_parsed_sequence, __pyx_n_s_show_unmodified_termini, __pyx_n_s_labels, __pyx_n_s_group, __pyx_n_s_group_l); if (unlikely(!__pyx_tuple__10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 310; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__10 = PyTuple_Pack(5, __pyx_n_s_parsed_sequence, __pyx_n_s_show_unmodified_termini, __pyx_n_s_labels, __pyx_n_s_group, __pyx_n_s_group_l); if (unlikely(!__pyx_tuple__10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 324; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
-  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(2, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_D_Programming_cython_pyteomics_p, __pyx_n_s_tostring, 310, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 310; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(2, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_D_Programming_cython_pyteomics_p, __pyx_n_s_tostring, 324, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 324; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -5436,59 +5438,59 @@ PyMODINIT_FUNC PyInit_cparser(void)
   if (__Pyx_patch_abc() < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   #endif
 
-  /* "pyteomics\cythonize\cparser.pyx":14
+  /* "pyteomics\cythonize\cparser.pyx":28
  * from cpython.object cimport PyObject_CallMethodObjArgs, PyObject_Not, PyObject_IsTrue
  * 
  * import re             # <<<<<<<<<<<<<<
  * from collections import deque
  * import itertools as it
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_re, 0, -1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 14; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_re, 0, -1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_re, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 14; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_re, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 28; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":15
+  /* "pyteomics\cythonize\cparser.pyx":29
  * 
  * import re
  * from collections import deque             # <<<<<<<<<<<<<<
  * import itertools as it
  * from pyteomics.auxiliary import PyteomicsError, memoize, BasicComposition
  */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_s_deque);
   __Pyx_GIVEREF(__pyx_n_s_deque);
   PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_deque);
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_collections, __pyx_t_1, -1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_collections, __pyx_t_1, -1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_deque); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_deque); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_deque, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 15; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_deque, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":16
+  /* "pyteomics\cythonize\cparser.pyx":30
  * import re
  * from collections import deque
  * import itertools as it             # <<<<<<<<<<<<<<
  * from pyteomics.auxiliary import PyteomicsError, memoize, BasicComposition
  * 
  */
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_itertools, 0, -1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_itertools, 0, -1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_it, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_it, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 30; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":17
+  /* "pyteomics\cythonize\cparser.pyx":31
  * from collections import deque
  * import itertools as it
  * from pyteomics.auxiliary import PyteomicsError, memoize, BasicComposition             # <<<<<<<<<<<<<<
  * 
  * cdef:
  */
-  __pyx_t_2 = PyList_New(3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyList_New(3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_n_s_PyteomicsError);
   __Pyx_GIVEREF(__pyx_n_s_PyteomicsError);
@@ -5499,31 +5501,31 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __Pyx_INCREF(__pyx_n_s_BasicComposition);
   __Pyx_GIVEREF(__pyx_n_s_BasicComposition);
   PyList_SET_ITEM(__pyx_t_2, 2, __pyx_n_s_BasicComposition);
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_pyteomics_auxiliary, __pyx_t_2, -1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_pyteomics_auxiliary, __pyx_t_2, -1); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_PyteomicsError); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_PyteomicsError, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_PyteomicsError, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_memoize); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_memoize); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_memoize, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_memoize, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_BasicComposition); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_BasicComposition); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_BasicComposition, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_BasicComposition, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 31; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":25
+  /* "pyteomics\cythonize\cparser.pyx":39
  * 
  * 
  * std_amino_acids = ['Q','W','E','R','T','Y','I','P','A','S',             # <<<<<<<<<<<<<<
  *                    'D','F','G','H','K','L','C','V','N','M']
  * """modX labels for the 20 standard amino acids."""
  */
-  __pyx_t_1 = PyList_New(20); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 25; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(20); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_s_Q);
   __Pyx_GIVEREF(__pyx_n_s_Q);
@@ -5590,7 +5592,7 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":29
+  /* "pyteomics\cythonize\cparser.pyx":43
  * """modX labels for the 20 standard amino acids."""
  * 
  * std_nterm = 'H-'             # <<<<<<<<<<<<<<
@@ -5602,7 +5604,7 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __Pyx_DECREF_SET(__pyx_v_9pyteomics_9cythonize_7cparser_std_nterm, __pyx_kp_s_H_2);
   __Pyx_GIVEREF(__pyx_kp_s_H_2);
 
-  /* "pyteomics\cythonize\cparser.pyx":32
+  /* "pyteomics\cythonize\cparser.pyx":46
  * """modX label for the unmodified N-terminus."""
  * 
  * std_cterm = '-OH'             # <<<<<<<<<<<<<<
@@ -5614,14 +5616,14 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __Pyx_DECREF_SET(__pyx_v_9pyteomics_9cythonize_7cparser_std_cterm, __pyx_kp_s_OH);
   __Pyx_GIVEREF(__pyx_kp_s_OH);
 
-  /* "pyteomics\cythonize\cparser.pyx":35
+  /* "pyteomics\cythonize\cparser.pyx":49
  * """modX label for the unmodified C-terminus."""
  * 
  * std_labels = std_amino_acids + [std_nterm, std_cterm]             # <<<<<<<<<<<<<<
  * """modX labels for the standard amino acids and unmodified termini."""
  * 
  */
-  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 35; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 49; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_nterm);
   __Pyx_GIVEREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_nterm);
@@ -5629,7 +5631,7 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __Pyx_INCREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_cterm);
   __Pyx_GIVEREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_cterm);
   PyList_SET_ITEM(__pyx_t_1, 1, __pyx_v_9pyteomics_9cythonize_7cparser_std_cterm);
-  __pyx_t_2 = PyNumber_Add(__pyx_v_9pyteomics_9cythonize_7cparser_std_amino_acids, __pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 35; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyNumber_Add(__pyx_v_9pyteomics_9cythonize_7cparser_std_amino_acids, __pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 49; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_XGOTREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_labels);
@@ -5637,19 +5639,19 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":38
+  /* "pyteomics\cythonize\cparser.pyx":52
  * """modX labels for the standard amino acids and unmodified termini."""
  * 
  * _modX_sequence = re.compile(r'^([^-]+-)?((?:[a-z]*[A-Z])+)(-[^-]+)?$')             # <<<<<<<<<<<<<<
  * _modX_group = re.compile(r'[a-z]*[A-Z]')
  * _modX_split = re.compile(r'([a-z]*)([A-Z])')
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_re); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_re); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_compile); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_compile); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_XGOTREF(__pyx_v_9pyteomics_9cythonize_7cparser__modX_sequence);
@@ -5657,19 +5659,19 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":39
+  /* "pyteomics\cythonize\cparser.pyx":53
  * 
  * _modX_sequence = re.compile(r'^([^-]+-)?((?:[a-z]*[A-Z])+)(-[^-]+)?$')
  * _modX_group = re.compile(r'[a-z]*[A-Z]')             # <<<<<<<<<<<<<<
  * _modX_split = re.compile(r'([a-z]*)([A-Z])')
  * 
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_re); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_re); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 53; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_compile); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_compile); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 53; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 39; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 53; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_XGOTREF(__pyx_v_9pyteomics_9cythonize_7cparser__modX_group);
@@ -5677,19 +5679,19 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":40
+  /* "pyteomics\cythonize\cparser.pyx":54
  * _modX_sequence = re.compile(r'^([^-]+-)?((?:[a-z]*[A-Z])+)(-[^-]+)?$')
  * _modX_group = re.compile(r'[a-z]*[A-Z]')
  * _modX_split = re.compile(r'([a-z]*)([A-Z])')             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_re); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 40; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_re); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_compile); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 40; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_compile); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 40; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_XGOTREF(__pyx_v_9pyteomics_9cythonize_7cparser__modX_split);
@@ -5697,7 +5699,7 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":84
+  /* "pyteomics\cythonize\cparser.pyx":98
  * cpdef int length(object sequence,
  *                  int show_unmodified_termini=0, int split=0,
  *                  int allow_unknown_modifications=0, object labels=std_labels):             # <<<<<<<<<<<<<<
@@ -5708,7 +5710,7 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __pyx_k__2 = __pyx_v_9pyteomics_9cythonize_7cparser_std_labels;
   __Pyx_GIVEREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_labels);
 
-  /* "pyteomics\cythonize\cparser.pyx":82
+  /* "pyteomics\cythonize\cparser.pyx":96
  *     return bool(match_modX(label))
  * 
  * cpdef int length(object sequence,             # <<<<<<<<<<<<<<
@@ -5719,7 +5721,7 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __pyx_k__2 = __pyx_v_9pyteomics_9cythonize_7cparser_std_labels;
   __Pyx_GIVEREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_labels);
 
-  /* "pyteomics\cythonize\cparser.pyx":152
+  /* "pyteomics\cythonize\cparser.pyx":166
  * 
  * cpdef list parse(str sequence, int show_unmodified_termini=0, int split=0,
  *                 int allow_unknown_modifications=0, object labels=std_labels):             # <<<<<<<<<<<<<<
@@ -5730,7 +5732,7 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __pyx_k__4 = __pyx_v_9pyteomics_9cythonize_7cparser_std_labels;
   __Pyx_GIVEREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_labels);
 
-  /* "pyteomics\cythonize\cparser.pyx":151
+  /* "pyteomics\cythonize\cparser.pyx":165
  * 
  * 
  * cpdef list parse(str sequence, int show_unmodified_termini=0, int split=0,             # <<<<<<<<<<<<<<
@@ -5741,19 +5743,19 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __pyx_k__4 = __pyx_v_9pyteomics_9cythonize_7cparser_std_labels;
   __Pyx_GIVEREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_labels);
 
-  /* "pyteomics\cythonize\cparser.pyx":310
+  /* "pyteomics\cythonize\cparser.pyx":324
  * 
  * 
  * def tostring(parsed_sequence, show_unmodified_termini=True):             # <<<<<<<<<<<<<<
  *     """Create a string from a parsed sequence.
  * 
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_9pyteomics_9cythonize_7cparser_9tostring, NULL, __pyx_n_s_pyteomics_cythonize_cparser); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 310; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_9pyteomics_9cythonize_7cparser_9tostring, NULL, __pyx_n_s_pyteomics_cythonize_cparser); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 324; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_tostring, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 310; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_tostring, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 324; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyteomics\cythonize\cparser.pyx":344
+  /* "pyteomics\cythonize\cparser.pyx":358
  * 
  * cpdef dict amino_acid_composition(object sequence, int show_unmodified_termini=0, int term_aa=0,
  *                                   int allow_unknown_modifications=0, object labels=std_labels):             # <<<<<<<<<<<<<<
@@ -5764,7 +5766,7 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __pyx_k__6 = __pyx_v_9pyteomics_9cythonize_7cparser_std_labels;
   __Pyx_GIVEREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_labels);
 
-  /* "pyteomics\cythonize\cparser.pyx":343
+  /* "pyteomics\cythonize\cparser.pyx":357
  * 
  * 
  * cpdef dict amino_acid_composition(object sequence, int show_unmodified_termini=0, int term_aa=0,             # <<<<<<<<<<<<<<
@@ -5776,15 +5778,15 @@ PyMODINIT_FUNC PyInit_cparser(void)
   __Pyx_GIVEREF(__pyx_v_9pyteomics_9cythonize_7cparser_std_labels);
 
   /* "pyteomics\cythonize\cparser.pyx":1
- * cimport cython             # <<<<<<<<<<<<<<
- * from cpython.ref cimport PyObject, Py_INCREF
- * from cpython.dict cimport PyDict_GetItem, PyDict_Next, PyDict_SetItem
+ * #   Copyright 2016 Joshua Klein, Lev Levitsky             # <<<<<<<<<<<<<<
+ * #
+ * #   Licensed under the Apache License, Version 2.0 (the "License");
  */
   __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_kp_u_length_line_82, __pyx_kp_u_Calculate_the_number_of_amino_ac) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_2, __pyx_kp_u_parse_line_151, __pyx_kp_u_Parse_a_sequence_string_written) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyDict_SetItem(__pyx_t_2, __pyx_kp_u_amino_acid_composition_line_343, __pyx_kp_u_Calculate_amino_acid_composition) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_kp_u_length_line_96, __pyx_kp_u_Calculate_the_number_of_amino_ac) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_kp_u_parse_line_165, __pyx_kp_u_Parse_a_sequence_string_written) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_t_2, __pyx_kp_u_amino_acid_composition_line_357, __pyx_kp_u_Calculate_amino_acid_composition) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 

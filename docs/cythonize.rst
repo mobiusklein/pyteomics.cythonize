@@ -13,10 +13,6 @@ use of them.
 This package also re-implements the :class:`pyteomics.mass.Composition` type in C using Python's
 :class:`dict` as a base.
 
-
-Submodules
-----------
-
 cythonize.cmass module
 ----------------------
 
