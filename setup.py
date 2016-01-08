@@ -1,9 +1,4 @@
 #!/usr/bin/env python
-
-'''
-setup.py file for pyteomics
-'''
-
 from setuptools import setup, Extension, find_packages
 
 try:
