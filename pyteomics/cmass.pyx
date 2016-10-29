@@ -1,3 +1,5 @@
+# cython: embedsignature=True
+# cython: profile=True
 #   Copyright 2016 Joshua Klein, Lev Levitsky
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,10 +32,11 @@ from pyteomics.mass import std_aa_mass as _std_aa_mass, std_ion_comp as _std_ion
 from collections import defaultdict
 from itertools import chain
 
-import cparser
-from cparser import parse, amino_acid_composition, _split_label
-cimport cparser
-from cparser cimport parse, amino_acid_composition, _split_label
+# from pyteomics import cparser
+from pyteomics.cparser import parse, amino_acid_composition, _split_label
+
+from pyteomics cimport cparser
+from pyteomics.cparser cimport parse, amino_acid_composition, _split_label
 
 cdef:
     dict nist_mass = _nist_mass

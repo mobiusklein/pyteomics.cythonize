@@ -4,24 +4,29 @@ from setuptools import setup, Extension, find_packages
 try:
     from Cython.Build import cythonize
     extensions = cythonize([
-        Extension(name="pyteomics.cythonize.cparser", sources=["pyteomics/cythonize/cparser.pyx"]),
-        Extension(name="pyteomics.cythonize.cmass", sources=["pyteomics/cythonize/cmass.pyx"])
-        ])
+        Extension(name="pyteomics.cparser", sources=[
+                  "pyteomics/cparser.pyx"]),
+        Extension(name="pyteomics.cmass",
+                  sources=["pyteomics/cmass.pyx"])
+    ])
 except ImportError:
     extensions = ([
-        Extension(name="pyteomics.cythonize.cparser", sources=["pyteomics/cythonize/cparser.c"]),
-        Extension(name="pyteomics.cythonize.cmass", sources=["pyteomics/cythonize/cmass.c"])
-        ])
+        Extension(name="pyteomics.cparser",
+                  sources=["pyteomics/cparser.c"]),
+        Extension(name="pyteomics.cmass",
+                  sources=["pyteomics/cmass.c"])
+    ])
 
 
 setup(
     name='pyteomics.cythonize',
     description='An Cython-accelerated version of common pyteomics functions',
     long_description=open("README.rst").read(),
-    version="0.1.0",
+    version="0.1.1",
     packages=find_packages(),
     zip_safe=False,
     install_requires=['pyteomics'],
+    include_package_data=True,
     ext_modules=extensions,
     maintainer='Joshua Klein',
     maintainer_email="jaklein@bu.edu",
@@ -34,6 +39,6 @@ setup(
         'Topic :: Scientific/Engineering :: Chemistry',
         'Topic :: Software Development :: Libraries'
     ],
-    namespace_packages=["pyteomics", "pyteomics.cythonize"],
+    namespace_packages=["pyteomics"],
     license='License :: OSI Approved :: Apache Software License'
-    )
+)

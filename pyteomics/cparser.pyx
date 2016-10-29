@@ -1,3 +1,5 @@
+# cython: embedsignature=True
+# cython: profile=True
 #   Copyright 2016 Joshua Klein, Lev Levitsky
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
@@ -321,7 +323,7 @@ cpdef list parse(str sequence, int show_unmodified_termini=0, int split=0,
     return parsed_sequence
 
 
-def tostring(parsed_sequence, show_unmodified_termini=True):
+cdef str tostring(object parsed_sequence, bint show_unmodified_termini=True):
     """Create a string from a parsed sequence.
 
     Parameters
@@ -340,16 +342,27 @@ def tostring(parsed_sequence, show_unmodified_termini=True):
     -------
     sequence : str
     """
+    cdef:
+        list labels, group_l
+        object group, remove_fn
+        bint is_term
+        Py_ssize_t i, n
+    n = len(parsed_sequence)
     labels = []
-    for group in parsed_sequence:
+    for i in range(n):
+        group = parsed_sequence[i]
         if isinstance(group, str):
-            if (group not in (std_cterm, std_nterm)) or show_unmodified_termini:
+            is_term = group == std_cterm or group == std_nterm
+            if is_term or show_unmodified_termini:
                 labels.append(group)
         else: # treat `group` as a tuple
             group_l = list(group)
+            remove_fn = group_l.remove
             if not show_unmodified_termini:
-                if std_cterm in group_l: group_l.remove(std_cterm)
-                if std_nterm in group_l: group_l.remove(std_nterm)
+                if std_cterm in group_l:
+                    remove_fn(std_cterm)
+                if std_nterm in group_l:
+                    remove_fn(std_nterm)
             labels.append(''.join(group_l))
     return ''.join(labels)
 

@@ -5,9 +5,10 @@ import pickle
 import unittest
 import random
 from pyteomics import auxiliary, mass
-from pyteomics.cythonize import cmass, cparser
+from pyteomics import cmass, cparser
 cmass.nist_mass = mass.nist_mass
 import gzip
+
 
 
 class MassTest(unittest.TestCase):

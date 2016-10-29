@@ -13,15 +13,19 @@ use of them.
 This package also re-implements the :class:`pyteomics.mass.Composition` type in C using Python's
 :class:`dict` as a base.
 
-cythonize.cmass module
+cmass module
 ----------------------
 
-.. automodule:: cythonize.cmass
+.. automodule:: cmass
     :members:
     :undoc-members:
     :show-inheritance:
 
-    .. autofunction:: cythonize.cmass.calculate_mass
+    .. autofunction:: cmass.fast_mass
+
+    .. autofunction:: cmass.fast_mass2
+
+    .. autofunction:: cmass.calculate_mass
 
     .. autoclass:: CComposition
 
@@ -34,19 +38,10 @@ cythonize.cmass module
             Copy this instance
 
 
-cythonize.cparser module
+cparser module
 ------------------------
 
-.. automodule:: cythonize.cparser
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: cythonize
+.. automodule:: cparser
     :members:
     :undoc-members:
     :show-inheritance:

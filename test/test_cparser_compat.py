@@ -1,12 +1,12 @@
 import unittest
 
 from pyteomics import parser
-from pyteomics.cythonize import cparser
+from pyteomics import cparser
 from string import ascii_uppercase as uppercase
 import random
 
 parse = cparser.parse
-tostring = cparser.tostring
+tostring = parser.tostring
 amino_acid_composition = cparser.amino_acid_composition
 length = cparser.length
 
@@ -74,24 +74,6 @@ class ParserTest(unittest.TestCase):
                 self.assertEqual(1, comp['cterm' + seq[-1]])
             self.assertEqual(sum(comp_default.values()),
                              sum(comp.values()))
-
-    def test_cleave(self):
-        for seq in self.simple_sequences:
-            for elem in cleave(
-                    seq, expasy_rules['trypsin'], int(random.uniform(1, 10)),
-                    labels=uppercase):
-                self.assertIn(elem, seq)
-            self.assertTrue(any(elem == seq
-                                for elem in cleave(seq, expasy_rules['trypsin'], len(seq),
-                                                   labels=uppercase)))
-
-    def test_cleave_min_length(self):
-        for seq in self.simple_sequences:
-            ml = random.uniform(1, 5)
-            for elem in cleave(
-                    seq, expasy_rules['trypsin'], int(random.uniform(1, 10)),
-                    ml, labels=uppercase):
-                self.assertTrue(len(elem) >= ml)
 
     def test_num_sites(self):
         self.assertEqual(
