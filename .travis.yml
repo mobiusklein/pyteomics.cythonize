@@ -1,0 +1,20 @@
+language: python
+python:
+  - "2.7"
+  - "3.5"
+  # does not have headers provided, please ask https://launchpad.net/~pypy/+archive/ppa
+  # maintainers to fix their pypy-dev package.
+  # - "pypy"
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+cache: pip
+# command to install dependencies
+install:
+  - pip install -U setuptools pytest
+  - pip install Cython --install-option="--no-cython-compile"
+  - pip install lxml
+  - pip install --only-binary=numpy numpy
+  - pip install .
+# command to run tests
+script: pytest test

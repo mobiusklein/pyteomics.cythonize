@@ -56,7 +56,8 @@ _modX_group = re.compile(r'[a-z]*[A-Z]')
 _modX_split = re.compile(r'([a-z]*)([A-Z])')
 
 
-cpdef inline int is_term_mod(str label):
+@cython.nonecheck(False)
+cdef bint is_term_mod(str label):
     """Check if `label` corresponds to a terminal modification.
 
     Parameters
@@ -67,7 +68,14 @@ cpdef inline int is_term_mod(str label):
     -------
     out : bool
     """
-    return (PySequence_GetItem(label, 0) == '-') or (PySequence_GetItem(label, len(label) - 1) == '-')
+    cdef:
+        bint result
+    result = label.startswith("-")
+    if result:
+        return result
+    else:
+        result = label.endswith("-")
+        return result
 
 cdef inline object match_modX(str label):
     """Check if `label` is a valid 'modX' label.
@@ -164,8 +172,32 @@ cpdef inline tuple _split_label(str label):
         return temp
 
 
-cpdef list parse(str sequence, int show_unmodified_termini=0, int split=0,
-                int allow_unknown_modifications=0, object labels=std_labels):
+cdef object _modX_split_findall = _modX_split.findall
+
+
+cdef list _parse_modx_sequence_split(str sequence):
+    cdef:
+        list parsed_sequence
+        tuple parts
+        Py_ssize_t i, n
+        object g
+
+    parsed_sequence = []
+    parts = tuple(_modX_split_findall(sequence))
+    n = len(parts)
+
+    for i in range(n):
+        g = <object>PyTuple_GET_ITEM(parts, i)
+
+        if g[0]:
+            parsed_sequence.append(g)
+        else:
+            parsed_sequence.append((g[1],))
+    return parsed_sequence
+    
+
+cpdef list parse(str sequence, bint show_unmodified_termini=0, bint split=0,
+                 bint allow_unknown_modifications=0, object labels=std_labels):
     """Parse a sequence string written in modX notation into a list of
     labels or (if `split` argument is :py:const:`True`) into a list of
     tuples representing amino acid residues and their modifications.
@@ -246,11 +278,11 @@ cpdef list parse(str sequence, int show_unmodified_termini=0, int split=0,
     n = <str>PyTuple_GET_ITEM(temp, 0)
     body = <str>PyTuple_GET_ITEM(temp, 1)
     c = <str>PyTuple_GET_ITEM(temp, 2)
-    slabels = set(_labels)
+    # slabels = set(_labels)
     # labels help save the day when only one terminal group is given
     if c is None and n is not None:
         # we can try to resolve the ambiguity
-        if n != std_nterm and n not in slabels:
+        if n != std_nterm and n not in _labels:
             # n is the body then
             c = '-' + body
             body = n[:-1]
@@ -258,16 +290,17 @@ cpdef list parse(str sequence, int show_unmodified_termini=0, int split=0,
 
     # Actual parsing
     if split:
-        parsed_sequence = [g if g[0] else (g[1],) for g in re.findall(
-            _modX_split, body)]
+        # parsed_sequence = [g if g[0] else (g[1],) for g in re.findall(
+        #     _modX_split, body)]
+        parsed_sequence = _parse_modx_sequence_split(body)
     else:
         parsed_sequence = <list>PyObject_CallMethodObjArgs(_modX_group, "findall", <PyObject*>body, NULL)
     nterm, cterm = (n or std_nterm), (c or std_cterm)
 
     if not allow_unknown_modifications:
-        if nterm is not None and nterm not in slabels:
+        if nterm is not None and nterm not in _labels:
             raise PyteomicsError('Unknown label: {}'.format(nterm))
-        if cterm is not None and cterm not in slabels:
+        if cterm is not None and cterm not in _labels:
             raise PyteomicsError('Unknown label: {}'.format(cterm))
 
     if split:
@@ -280,9 +313,9 @@ cpdef list parse(str sequence, int show_unmodified_termini=0, int split=0,
             else:
                 mod = ''
                 X = <str>PyTuple_GET_ITEM(tgroup, 0)
-            if ((not mod) and X not in slabels) or\
-                not ((mod+X in slabels) or\
-                (X in slabels and (mod in slabels or allow_unknown_modifications))):
+            if ((not mod) and X not in _labels) or\
+                not ((mod+X in _labels) or\
+                (X in _labels and (mod in _labels or allow_unknown_modifications))):
                 raise PyteomicsError('Unknown label: {}'.format(tgroup))
 
     else:
@@ -295,10 +328,10 @@ cpdef list parse(str sequence, int show_unmodified_termini=0, int split=0,
             mod = <str>PyTuple_GET_ITEM(temp, 0)
             X = <str>PyTuple_GET_ITEM(temp, 1)
             is_mod = PyObject_IsTrue(mod)
-            in_labels = X not in slabels
+            in_labels = X not in _labels
             if ((not is_mod) and in_labels) or\
-                not ((mod+X in slabels) or\
-                (X in slabels and (mod in slabels or allow_unknown_modifications))):
+                not ((mod+X in _labels) or\
+                (X in _labels and (mod in _labels or allow_unknown_modifications))):
                 raise PyteomicsError('Unknown label: {}'.format(sgroup))
 
     # Append terminal labels
@@ -367,8 +400,8 @@ cdef str tostring(object parsed_sequence, bint show_unmodified_termini=True):
     return ''.join(labels)
 
 
-cpdef dict amino_acid_composition(object sequence, int show_unmodified_termini=0, int term_aa=0,
-                                  int allow_unknown_modifications=0, object labels=std_labels):
+cpdef dict amino_acid_composition(object sequence, bint show_unmodified_termini=0, bint term_aa=0,
+                                  bint allow_unknown_modifications=0, object labels=std_labels):
     """Calculate amino acid composition of a polypeptide.
 
     Parameters
@@ -447,11 +480,13 @@ cpdef dict amino_acid_composition(object sequence, int show_unmodified_termini=0
         else:
             cterm_aa_position = PyList_Size(parsed_sequence) - 1
         if PyList_Size(parsed_sequence) > 1:
-            temp = PyInt_FromLong(cterm_aa_position)
-            temp = PyObject_CallMethodObjArgs(parsed_sequence, "pop", <PyObject*>temp, NULL)
+            # temp = PyInt_FromLong(cterm_aa_position)
+            # temp = PyObject_CallMethodObjArgs(parsed_sequence, "pop", <PyObject*>temp, NULL)
+            temp = parsed_sequence.pop(cterm_aa_position)
             PyDict_SetItem(aa_dict, 'cterm' + temp, 1)
-        temp = PyInt_FromLong(nterm_aa_position)
-        temp = PyObject_CallMethodObjArgs(parsed_sequence, "pop", <PyObject*>temp, NULL)
+        # temp = PyInt_FromLong(nterm_aa_position)
+        # temp = PyObject_CallMethodObjArgs(parsed_sequence, "pop", <PyObject*>temp, NULL)
+        temp = parsed_sequence.pop(nterm_aa_position)
         PyDict_SetItem(aa_dict, 'nterm' + temp, 1)
     # Process core amino acids.
     i = 0

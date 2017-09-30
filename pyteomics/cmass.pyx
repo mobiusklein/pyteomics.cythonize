@@ -27,15 +27,16 @@ from cpython.sequence cimport PySequence_GetItem
 from cpython.exc cimport PyErr_Occurred
 
 from pyteomics.auxiliary import PyteomicsError, _nist_mass
-from pyteomics.mass import std_aa_mass as _std_aa_mass, std_ion_comp as _std_ion_comp, std_aa_comp as _std_aa_comp
+from pyteomics.mass import (
+    std_aa_mass as _std_aa_mass,
+    std_ion_comp as _std_ion_comp,
+    std_aa_comp as _std_aa_comp)
 
 from collections import defaultdict
 from itertools import chain
 
-# from pyteomics import cparser
-from pyteomics.cparser import parse, amino_acid_composition, _split_label
-
-from pyteomics cimport cparser
+from pyteomics import cparser
+# from pyteomics cimport cparser
 from pyteomics.cparser cimport parse, amino_acid_composition, _split_label
 
 cdef:
@@ -113,7 +114,7 @@ cpdef double fast_mass(str sequence, str ion_type=None, int charge=0,
         double mass = 0
         int i, num
         Py_ssize_t pos
-        str a
+        object a
         PyObject* pkey
         PyObject* pvalue
 
@@ -121,7 +122,7 @@ cpdef double fast_mass(str sequence, str ion_type=None, int charge=0,
         a = PySequence_GetItem(sequence, i)
         pvalue = PyDict_GetItem(aa_mass, a)
         if pvalue == NULL:
-            raise PyteomicsError('No mass data for residue: ' + a)
+            raise PyteomicsError('No mass data for residue: %r' % (a,))
         mass += PyFloat_AsDouble(<object>pvalue)
     pvalue = PyErr_Occurred()
     if pvalue != NULL:
@@ -199,13 +200,13 @@ cpdef double fast_mass2(str sequence, str ion_type=None, int charge=0,
         PyDict_SetItem(aa_mass, '-OH', get_mass(mass_data, "H") + get_mass(mass_data, "O"))
 
     try:
-        comp = amino_acid_composition(sequence,
+        comp = cparser.amino_acid_composition(sequence,
                 show_unmodified_termini=1,
                 allow_unknown_modifications=1,
                 labels=list(aa_mass))
     except PyteomicsError:
         raise PyteomicsError('Mass not specified for label(s): {}'.format(
-            ', '.join(set(parse(sequence)).difference(aa_mass))))
+            ', '.join(set(cparser.parse(sequence)).difference(aa_mass))))
 
     mass = 0.
     pos = 0
@@ -382,7 +383,7 @@ cdef class CComposition(dict):
         self._from_dict(comp)
 
     def _from_sequence(self, sequence, aa_comp):
-        parsed_sequence = parse(
+        parsed_sequence = cparser.parse(
             sequence,
             labels=aa_comp,
             show_unmodified_termini=True)

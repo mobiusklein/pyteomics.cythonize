@@ -13,11 +13,12 @@
 #   limitations under the License.
 
 
-cpdef list parse(str sequence, int show_unmodified_termini=*, int split=*,
-                 int allow_unknown_modifications=*, object  labels=*)
+cpdef list parse(str sequence, bint show_unmodified_termini=*, bint split=*,
+                 bint allow_unknown_modifications=*, object  labels=*)
 
-cpdef dict amino_acid_composition(object sequence, int show_unmodified_termini=*, int term_aa=*,
-                                  int allow_unknown_modifications=*, object labels=*)
+cpdef dict amino_acid_composition(object sequence, bint show_unmodified_termini=*, bint term_aa=*,
+                                  bint allow_unknown_modifications=*, object labels=*)
 
 cpdef tuple _split_label(str label)
 
+cdef str tostring(object parsed_sequence, bint show_unmodified_termini=*)
