@@ -28,22 +28,26 @@ from cpython.exc cimport PyErr_Occurred
 
 from pyteomics.auxiliary import PyteomicsError, _nist_mass
 from pyteomics.mass import (
-    std_aa_mass as _std_aa_mass,
-    std_ion_comp as _std_ion_comp,
-    std_aa_comp as _std_aa_comp)
+    std_aa_mass,
+    std_ion_comp,
+    std_aa_comp)
 
 from collections import defaultdict
 from itertools import chain
 
+from pyteomics.parser import amino_acid_composition as pamino_acid_composition
 from pyteomics import cparser
 # from pyteomics cimport cparser
 from pyteomics.cparser cimport parse, amino_acid_composition, _split_label
 
 cdef:
     dict nist_mass = _nist_mass
-    dict std_aa_mass = _std_aa_mass
-    dict std_ion_comp = {k: CComposition(v) for k, v in _std_ion_comp.items()}
-    dict std_aa_comp = {k: CComposition(v) for k, v in _std_aa_comp.items()}
+    dict _std_aa_mass = std_aa_mass
+    dict _std_ion_comp = {k: CComposition(v) for k, v in std_ion_comp.items()}
+    dict _std_aa_comp = {k: CComposition(v) for k, v in std_aa_comp.items()}
+
+std_ion_comp = _std_ion_comp
+std_aa_comp = _std_aa_comp
 
 
 def __get_constants():
@@ -76,8 +80,8 @@ cdef inline double get_mass(dict mass_data, object key):
 
 
 cpdef double fast_mass(str sequence, str ion_type=None, int charge=0,
-                       dict mass_data=nist_mass, dict aa_mass=std_aa_mass,
-                       dict ion_comp=std_ion_comp):
+                       dict mass_data=_nist_mass, dict aa_mass=_std_aa_mass,
+                       dict ion_comp=_std_ion_comp):
     """Calculate monoisotopic mass of an ion using the fast
     algorithm. May be used only if amino acid residues are presented in
     one-letter code.
@@ -148,8 +152,8 @@ cpdef double fast_mass(str sequence, str ion_type=None, int charge=0,
 
 
 cpdef double fast_mass2(str sequence, str ion_type=None, int charge=0,
-                        dict mass_data=nist_mass, dict aa_mass=std_aa_mass,
-                        dict ion_comp=std_ion_comp):
+                        dict mass_data=_nist_mass, dict aa_mass=_std_aa_mass,
+                        dict ion_comp=_std_ion_comp):
     """Calculate monoisotopic mass of an ion using the fast
     algorithm. *modX* notation is fully supported.
 
@@ -198,16 +202,16 @@ cpdef double fast_mass2(str sequence, str ion_type=None, int charge=0,
     ptemp = PyDict_GetItem(aa_mass, '-OH')
     if ptemp == NULL:
         PyDict_SetItem(aa_mass, '-OH', get_mass(mass_data, "H") + get_mass(mass_data, "O"))
-
     try:
-        comp = cparser.amino_acid_composition(sequence,
-                show_unmodified_termini=1,
-                allow_unknown_modifications=1,
-                labels=list(aa_mass))
+        comp = (cparser.amino_acid_composition(
+        # comp = (pamino_acid_composition(
+            sequence,
+            show_unmodified_termini=1,
+            allow_unknown_modifications=1,
+            labels=list(aa_mass)))
     except PyteomicsError:
         raise PyteomicsError('Mass not specified for label(s): {}'.format(
             ', '.join(set(cparser.parse(sequence)).difference(aa_mass))))
-
     mass = 0.
     pos = 0
     while(PyDict_Next(comp, &pos, &pkey, &pvalue)):
@@ -221,12 +225,12 @@ cpdef double fast_mass2(str sequence, str ion_type=None, int charge=0,
             mod = <str>PyTuple_GET_ITEM(temp, 0)
             X = <str>PyTuple_GET_ITEM(temp, 1)
             ptemp = PyDict_GetItem(aa_mass, mod)
-            if ptemp is NULL:
-                raise (<object>ptemp)("An error occurred in cmass.fast_mass: %s not found in aa_mass" % mod)
+            if ptemp == NULL:
+                raise KeyError("An error occurred in cmass.fast_mass: %s not found in aa_mass" % mod)
             interim = PyFloat_AsDouble(<object>ptemp)
             ptemp = PyDict_GetItem(aa_mass, X)
-            if ptemp is NULL:
-                raise (<object>ptemp)("An error occurred in cmass.fast_mass: %s not found in aa_mass" % X)
+            if ptemp == NULL:
+                raise KeyError("An error occurred in cmass.fast_mass: %s not found in aa_mass" % X)
             interim += PyFloat_AsDouble(<object>ptemp)
             mass += interim * num
 
@@ -678,7 +682,7 @@ cdef class CComposition(dict):
         '''
         Calculate the mass or m/z of a Composition.
         '''
-        cdef long mdid
+        cdef object mdid
         mdid = id(mass_data)
         if self._mass_args is not None and average is self._mass_args[0]\
                 and charge == self._mass_args[1] and mdid == self._mass_args[2]\
@@ -695,7 +699,7 @@ cdef class CComposition(dict):
             dict mass_data, aa_comp
             str kwa
             set kw_sources, kw_given
-        aa_comp=kwargs.get('aa_comp', std_aa_comp)
+        aa_comp=kwargs.get('aa_comp', _std_aa_comp)
         mass_data=kwargs.get('mass_data')
         if mass_data is None:
             mass_data = nist_mass
@@ -884,7 +888,7 @@ cdef double _calculate_mass(CComposition composition,
             mass += (composition.getitem(isotope_string) * isotope_mass)
 
     if ion_type is not None:
-        interm = PyDict_GetItem(std_ion_comp, ion_type)
+        interm = PyDict_GetItem(_std_ion_comp, ion_type)
         if interm == NULL:
             raise KeyError("Unknown ion_type: {}".format(ion_type))
         ion_type_comp = <CComposition>interm
