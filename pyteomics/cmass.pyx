@@ -40,8 +40,9 @@ from pyteomics import cparser
 # from pyteomics cimport cparser
 from pyteomics.cparser cimport parse, amino_acid_composition, _split_label
 
+cdef dict nist_mass = _nist_mass
+
 cdef:
-    dict nist_mass = _nist_mass
     dict _std_aa_mass = std_aa_mass
     dict _std_ion_comp = {k: CComposition(v) for k, v in std_ion_comp.items()}
     dict _std_aa_comp = {k: CComposition(v) for k, v in std_aa_comp.items()}

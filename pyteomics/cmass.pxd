@@ -12,6 +12,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
+
 cpdef double fast_mass(str sequence, str ion_type=*, int charge=*,
                        dict mass_data=*, dict aa_mass=*,
                        dict ion_comp=*)
@@ -19,6 +20,7 @@ cpdef double fast_mass(str sequence, str ion_type=*, int charge=*,
 cpdef double fast_mass2(str sequence, str ion_type=*, int charge=*,
                         dict mass_data=*, dict aa_mass=*,
                         dict ion_comp=*)
+
 
 cdef class CComposition(dict):
     cdef object _mass
