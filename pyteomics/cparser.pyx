@@ -19,7 +19,7 @@ from cpython.ref cimport PyObject, Py_INCREF
 from cpython.dict cimport PyDict_GetItem, PyDict_Next, PyDict_SetItem
 from cpython.int cimport PyInt_AsLong, PyInt_Check, PyInt_FromLong
 from cpython.float cimport PyFloat_AsDouble
-from cpython.list cimport (PyList_GET_ITEM, PyList_GetItem, PyList_SetItem, 
+from cpython.list cimport (PyList_GET_ITEM, PyList_GetItem, PyList_SetItem,
                            PyList_SET_ITEM, PyList_Append, PyList_Insert,
                            PyList_Size)
 from cpython.tuple cimport PyTuple_GetItem, PyTuple_GET_ITEM
@@ -51,9 +51,9 @@ std_cterm = '-OH'
 std_labels = std_amino_acids + [std_nterm, std_cterm]
 """modX labels for the standard amino acids and unmodified termini."""
 
-_modX_sequence = re.compile(r'^([^-]+-)?((?:[a-z]*[A-Z])+)(-[^-]+)?$')
-_modX_group = re.compile(r'[a-z]*[A-Z]')
-_modX_split = re.compile(r'([a-z]*)([A-Z])')
+_modX_sequence = re.compile(r'^([^-]+-)?((?:[^A-Z-]*[A-Z])+)(-[^-]+)?$')
+_modX_group = re.compile(r'[^A-Z-]*[A-Z]')
+_modX_split = re.compile(r'([^A-Z-]*)([A-Z])')
 
 
 @cython.nonecheck(False)
