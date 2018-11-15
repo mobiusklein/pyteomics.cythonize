@@ -22,7 +22,7 @@ setup(
     name='pyteomics.cythonize',
     description='An Cython-accelerated version of common pyteomics functions',
     long_description=open("README.rst").read(),
-    version="0.2.1",
+    version="0.2.2",
     packages=find_packages(),
     zip_safe=False,
     install_requires=['pyteomics'],
@@ -40,5 +40,6 @@ setup(
         'Topic :: Software Development :: Libraries'
     ],
     namespace_packages=["pyteomics"],
-    license='License :: OSI Approved :: Apache Software License'
+    license='License :: OSI Approved :: Apache Software License',
+    url="https://github.com/mobiusklein/pyteomics.cythonize"
 )

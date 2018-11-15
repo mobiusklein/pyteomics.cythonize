@@ -9,3 +9,18 @@ use of them.
 
 This package also re-implements the `pyteomics.mass.Composition` type in C using Python's
 `dict` as a base.
+
+
+API
+---
+
+This package provides two modules, :title-reference:`pyteomics.cmass` and :title-reference:`pyteomics.cparser`,
+which mimic a subset of the APIs of :title-reference:`pyteomics.mass` and :title-reference:`pyteomics.parser`
+respectively. For example:
+
+.. code:: python
+
+    from pyteomics import cmass, mass
+
+    assert cmass.fast_mass("PEPTIDE") == mass.fast_mass("PEPTIDE")
+
