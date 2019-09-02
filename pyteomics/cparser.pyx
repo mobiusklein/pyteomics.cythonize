@@ -1,5 +1,6 @@
 # cython: embedsignature=True
-# cython: profile=True
+# cython: profile=False
+
 #   Copyright 2016 Joshua Klein, Lev Levitsky
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,15 +15,19 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
+from libc.stdlib cimport malloc, free
+
 cimport cython
 from cpython.ref cimport PyObject, Py_INCREF
-from cpython.dict cimport PyDict_GetItem, PyDict_Next, PyDict_SetItem
+from cpython.iterator cimport PyIter_Next
+from cpython.dict cimport PyDict_GetItem, PyDict_Next, PyDict_SetItem, PyDict_Keys, PyDict_Values
 from cpython.int cimport PyInt_AsLong, PyInt_Check, PyInt_FromLong
 from cpython.float cimport PyFloat_AsDouble
 from cpython.list cimport (PyList_GET_ITEM, PyList_GetItem, PyList_SetItem,
                            PyList_SET_ITEM, PyList_Append, PyList_Insert,
-                           PyList_Size)
-from cpython.tuple cimport PyTuple_GetItem, PyTuple_GET_ITEM
+                           PyList_Size, PyList_New)
+from cpython.tuple cimport (
+    PyTuple_GetItem, PyTuple_GET_ITEM, PyTuple_SET_ITEM, PyTuple_New, PyTuple_Size)
 from cpython.sequence cimport PySequence_GetItem
 from cpython.exc cimport PyErr_Occurred
 from cpython.object cimport PyObject_CallMethodObjArgs, PyObject_Not, PyObject_IsTrue
@@ -103,7 +108,7 @@ cdef inline int is_modX(str label):
     """
     return bool(match_modX(label))
 
-cpdef int length(object sequence, 
+cpdef int length(object sequence,
                  int show_unmodified_termini=0, int split=0,
                  int allow_unknown_modifications=0, object labels=std_labels):
     """Calculate the number of amino acid residues in a polypeptide
@@ -128,7 +133,7 @@ cpdef int length(object sequence,
 
     if isinstance(sequence, str) or isinstance(sequence, list):
         if isinstance(sequence, str):
-            parsed_sequence = parse(sequence, show_unmodified_termini, 
+            parsed_sequence = parse(sequence, show_unmodified_termini,
                                     split, allow_unknown_modifications, labels)
         else:
             parsed_sequence = sequence
@@ -147,8 +152,8 @@ cpdef int length(object sequence,
 
 cdef inline list interpolate_labels(object labels):
     cdef list _labels
-    if isinstance(labels, list):
-        _labels = <list>labels
+    if labels is None:
+        _labels = list(std_labels)
     else:
         _labels = list(labels)
     _labels.extend((std_cterm, std_nterm))
@@ -160,7 +165,7 @@ cpdef inline tuple _split_label(str label):
         str mod, X
         tuple temp
 
-    
+
     temp = <tuple>PyObject_CallMethodObjArgs(match_modX(label), "groups", NULL)
     if <PyObject*>temp == NULL:
         raise PyteomicsError('Cannot split a non-modX label: %s' % label)
@@ -194,10 +199,10 @@ cdef list _parse_modx_sequence_split(str sequence):
         else:
             parsed_sequence.append((g[1],))
     return parsed_sequence
-    
+
 
 cpdef list parse(str sequence, bint show_unmodified_termini=0, bint split=0,
-                 bint allow_unknown_modifications=0, object labels=std_labels):
+                 bint allow_unknown_modifications=0, object labels=None):
     """Parse a sequence string written in modX notation into a list of
     labels or (if `split` argument is :py:const:`True`) into a list of
     tuples representing amino acid residues and their modifications.
@@ -269,10 +274,12 @@ cpdef list parse(str sequence, bint show_unmodified_termini=0, bint split=0,
         Py_ssize_t i
         int is_mod, is_residue, in_labels
 
+    if labels is None:
+        allow_unknown_modifications = True
     _labels = interpolate_labels(labels)
-    
+
     match = PyObject_CallMethodObjArgs(_modX_sequence, "match", <PyObject*>sequence, NULL)
-    if match is None:    
+    if match is None:
         raise PyteomicsError('Not a valid modX sequence: ' + sequence)
     temp = <tuple>PyObject_CallMethodObjArgs(match, "groups", NULL)
     n = <str>PyTuple_GET_ITEM(temp, 0)
@@ -356,7 +363,7 @@ cpdef list parse(str sequence, bint show_unmodified_termini=0, bint split=0,
     return parsed_sequence
 
 
-cdef str tostring(object parsed_sequence, bint show_unmodified_termini=True):
+cpdef str tostring(object parsed_sequence, bint show_unmodified_termini=True):
     """Create a string from a parsed sequence.
 
     Parameters
@@ -401,7 +408,7 @@ cdef str tostring(object parsed_sequence, bint show_unmodified_termini=True):
 
 
 cpdef dict amino_acid_composition(object sequence, bint show_unmodified_termini=0, bint term_aa=0,
-                                  bint allow_unknown_modifications=0, object labels=std_labels):
+                                  bint allow_unknown_modifications=0, object labels=None):
     """Calculate amino acid composition of a polypeptide.
 
     Parameters
@@ -448,6 +455,9 @@ cpdef dict amino_acid_composition(object sequence, bint show_unmodified_termini=
         object temp
         PyObject* pvalue
         Py_ssize_t i
+
+    if labels is None:
+        allow_unknown_modifications = True
 
     _labels = interpolate_labels(labels)
 
@@ -501,3 +511,581 @@ cpdef dict amino_acid_composition(object sequence, bint show_unmodified_termini=
         PyDict_SetItem(aa_dict, aa, aa_count)
 
     return aa_dict
+
+
+ctypedef fused tuple_or_list:
+    tuple
+    list
+
+
+cpdef enum PositionType:
+    n_term = 1
+    c_term = 2
+    internal = 3
+    universal = 4
+
+
+cdef inline list copy_list(list source):
+    cdef:
+        size_t i, n
+        list result
+        object val
+    n = PyList_Size(source)
+    result = PyList_New(n)
+    for i in range(n):
+        val = <object>PyList_GET_ITEM(source, i)
+        Py_INCREF(val)
+        PyList_SET_ITEM(result, i, val)
+    return result
+
+
+@cython.final
+@cython.freelist(5000)
+cdef class SequencePosition(object):
+    cdef:
+        public str modification
+        public PositionType position_type
+        public str amino_acid
+        public str terminal
+
+    def __init__(self, amino_acid, modification=None, terminal=None, position_type=None):
+        if position_type is None:
+            position_type = PositionType.internal
+        self.amino_acid = amino_acid
+        self.modification = modification
+        self.terminal = terminal
+        self.position_type = position_type
+
+    @staticmethod
+    cdef SequencePosition _create(str amino_acid, str modification, str terminal, PositionType position_type):
+        cdef SequencePosition self = SequencePosition.__new__(SequencePosition)
+        self.amino_acid = amino_acid
+        self.modification = modification
+        self.terminal = terminal
+        self.position_type = position_type
+        return self
+
+    def __getitem__(self, i):
+        return self.get_index(i)
+
+    cpdef str get_index(self, long i):
+        cdef:
+            long size, n_mods
+        size = self.get_size()
+        n_mods = self.modification is not None
+        if i >= size:
+            raise IndexError(i)
+        elif i < 0:
+            if size + i < 0:
+                raise IndexError(i)
+            i = size + i
+        if self.position_type == PositionType.n_term:
+            if i == 0:
+                return self.terminal
+            elif (i - 1) == n_mods:
+                return self.amino_acid
+            else:
+                return self.modification
+        elif self.position_type == PositionType.internal:
+            if i == n_mods:
+                return self.amino_acid
+            else:
+                return self.modification
+        else:
+            if i - n_mods == 0:
+                return self.amino_acid
+            elif i - n_mods == 1:
+                return self.terminal
+            else:
+                return self.modification
+
+    cdef size_t get_size(self):
+        cdef:
+            size_t n_mods
+
+        n_mods = self.modification is not None
+        if self.position_type == PositionType.internal:
+            return n_mods + 1
+        else:
+            return n_mods + 2
+
+    cdef bint is_modified(self):
+        return self.modification is not None
+
+    cpdef add_modification(self, str mod):
+        self.modification = mod
+
+    def __repr__(self):
+        return str(self.as_tuple())
+
+    def __len__(self):
+        return self.get_size()
+
+    cpdef tuple as_tuple(self):
+        cdef:
+            size_t size, i, n_mods, j
+            tuple result
+            str mod
+        size = self.get_size()
+        result = PyTuple_New(size)
+        i = 0
+        if self.position_type == PositionType.n_term:
+            Py_INCREF(self.terminal)
+            PyTuple_SET_ITEM(result, i, self.terminal)
+            i += 1
+        if self.is_modified():
+            mod = self.modification
+            Py_INCREF(mod)
+            PyTuple_SET_ITEM(result, i, mod)
+            i += 1
+        Py_INCREF(self.amino_acid)
+        PyTuple_SET_ITEM(result, i, self.amino_acid)
+        i += 1
+        if self.position_type == PositionType.c_term:
+            Py_INCREF(self.terminal)
+            PyTuple_SET_ITEM(result, i, self.terminal)
+            i += 1
+        return result
+
+    cdef SequencePosition copy(self):
+        return SequencePosition._create(
+            self.amino_acid, (self.modification), self.terminal, self.position_type)
+
+    @classmethod
+    def from_tuple(cls, tuple source):
+        cdef:
+            size_t size, i
+            str entry
+            str last_entry
+            str terminal
+            str amino_acid
+            str modification
+            PositionType position_type
+
+        position_type = PositionType.internal
+        modification = None
+        size = PyTuple_Size(source)
+        last_entry = None
+        terminal = None
+        for i in range(size):
+            entry = <str>PyTuple_GET_ITEM(source, i)
+            if entry.endswith("-"):
+                if position_type != PositionType.internal:
+                    raise ValueError(
+                        "Position already has position type %s, second type provided %s" % (
+                            position_type, PositionType.n_term))
+                position_type = PositionType.n_term
+                terminal = entry
+            elif entry.startswith("-"):
+                if position_type != PositionType.internal:
+                    raise ValueError(
+                        "Position already has position type %s, second type provided %s" % (
+                            position_type, PositionType.c_term))
+                position_type = PositionType.c_term
+                terminal = entry
+            else:
+                if last_entry is not None:
+                    modification = last_entry
+                last_entry = entry
+        amino_acid = last_entry
+        return cls(amino_acid, modification, terminal, position_type)
+
+    @classmethod
+    def parse(cls, str sequence, **kwargs):
+        cdef:
+            size_t n, i
+            list tokens, result
+            object converter
+        converter = cls.from_tuple
+        tokens = parse(sequence, show_unmodified_termini=True, split=True, **kwargs)
+        n = PyList_Size(tokens)
+        result = []
+        for i in range(n):
+            result.append(converter(<tuple>PyList_GET_ITEM(tokens, i)))
+        return result
+
+    @classmethod
+    def from_iterable(cls, object iterable):
+        cdef:
+            size_t i, n
+            list result
+            object converter
+
+        converter = cls.from_tuple
+        result = []
+        for obj in iterable:
+            if isinstance(obj, SequencePosition):
+                result.append((<SequencePosition>obj).copy())
+            else:
+                result.append(
+                    converter(<tuple?>obj))
+        return result
+
+
+cpdef list copy_sequence(list sequence):
+    cdef:
+        list result
+        size_t i, n
+        SequencePosition position
+    n = PyList_Size(sequence)
+    result = PyList_New(n)
+    for i in range(n):
+        position = <SequencePosition>PyList_GET_ITEM(sequence, i)
+        position = position.copy()
+        Py_INCREF(position)
+        PyList_SET_ITEM(result, i, position)
+    return result
+
+
+@cython.freelist(100)
+cdef class IsoformGenerator(object):
+    cdef:
+        public dict variable_mods
+        public dict fixed_mods
+        public list labels
+        public long max_mods
+        public bint override
+        public bint show_unmodified_termini
+
+        public bint persist
+
+        # Temporary State
+        public list sequence
+        public list original_sequence
+        public list last_indices
+
+    def __init__(self, variable_mods=None, fixed_mods=None, labels=None, max_mods=None, override=False,
+                 show_unmodified_termini=False, persist=True):
+        if variable_mods is None:
+            variable_mods = {}
+        if fixed_mods is None:
+            fixed_mods = {}
+        if labels is None:
+            labels = list(std_labels)
+        if max_mods is None:
+            max_mods = -1
+        self.variable_mods = self.coerce_modification_dict(variable_mods)
+        self.fixed_mods = self.coerce_modification_dict(fixed_mods)
+        self.labels = labels
+        self.max_mods = PyInt_AsLong(max_mods)
+        self.override = override
+        self.show_unmodified_termini = show_unmodified_termini
+        self.persist = persist
+
+        self.sequence = None
+        self.original_sequence = None
+        self.last_indices = []
+
+    cpdef dict coerce_modification_dict(self, dict source):
+        cdef:
+            str label
+            ModificationRule rule
+            list targets
+            dict result
+        result = {}
+        for label, targets in source.items():
+            rule = ModificationRule(label, targets)
+            PyDict_SetItem(result, label, rule)
+        return result
+
+    cpdef list initialize_from_str(self, str sequence):
+        labels = self.labels + list(self.fixed_mods)
+        self.sequence = SequencePosition.parse(sequence, labels=labels)
+        return self.sequence
+
+    cpdef list initialize_from_iterable(self, object sequence):
+        self.sequence = SequencePosition.from_iterable(sequence)
+        return self.sequence
+
+    cpdef list apply_fixed_mods(self, list sequence):
+        cdef:
+            size_t i, n
+            Py_ssize_t j
+            PyObject* pkey
+            PyObject* pvalue
+            SequencePosition position
+            ModificationRule rule
+
+        n = PyList_Size(sequence)
+        for i in range(n):
+            position = <SequencePosition>PyList_GET_ITEM(sequence, i)
+            j = 0
+            while PyDict_Next(self.fixed_mods, &j, &pkey, &pvalue):
+                rule = <ModificationRule>pvalue
+                if rule.test(position):
+                    if not position.is_modified():
+                        position.add_modification(rule.modification)
+        return sequence
+
+    cpdef dict build_site_map(self, list sequence, bint include_unmodified=True):
+        cdef:
+            size_t i, n
+            Py_ssize_t j
+            PyObject* pkey
+            PyObject* pvalue
+            PyObject* psites
+            list sites
+            SequencePosition position
+            ModificationRule rule
+            dict site_map
+
+        site_map = dict()
+        n = PyList_Size(sequence)
+        for i in range(n):
+            position = <SequencePosition>PyList_GET_ITEM(sequence, i)
+            j = 0
+            while PyDict_Next(self.variable_mods, &j, &pkey, &pvalue):
+                rule = <ModificationRule>pvalue
+                if rule.test(position):
+                    if not position.is_modified():
+                        psites = PyDict_GetItem(site_map, i)
+                        if psites == NULL:
+                            sites = []
+                            PyDict_SetItem(site_map, i, sites)
+                        else:
+                            sites = <list>psites
+                        position = position.copy()
+                        position.modification = rule.modification
+                        sites.append(position)
+        if include_unmodified:
+            j = 0
+            while PyDict_Next(site_map, &j, &pkey, &pvalue):
+                position = <SequencePosition>PyList_GET_ITEM(sequence, PyInt_AsLong(<object>pkey))
+                position = position.copy()
+                (<list>pvalue).append(position)
+        return site_map
+
+    @cython.boundscheck(False)
+    def generate(self, sequence_spec):
+        cdef:
+            list sequence
+            dict variable_mod_sites
+            list indices, assignments
+            tuple assignment
+            tuple subindices, subassignments
+            object temp1, temp2
+            object assignments_product
+            size_t i, n, j, k, n_mods
+            long* pindices
+
+        if isinstance(sequence_spec, str):
+            self.initialize_from_str(sequence_spec)
+        else:
+            self.initialize_from_iterable(sequence_spec)
+
+        self.apply_fixed_mods(self.sequence)
+        variable_mod_sites = self.build_site_map(self.sequence)
+        indices = PyDict_Keys(variable_mod_sites)
+        assignments = PyDict_Values(variable_mod_sites)
+        k = PyList_Size(indices)
+
+        if self.persist:
+            self.original_sequence = list(self.sequence)
+
+        if self.max_mods < 0 or self.max_mods > k:
+            self.last_indices = indices
+            assignments_product = it.product(*assignments)
+            pindices = <long*>malloc(sizeof(long) * k)
+            for i in range(k):
+                pindices[i] = PyInt_AsLong(<object>PyList_GET_ITEM(indices, i))
+            for a in assignments_product:
+                assignment = <tuple>a
+                yield self._apply_variable_assignment(self.sequence, pindices, assignment, k)
+            free(pindices)
+        else:
+            self._reset_sequence()
+            for n_mods in range(0, self.max_mods):
+                for subindices in it.combinations(indices, n_mods):
+                    self._reset_sequence()
+                    self.last_indices = list(subindices)
+                    k = PyTuple_Size(subindices)
+                    pindices = <long*>malloc(sizeof(long) * k)
+                    subassignments = PyTuple_New(k)
+                    for i in range(k):
+                        temp1 = <object>PyTuple_GET_ITEM(subindices, i)
+                        pindices[i] = PyInt_AsLong(temp1)
+                        temp2 = <object>PyDict_GetItem(variable_mod_sites, temp1)
+                        Py_INCREF(temp2)
+                        PyTuple_SET_ITEM(subassignments, i, temp2)
+                    assignments_product = it.product(*subassignments)
+                    for a in assignments_product:
+                        yield self._apply_variable_assignment(self.sequence, pindices, <tuple>a, k)
+                    free(pindices)
+        self.sequence = None
+
+    @cython.boundscheck(False)
+    cdef list _apply_variable_assignment(self, list sequence, long* indices, tuple_or_list assignment, size_t n):
+        cdef:
+            size_t i
+            long ix
+            SequencePosition position
+            str mod
+        if self.persist:
+            sequence = list(sequence)
+        else:
+            self._reset_sequence()
+        for i in range(n):
+            if tuple_or_list is tuple:
+                position = <SequencePosition>PyTuple_GET_ITEM(assignment, i)
+            else:
+                position = <SequencePosition>PyList_GET_ITEM(assignment, i)
+            ix = indices[i]
+            Py_INCREF(position)
+            PyList_SET_ITEM(sequence, ix, position)
+        return sequence
+
+    cdef void _reset_sequence(self):
+        cdef:
+            size_t i, n
+            long ix
+            SequencePosition position
+
+        n = PyList_Size(self.last_indices)
+        for i in range(n):
+            ix = PyInt_AsLong(<object>PyList_GET_ITEM(self.last_indices, i))
+            position = <SequencePosition>PyList_GET_ITEM(self.original_sequence, ix)
+            Py_INCREF(position)
+            PyList_SET_ITEM(self.sequence, ix, position)
+
+    def __call__(self, sequence_spec):
+        return self.generate(sequence_spec)
+
+
+cdef bint _is_nterm_mod(str target):
+    return target.startswith("nterm")
+
+
+cdef bint _is_cterm_mod(str target):
+    return target.startswith("cterm")
+
+
+@cython.freelist(100)
+cdef class ModificationRule(object):
+    cdef:
+        public str modification
+        public list targets
+
+    def __init__(self, str label, targets):
+        self.modification = label
+        self.targets = [ModificationTarget._from_string(x) if isinstance(x, str)
+                        else ModificationTarget._create(None, PositionType.universal)
+                        for x in targets]
+
+    cpdef bint test(self, SequencePosition position):
+        cdef:
+            size_t i, n
+            ModificationTarget t
+        n = PyList_Size(self.targets)
+        for i in range(n):
+            t = <ModificationTarget>PyList_GET_ITEM(self.targets, i)
+            if t.test(position):
+                return True
+        return False
+
+    def __call__(self, position):
+        return self.test(position)
+
+    def __repr__(self):
+        t = "{self.__class__.__name__}({self.modification!r}, {self.targets})"
+        return t.format(self=self)
+
+
+@cython.freelist(1000)
+cdef class ModificationTarget(object):
+    cdef:
+        public str target
+        public PositionType position_type
+
+    def __init__(self, target, position_type=PositionType.internal):
+        self.target = target
+        self.position_type = position_type
+
+    cpdef bint test(self, SequencePosition position):
+        if self.position_type == PositionType.universal:
+            return True
+        if self.position_type != PositionType.internal:
+            if position.position_type != self.position_type:
+                return False
+        if self.target is not None:
+            if self.target != position.amino_acid:
+                return False
+        return True
+
+    def __call__(self, position):
+        return self.test(position)
+
+    def __repr__(self):
+        return "{self.__class__.__name__}({self.target!r}, {self.position_type!r})".format(self=self)
+
+    @staticmethod
+    cdef ModificationTarget _create(str target, PositionType position_type):
+        cdef ModificationTarget inst = ModificationTarget.__new__(ModificationTarget)
+        inst.target = target
+        inst.position_type = position_type
+        return inst
+
+    @staticmethod
+    def from_string(str string):
+        return ModificationTarget._from_string(string)
+
+    @staticmethod
+    cdef ModificationTarget _from_string(str string):
+        cdef:
+            PositionType position_type
+            size_t n
+            str target
+            ModificationTarget inst
+        n = len(string)
+        target = None
+        position_type = PositionType.internal
+        if _is_cterm_mod(string):
+            position_type = PositionType.c_term
+            if n > 5:
+                if n > 6:
+                    raise ValueError("Terminal Modifications with Target must be a single Amino Acid, got %s" % (string, ))
+                target = string[-1]
+        elif _is_nterm_mod(string):
+            position_type = PositionType.n_term
+            if n > 5:
+                if n > 6:
+                    raise ValueError("Terminal Modifications with Target must be a single Amino Acid, got %s" % (string, ))
+                target = string[-1]
+        else:
+            if n > 1:
+                raise ValueError("Target must be a single Amino Acid, got %s" % (string, ))
+            target = string
+        inst = ModificationTarget._create(target, position_type)
+        return inst
+
+
+def isoforms(str sequence, **kwargs):
+    cdef:
+        IsoformGenerator isoform_generator
+        str _format
+        object gen
+
+    variable_mods = kwargs.get("variable_mods", None)
+    fixed_mods = kwargs.get("fixed_mods", None)
+    labels = kwargs.get("labels", None)
+    max_mods = kwargs.get("max_mods", None)
+    override = kwargs.get("override", False)
+    show_unmodified_termini = kwargs.get("show_unmodified_termini", False)
+    _format = kwargs.get("format", "str")
+
+    isoform_generator = IsoformGenerator(
+        variable_mods=variable_mods,
+        fixed_mods=fixed_mods,
+        labels=labels,
+        max_mods=max_mods,
+        override=override,
+        show_unmodified_termini=show_unmodified_termini)
+    gen = isoform_generator.generate(sequence)
+    if _format == "str":
+        for form in gen:
+            yield tostring(
+                form, show_unmodified_termini=show_unmodified_termini)
+    elif _format == "split":
+        for form in gen:
+            yield form
+    else:
+        raise PyteomicsError('Unsupported value of "format": {}'.format(_format))

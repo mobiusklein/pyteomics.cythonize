@@ -21,4 +21,4 @@ cpdef dict amino_acid_composition(object sequence, bint show_unmodified_termini=
 
 cpdef tuple _split_label(str label)
 
-cdef str tostring(object parsed_sequence, bint show_unmodified_termini=*)
+cpdef str tostring(object parsed_sequence, bint show_unmodified_termini=*)
