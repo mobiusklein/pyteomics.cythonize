@@ -566,6 +566,8 @@ cdef class SequencePosition(object):
         return self
 
     def __getitem__(self, i):
+        if isinstance(i, slice):
+            return self.as_tuple()[i]
         return self.get_index(i)
 
     cpdef str get_index(self, long i):
