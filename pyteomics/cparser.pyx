@@ -723,6 +723,31 @@ cdef class SequencePosition(object):
                     converter(<tuple?>obj))
         return result
 
+    cdef bint _eq(self, SequencePosition other):
+        if self.amino_acid != other.amino_acid:
+            return False
+        elif self.modification != other.modification:
+            return False
+        elif self.terminal != other.terminal:
+            return False
+        return True
+
+    cdef bint _eq_tuple(self, tuple other):
+        return self.as_tuple() == other
+
+    def __eq__(self, other):
+        if other is None:
+            return False
+        if isinstance(other, SequencePosition):
+            return self._eq(<SequencePosition>other)
+        elif isinstance(other, tuple):
+            return self._eq_tuple(<tuple>other)
+        else:
+            return self._eq_tuple(tuple(other))
+
+    def __ne__(self, other):
+        return not (self == other)
+
 
 cpdef list copy_sequence(list sequence):
     cdef:
