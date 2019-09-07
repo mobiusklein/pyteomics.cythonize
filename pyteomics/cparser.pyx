@@ -28,9 +28,11 @@ from cpython.list cimport (PyList_GET_ITEM, PyList_GetItem, PyList_SetItem,
                            PyList_Size, PyList_New)
 from cpython.tuple cimport (
     PyTuple_GetItem, PyTuple_GET_ITEM, PyTuple_SET_ITEM, PyTuple_New, PyTuple_Size)
-from cpython.sequence cimport PySequence_GetItem
+from cpython.sequence cimport PySequence_GetItem, PySequence_Fast, PySequence_Fast_GET_ITEM, PySequence_Fast_GET_SIZE
 from cpython.exc cimport PyErr_Occurred
 from cpython.object cimport PyObject_CallMethodObjArgs, PyObject_Not, PyObject_IsTrue
+
+from pyteomics.ccompat cimport PyStr_AsUTF8AndSize, PyStr_FromStringAndSize
 
 import re
 from collections import deque
@@ -42,6 +44,7 @@ cdef:
     str std_nterm, std_cterm
     object _modX_sequence, _modX_group, _modX_split
 
+DEF TOSTRING_STACK_BUFFER_SIZE = 150
 
 std_amino_acids = ['Q','W','E','R','T','Y','I','P','A','S',
                    'D','F','G','H','K','L','C','V','N','M']
@@ -383,28 +386,115 @@ cpdef str tostring(object parsed_sequence, bint show_unmodified_termini=True):
     sequence : str
     """
     cdef:
-        list labels, group_l
-        object group, remove_fn
-        bint is_term
-        Py_ssize_t i, n
-    n = len(parsed_sequence)
-    labels = []
+        labels, group_l
+        object group
+        str group_j
+        Py_ssize_t i, n, acc, sz
+        Py_ssize_t j, m, k
+        object sequence_fast
+        SequencePosition pos
+        str result
+
+        char* cstr
+        char[TOSTRING_STACK_BUFFER_SIZE] prealloc_buffer
+        char* string_buffer
+        bint needs_free
+    needs_free = False
+    sz = 0
+    acc = 0
+    sequence_fast = PySequence_Fast(parsed_sequence, "tostring requires an iterable sequence!")
+    n = PySequence_Fast_GET_SIZE(sequence_fast)
     for i in range(n):
-        group = parsed_sequence[i]
-        if isinstance(group, str):
-            is_term = group == std_cterm or group == std_nterm
-            if is_term or show_unmodified_termini:
-                labels.append(group)
-        else: # treat `group` as a tuple
-            group_l = list(group)
-            remove_fn = group_l.remove
-            if not show_unmodified_termini:
-                if std_cterm in group_l:
-                    remove_fn(std_cterm)
-                if std_nterm in group_l:
-                    remove_fn(std_nterm)
-            labels.append(''.join(group_l))
-    return ''.join(labels)
+        group = <object>PySequence_Fast_GET_ITEM(sequence_fast, i)
+        if isinstance(group, tuple):
+            m = PyTuple_Size(group)
+            for j in range(m):
+                group_j = <str>PyTuple_GetItem(group, j)
+                PyStr_AsUTF8AndSize(group_j, &sz)
+                acc += sz
+        elif isinstance(group, str):
+            PyStr_AsUTF8AndSize(group, &sz)
+            acc += sz
+        elif isinstance(group, SequencePosition):
+            pos = <SequencePosition>group
+            if pos.terminal is not None:
+                cstr = PyStr_AsUTF8AndSize(pos.terminal, &sz)
+                acc += sz
+            if pos.modification is not None:
+                cstr = PyStr_AsUTF8AndSize(pos.modification, &sz)
+                acc += sz
+            if pos.amino_acid is not None:
+                cstr = PyStr_AsUTF8AndSize(pos.amino_acid, &sz)
+                acc += sz
+        else:
+            raise TypeError(type(group))
+
+    if acc < TOSTRING_STACK_BUFFER_SIZE:
+        string_buffer = prealloc_buffer
+    else:
+        string_buffer = <char*>malloc(sizeof(char*) * acc)
+        needs_free = True
+    acc = 0
+    for i in range(n):
+        group = <object>PySequence_Fast_GET_ITEM(sequence_fast, i)
+        if isinstance(group, tuple):
+            m = PyTuple_Size(group)
+            for j in range(m):
+                group_j = <str>PyTuple_GetItem(group, j)
+                if (group_j == std_cterm or group_j == std_nterm) and not show_unmodified_termini:
+                    continue
+
+                cstr = PyStr_AsUTF8AndSize(group_j, &sz)
+                for k in range(sz):
+                    string_buffer[acc] = cstr[k]
+                    acc += 1
+
+        elif isinstance(group, str):
+            group_j = <str>group
+            if (group_j == std_cterm or group_j == std_nterm) and not show_unmodified_termini:
+                continue
+
+            PyStr_AsUTF8AndSize(group, &sz)
+            cstr = PyStr_AsUTF8AndSize(group, &sz)
+            for k in range(sz):
+                string_buffer[acc] = cstr[k]
+                acc += 1
+
+        elif isinstance(group, SequencePosition):
+            pos = <SequencePosition>group
+            if pos.position_type == PositionType.n_term:
+                if pos.terminal is not None:
+                    if show_unmodified_termini or pos.terminal != std_nterm:
+                        cstr = PyStr_AsUTF8AndSize(pos.terminal, &sz)
+                        for j in range(sz):
+                            string_buffer[acc] = cstr[j]
+                            acc += 1
+
+            if pos.modification is not None:
+                cstr = PyStr_AsUTF8AndSize(pos.modification, &sz)
+                for j in range(sz):
+                    string_buffer[acc] = cstr[j]
+                    acc += 1
+
+            if pos.amino_acid is not None:
+                cstr = PyStr_AsUTF8AndSize(pos.amino_acid, &sz)
+                for j in range(sz):
+                    string_buffer[acc] = cstr[j]
+                    acc += 1
+
+            if pos.position_type == PositionType.c_term:
+                if pos.terminal is not None:
+                    if show_unmodified_termini or pos.terminal != std_cterm:
+                        cstr = PyStr_AsUTF8AndSize(pos.terminal, &sz)
+                        for j in range(sz):
+                            string_buffer[acc] = cstr[j]
+                            acc += 1
+
+    result = PyStr_FromStringAndSize(string_buffer, acc)
+    if needs_free:
+        free(string_buffer)
+    return result
+
 
 
 cpdef dict amino_acid_composition(object sequence, bint show_unmodified_termini=0, bint term_aa=0,
@@ -747,6 +837,72 @@ cdef class SequencePosition(object):
 
     def __ne__(self, other):
         return not (self == other)
+
+
+cpdef str _sequence_tostring(list sequence, bint show_unmodified_termini=True):
+    cdef:
+        size_t i, n, acc, j
+        Py_ssize_t sz
+        char* cstr
+        char[TOSTRING_STACK_BUFFER_SIZE] prealloc_buffer
+        char* string_buffer
+        bint needs_free
+        SequencePosition pos
+        str result
+
+    needs_free = False
+    sz = 0
+    n = PyList_Size(sequence)
+    acc = 0
+    for i in range(n):
+        pos = <SequencePosition?>PyList_GET_ITEM(sequence, i)
+        if pos.terminal is not None:
+            cstr = PyStr_AsUTF8AndSize(pos.terminal, &sz)
+            acc += sz
+        if pos.modification is not None:
+            cstr = PyStr_AsUTF8AndSize(pos.modification, &sz)
+            acc += sz
+        if pos.amino_acid is not None:
+            cstr = PyStr_AsUTF8AndSize(pos.amino_acid, &sz)
+            acc += sz
+    if acc < TOSTRING_STACK_BUFFER_SIZE:
+        string_buffer = prealloc_buffer
+    else:
+        string_buffer = <char*>malloc(sizeof(char*) * acc)
+        needs_free = True
+    acc = 0
+    for i in range(n):
+        pos = <SequencePosition?>PyList_GET_ITEM(sequence, i)
+        if pos.position_type == PositionType.n_term:
+            if pos.terminal is not None:
+                cstr = PyStr_AsUTF8AndSize(pos.terminal, &sz)
+                for j in range(sz):
+                    string_buffer[acc] = cstr[j]
+                    acc += 1
+
+        if pos.modification is not None:
+            cstr = PyStr_AsUTF8AndSize(pos.modification, &sz)
+            for j in range(sz):
+                string_buffer[acc] = cstr[j]
+                acc += 1
+
+        if pos.amino_acid is not None:
+            cstr = PyStr_AsUTF8AndSize(pos.amino_acid, &sz)
+            for j in range(sz):
+                string_buffer[acc] = cstr[j]
+                acc += 1
+
+        if pos.position_type == PositionType.c_term:
+            if pos.terminal is not None:
+                cstr = PyStr_AsUTF8AndSize(pos.terminal, &sz)
+                for j in range(sz):
+                    string_buffer[acc] = cstr[j]
+                    acc += 1
+
+    result = PyStr_FromStringAndSize(string_buffer, acc)
+    if needs_free:
+        free(string_buffer)
+    return result
 
 
 cpdef list copy_sequence(list sequence):
@@ -1109,7 +1265,7 @@ def isoforms(str sequence, **kwargs):
     gen = isoform_generator.generate(sequence)
     if _format == "str":
         for form in gen:
-            yield tostring(
+            yield _sequence_tostring(
                 form, show_unmodified_termini=show_unmodified_termini)
     elif _format == "split":
         for form in gen:
