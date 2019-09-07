@@ -807,11 +807,11 @@ cdef class IsoformGenerator(object):
         cdef:
             str label
             ModificationRule rule
-            list targets
+            object targets
             dict result
         result = {}
         for label, targets in source.items():
-            rule = ModificationRule(label, targets)
+            rule = ModificationRule(label, list(targets))
             PyDict_SetItem(result, label, rule)
         return result
 
