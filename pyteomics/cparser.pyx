@@ -34,6 +34,10 @@ from cpython.object cimport PyObject_CallMethodObjArgs, PyObject_Not, PyObject_I
 
 from pyteomics.ccompat cimport PyStr_AsUTF8AndSize, PyStr_FromStringAndSize
 
+cdef extern from "<ctype.h>" nogil:
+    int isupper(int argument)
+
+
 import re
 from collections import deque
 import itertools as it
@@ -299,12 +303,14 @@ cpdef list parse(str sequence, bint show_unmodified_termini=0, bint split=0,
             n = None
 
     # Actual parsing
-    if split:
+    # if split:
         # parsed_sequence = [g if g[0] else (g[1],) for g in re.findall(
         #     _modX_split, body)]
-        parsed_sequence = _parse_modx_sequence_split(body)
-    else:
-        parsed_sequence = <list>PyObject_CallMethodObjArgs(_modX_group, "findall", <PyObject*>body, NULL)
+    #     parsed_sequence = _parse_modx_sequence_split(body)
+    # else:
+    #     parsed_sequence = <list>PyObject_CallMethodObjArgs(_modX_group, "findall", <PyObject*>body, NULL)
+    parsed_sequence = _tokenize_modx_sequence(body, split)
+
     nterm, cterm = (n or std_nterm), (c or std_cterm)
 
     if not allow_unknown_modifications:
@@ -364,6 +370,66 @@ cpdef list parse(str sequence, bint show_unmodified_termini=0, bint split=0,
 
 
     return parsed_sequence
+
+
+cdef list _tokenize_modx_sequence(str sequence, bint split=True):
+    cdef:
+        char* csequence
+        char c
+        Py_ssize_t i, n, parsed_n, start, end
+        list tokens
+        str nterm, cterm
+
+    start = 0
+    end = 0
+    tokens = []
+    i = 0
+    parsed_n = 0
+    csequence = PyStr_AsUTF8AndSize(sequence, &n)
+    nterm = None
+    cterm = None
+
+    while i < n:
+        c = csequence[i]
+        # We've reached an amino acid. Process the current modX block
+        if isupper(c):
+            end = i + 1
+            if not split:
+                tokens.append(PyStr_FromStringAndSize(&csequence[start], end - start))
+            else:
+                if end - start > 1:
+                    mod = PyStr_FromStringAndSize(&csequence[start], (end - start) - 1)
+                    x = PyStr_FromStringAndSize(&csequence[end - 1], 1)
+                    tokens.append((mod, x))
+                else:
+                    x = PyStr_FromStringAndSize(&csequence[end - 1], 1)
+                    tokens.append((x, ))
+            parsed_n += 1
+            start = i + 1
+        # We've reached a terminal modification boundary
+        elif c == '-':
+            # If we haven't parsed any other tokens
+            if parsed_n == 0:
+                end = i + 1
+                if split:
+                    nterm = PyStr_FromStringAndSize(&csequence[start], end - start)
+                else:
+                    tokens.append(nterm)
+                start = i + 1
+
+        i += 1
+    end = n
+    # The end of the last position was different from the end of the string so we must have
+    # a C-terminal
+    if start != end:
+        cterm = PyStr_FromStringAndSize(&csequence[start], end - start)
+        if not split:
+            tokens.append(cterm)
+        else:
+            tokens[-1] = tokens[-1] + (cterm, )
+    if split and nterm:
+        tokens[0] = (nterm, ) + tokens[0]
+    return tokens
 
 
 cpdef str tostring(object parsed_sequence, bint show_unmodified_termini=True):
