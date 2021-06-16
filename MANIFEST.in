@@ -3,3 +3,4 @@ include pyproject.toml
 recursive-include pyteomics *.pyx
 recursive-include pyteomics *.pxd
 recursive-include pyteomics *.c
+recursive-include pyteomics *.h
