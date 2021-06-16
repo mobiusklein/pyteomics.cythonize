@@ -1,5 +1,5 @@
 test: install
-	nosetests test
+	pytest test
 
 install:
 	python setup.py build
