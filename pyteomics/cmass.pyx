@@ -25,7 +25,7 @@ from cpython.float cimport PyFloat_AsDouble
 from cpython.sequence cimport PySequence_GetItem
 from cpython.exc cimport PyErr_Occurred
 
-from pyteomics.ccompat cimport PyInt_AsLong
+from pyteomics.ccompat cimport PyInt_AsLong, PyInt_Check, PyInt_FromLong
 
 from pyteomics.auxiliary import PyteomicsError, _nist_mass
 from pyteomics.mass import (
@@ -472,6 +472,15 @@ cdef class CComposition(dict):
 
         return result
 
+    def __rsub__(self, other):
+        return CComposition(other) - self
+
+    def __radd__(self, other):
+        return CComposition(other) + self
+
+    def __rmul__(self, other):
+        return self * other
+
     def __reduce__(self):
         return marshal_ccomposition, (dict(self),)
 
@@ -487,17 +496,17 @@ cdef class CComposition(dict):
     def __mul__(self, other):
         cdef:
             CComposition prod = CComposition()
-            int rep, v
+            long rep, v
             str k
 
         if isinstance(other, CComposition):
             self, other = other, self
 
-        if not isinstance(other, int):
+        if not PyInt_Check(other):
             raise PyteomicsError(
                 'Cannot multiply Composition by non-integer',
                 other)
-        rep = other
+        rep = PyInt_AsLong(other)
         for k, v in self.items():
             prod.setitem(k, v * rep)
         return prod
