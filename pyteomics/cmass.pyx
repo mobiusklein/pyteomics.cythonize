@@ -25,7 +25,7 @@ from cpython.float cimport PyFloat_AsDouble
 from cpython.sequence cimport PySequence_GetItem
 from cpython.exc cimport PyErr_Occurred
 
-from pyteomics.ccompat import PyInt_AsLong
+from pyteomics.ccompat cimport PyInt_AsLong
 
 from pyteomics.auxiliary import PyteomicsError, _nist_mass
 from pyteomics.mass import (

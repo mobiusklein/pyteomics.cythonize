@@ -452,7 +452,6 @@ cpdef str tostring(object parsed_sequence, bint show_unmodified_termini=True):
     sequence : str
     """
     cdef:
-        labels, group_l
         object group
         str group_j
         Py_ssize_t i, n, acc, sz
@@ -875,8 +874,7 @@ cdef class SequencePosition(object):
             if isinstance(obj, SequencePosition):
                 result.append((<SequencePosition>obj).copy())
             else:
-                result.append(
-                    converter(<tuple?>obj))
+                result.append(converter(<tuple?>obj))
         return result
 
     cdef bint _eq(self, SequencePosition other):
