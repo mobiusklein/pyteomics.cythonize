@@ -19,12 +19,13 @@ import re
 cimport cython
 from cpython.ref cimport PyObject
 from cpython.dict cimport PyDict_GetItem, PyDict_SetItem, PyDict_Next, PyDict_Keys, PyDict_Update, PyDict_DelItem
-from cpython.int cimport PyInt_AsLong, PyInt_Check, PyInt_FromLong
 from cpython.tuple cimport PyTuple_GetItem, PyTuple_GET_ITEM
 from cpython.list cimport PyList_GET_ITEM
 from cpython.float cimport PyFloat_AsDouble
 from cpython.sequence cimport PySequence_GetItem
 from cpython.exc cimport PyErr_Occurred
+
+from pyteomics.ccompat import PyInt_AsLong
 
 from pyteomics.auxiliary import PyteomicsError, _nist_mass
 from pyteomics.mass import (
@@ -255,7 +256,7 @@ cpdef double fast_mass2(str sequence, str ion_type=None, int charge=0,
 
 
 # Forward Declaration
-cdef: 
+cdef:
     str _atom = r'([A-Z][a-z+]*)(?:\[(\d+)\])?([+-]?\d+)?'
     str _formula = r'^({})*$'.format(_atom)
     str _isotope_string = r'^([A-Z][a-z+]*)(?:\[(\d+)\])?$'
@@ -491,7 +492,7 @@ cdef class CComposition(dict):
 
         if isinstance(other, CComposition):
             self, other = other, self
-        
+
         if not isinstance(other, int):
             raise PyteomicsError(
                 'Cannot multiply Composition by non-integer',
@@ -808,7 +809,7 @@ def calculate_mass(composition=None, average=False, charge=None, mass_data=None,
         composition = CComposition(mass_data=mass_data, **kwargs)
     return composition.mass(average=average, charge=charge, mass_data=mass_data, ion_type=ion_type)
 
-    
+
 
 @cython.wraparound(False)
 @cython.boundscheck(False)

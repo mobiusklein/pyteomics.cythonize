@@ -21,7 +21,7 @@ cimport cython
 from cpython.ref cimport PyObject, Py_INCREF
 from cpython.iterator cimport PyIter_Next
 from cpython.dict cimport PyDict_GetItem, PyDict_Next, PyDict_SetItem, PyDict_Keys, PyDict_Values
-from cpython.int cimport PyInt_AsLong, PyInt_Check, PyInt_FromLong
+from pyteomics.ccompat cimport PyInt_AsLong, PyInt_Check, PyInt_FromLong
 from cpython.float cimport PyFloat_AsDouble
 from cpython.list cimport (PyList_GET_ITEM, PyList_GetItem, PyList_SetItem,
                            PyList_SET_ITEM, PyList_Append, PyList_Insert,
