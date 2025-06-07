@@ -4,3 +4,4 @@ recursive-include pyteomics *.pyx
 recursive-include pyteomics *.pxd
 recursive-include pyteomics *.c
 recursive-include pyteomics *.h
+recursive-include pyteomics *.py
