@@ -20,7 +20,7 @@ setup(
     name="pyteomics.cythonize",
     description="An Cython-accelerated version of common pyteomics functions",
     long_description=open("README.rst").read(),
-    version="0.2.8",
+    version="0.2.9",
     packages=find_namespace_packages(include=["pyteomics*"]),
     zip_safe=False,
     install_requires=["pyteomics"],
